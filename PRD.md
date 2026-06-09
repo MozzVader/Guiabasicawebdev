@@ -2,7 +2,7 @@
 
 > **Documento de Requisitos del Producto (PRD)**
 > Última actualización: 2026-06-10
-> Estado: En desarrollo — Fase 1
+> Estado: En desarrollo — Fase 4 (Git & GitHub)
 > Repo: [GitHub](https://github.com/MozzVader/WebForge)
 
 ---
@@ -549,7 +549,7 @@ Las cheatsheets son secciones dedicadas con formato de **referencia rápida**. T
 
 - Toggle dark/light en el header
 - Persiste la preferencia en `localStorage`
-- Respecta `prefers-color-scheme` del sistema como default
+- Dark es el tema por defecto; solo respeta preferencia explícita del usuario
 - Transición suave con CSS transition en `background-color` y `color`
 
 ### 8.4 Botón Copiar Código
@@ -616,32 +616,36 @@ Las cheatsheets son secciones dedicadas con formato de **referencia rápida**. T
 - [x] Configurar GitHub Pages (si no está ya)
 - [x] Crear README.md del repo
 
-### Fase 2: Layout & Navegación
-- [ ] Implementar `layout.css` (grid sidebar + main)
-- [ ] Implementar `sidebar.js` (toggle, acordeón, scroll spy)
-- [ ] Crear una página de sección como template (`sections/html-basico.html`)
-- [ ] Implementar responsive design (sidebar colapsable, hamburger menu)
-- [ ] Implementar `theme-toggle.js` (dark/light)
-- [ ] Crear `responsive.css` con breakpoints
+### Fase 2: Layout & Navegación ✅
+- [x] Implementar `layout.css` (grid sidebar + main)
+- [x] Implementar `sidebar.js` (toggle, acordeón, scroll spy)
+- [x] Crear una página de sección como template (`sections/html-basico.html`)
+- [x] Implementar responsive design (sidebar colapsable, hamburger menu)
+- [x] Implementar `theme-toggle.js` (dark/light)
+- [x] Crear `responsive.css` con breakpoints
 
-### Fase 3: Componentes UI
-- [ ] Implementar bloques de código con syntax highlighting
-- [ ] Implementar botón "Copiar código"
-- [ ] Crear sistema de callouts/tips/warnings/notes
-- [ ] Crear `components.css` completo
-- [ ] Implementar `code-blocks.css`
-- [ ] Implementar `animations.css` (on-scroll)
-- [ ] Implementar `scroll-animations.js`
+### Fase 3: Componentes UI ✅
+- [x] Implementar bloques de código con syntax highlighting
+- [x] Implementar botón "Copiar código"
+- [x] Crear sistema de callouts/tips/warnings/notes
+- [x] Crear `components.css` completo
+- [x] Implementar `code-blocks.css`
+- [x] Implementar `animations.css` (on-scroll)
+- [x] Implementar `scroll-animations.js`
 
-### Fase 4: Contenido — HTML
-- [ ] Escribir `sections/html-basico.html`
+### Fase 4: Contenido — Git & GitHub
+- [ ] Escribir `sections/git-github.html`
+- [ ] Escribir `cheatsheets/git-cheatsheet.html`
+
+### Fase 5: Contenido — HTML
+- [x] Escribir `sections/html-basico.html`
 - [ ] Escribir `sections/html-semantico.html`
 - [ ] Escribir `sections/html-formularios.html`
 - [ ] Escribir `sections/html-multimedia.html`
 - [ ] Escribir `sections/html-accesibilidad.html`
 - [ ] Escribir `cheatsheets/html-cheatsheet.html`
 
-### Fase 5: Contenido — CSS
+### Fase 6: Contenido — CSS
 - [ ] Escribir `sections/css-basico.html`
 - [ ] Escribir `sections/css-variables.html`
 - [ ] Escribir `sections/css-flexbox.html`
@@ -653,7 +657,7 @@ Las cheatsheets son secciones dedicadas con formato de **referencia rápida**. T
 - [ ] Escribir `sections/css-maquetacion.html`
 - [ ] Escribir `cheatsheets/css-cheatsheet.html`
 
-### Fase 6: Contenido — JavaScript
+### Fase 7: Contenido — JavaScript
 - [ ] Escribir `sections/js-basico.html`
 - [ ] Escribir `sections/js-moderno.html`
 - [ ] Escribir `sections/js-dom.html`
@@ -662,17 +666,15 @@ Las cheatsheets son secciones dedicadas con formato de **referencia rápida**. T
 - [ ] Escribir `sections/js-almacenamiento.html`
 - [ ] Escribir `cheatsheets/js-cheatsheet.html`
 
-### Fase 7: Contenido — Extras
-- [ ] Escribir `sections/git-github.html`
+### Fase 8: Contenido — Extras
 - [ ] Escribir `sections/herramientas-workflow.html`
 - [ ] Escribir `sections/seo-performance.html`
-- [ ] Escribir `cheatsheets/git-cheatsheet.html`
 - [ ] Escribir `cheatsheets/seo-cheatsheet.html`
 
-### Fase 8: Funcionalidades Extra & Polish
+### Fase 9: Funcionalidades Extra & Polish
 - [ ] Implementar buscador in-page (`search.js`)
 - [ ] Crear og-image.png
-- [ ] Crear favicon.svg
+- [x] Crear favicon.svg
 - [ ] Revisión de SEO: meta tags, Open Graph, sitemap
 - [ ] Revisión de accesibilidad: contrastes, aria attributes, keyboard nav
 - [ ] Revisión de performance: Lighthouse audit
@@ -724,4 +726,4 @@ Las cheatsheets son secciones dedicadas con formato de **referencia rápida**. T
 
 ---
 
-> **En progreso**: Fase 1 completada. Próximo → Fase 2 (Layout & Navegación).
+> **En progreso**: Fases 1-3 completadas. Próximo → Fase 4 (Git & GitHub).
