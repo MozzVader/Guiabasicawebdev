@@ -3,9 +3,13 @@
  * Initializes all modules in the correct order.
  */
 
-// Import modules
+// Import modules — all self-registering modules must be imported
+// so their event listeners get attached
 import { loadCommonComponents } from './common-loader.js';
 import { initTheme } from './theme-toggle.js';
+import { initSidebar } from './sidebar.js';
+import { initScrollAnimations } from './scroll-animations.js';
+import { initHighlighting, initCopyButtons } from './code-blocks.js';
 
 /**
  * Bootstraps the application
