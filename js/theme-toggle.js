@@ -11,13 +11,8 @@ const THEME_KEY = 'webforge-theme';
  */
 const getInitialTheme = () => {
     const stored = localStorage.getItem(THEME_KEY);
+    // Only respect stored preference; default is always dark
     if (stored === 'dark' || stored === 'light') return stored;
-
-    // Fall back to system preference
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
-        return 'light';
-    }
-
     return 'dark';
 };
 
@@ -72,12 +67,7 @@ export const initTheme = () => {
         }
     }
 
-    // Listen for system theme changes
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-        if (!localStorage.getItem(THEME_KEY)) {
-            applyTheme(e.matches ? 'dark' : 'light', true);
-        }
-    });
+    // Don't auto-switch on system theme changes — dark is the default
 };
 
 /**

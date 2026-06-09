@@ -4,13 +4,40 @@
  */
 
 /**
+ * Waits for Highlight.js to be available (CDN load), then initializes.
+ * If already loaded, runs immediately. Otherwise retries for up to 3s.
+ */
+const waitForHljs = () => new Promise((resolve) => {
+    if (typeof hljs !== 'undefined') {
+        resolve();
+        return;
+    }
+
+    let attempts = 0;
+    const maxAttempts = 60; // 60 * 50ms = 3 seconds
+    const interval = setInterval(() => {
+        if (typeof hljs !== 'undefined') {
+            clearInterval(interval);
+            resolve();
+        } else if (++attempts >= maxAttempts) {
+            clearInterval(interval);
+            console.warn('WebForge: Highlight.js failed to load from CDN');
+            resolve();
+        }
+    }, 50);
+});
+
+/**
  * Initializes Highlight.js on all code blocks
  */
-export const initHighlighting = () => {
-    // If Highlight.js is loaded via CDN
+export const initHighlighting = async () => {
+    await waitForHljs();
+
     if (typeof hljs !== 'undefined') {
         document.querySelectorAll('.code-block pre code').forEach((block) => {
-            hljs.highlightElement(block);
+            if (!block.dataset.highlighted) {
+                hljs.highlightElement(block);
+            }
         });
     }
 };
@@ -21,6 +48,10 @@ export const initHighlighting = () => {
 export const initCopyButtons = () => {
     const copyBtns = document.querySelectorAll('.code-block-copy');
     copyBtns.forEach((btn) => {
+        // Avoid double-binding
+        if (btn.dataset.bound) return;
+        btn.dataset.bound = 'true';
+
         btn.addEventListener('click', async () => {
             const codeBlock = btn.closest('.code-block');
             const code = codeBlock.querySelector('code');
@@ -29,12 +60,10 @@ export const initCopyButtons = () => {
 
             const text = code.textContent;
 
-            // Use clipboard API
             try {
                 await navigator.clipboard.writeText(text);
                 showCopiedFeedback(btn);
             } catch {
-                // Fallback
                 const textarea = document.createElement('textarea');
                 textarea.value = text;
                 textarea.style.position = 'fixed';
@@ -68,17 +97,18 @@ const showCopiedFeedback = (btn) => {
     }, 2000);
 };
 
-// Initialize on DOM ready and after components load
+// Initialize on DOM ready
 document.addEventListener('DOMContentLoaded', () => {
     initHighlighting();
     initCopyButtons();
 });
 
+// Re-initialize after shared components load (new code blocks might exist)
 document.addEventListener('components:loaded', () => {
     setTimeout(() => {
         initHighlighting();
         initCopyButtons();
-    }, 100);
+    }, 150);
 });
 
 export default { initHighlighting, initCopyButtons };
