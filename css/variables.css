@@ -133,27 +133,37 @@
    Light Theme Override
    ============================================ */
 [data-theme="light"] {
-    --bg-primary: #ffffff;
-    --bg-secondary: #f6f8fa;
-    --bg-tertiary: #eaeef2;
-    --bg-elevated: #ffffff;
+    /* Off-white / very light gray base — easy on the eyes */
+    --bg-primary: #f0f2f5;
+    --bg-secondary: #e4e8ec;
+    --bg-tertiary: #d8dce2;
+    --bg-elevated: #f6f8fa;
 
-    --text-primary: #1f2328;
-    --text-secondary: #656d76;
-    --text-muted: #b0b8c1;
-    --text-inverse: #ffffff;
+    /* Stronger text contrast for readability */
+    --text-primary: #1a1e24;
+    --text-secondary: #42474e;
+    --text-muted: #768390;
+    --text-inverse: #f0f2f5;
 
-    --border-color: #d0d7de;
-    --border-color-light: #eaeef2;
-    --divider: #d0d7de;
+    --border-color: #c8ced6;
+    --border-color-light: #d8dce2;
+    --divider: #c8ced6;
 
-    --grid-color: rgba(88, 166, 255, 0.06);
+    --grid-color: rgba(0, 0, 0, 0.04);
 
-    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
-    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
-    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
-    --shadow-glow-blue: 0 0 20px rgba(88, 166, 255, 0.1);
-    --shadow-glow-cyan: 0 0 20px rgba(57, 210, 192, 0.1);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.12);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.15);
+    --shadow-glow-blue: 0 0 20px rgba(56, 132, 244, 0.12);
+    --shadow-glow-cyan: 0 0 20px rgba(0, 180, 160, 0.12);
+
+    /* Accent colors — slightly deeper for light bg contrast */
+    --accent-blue: #3884f4;
+    --accent-cyan: #00b4a0;
+    --accent-green: #1a7f37;
+    --accent-purple: #8250df;
+    --accent-red: #cf222e;
+    --accent-orange: #bc4c00;
 
     /* Code stays dark in both themes */
     --code-bg: #161b22;
