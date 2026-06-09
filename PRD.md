@@ -2,7 +2,7 @@
 
 > **Documento de Requisitos del Producto (PRD)**
 > Última actualización: 2026-06-10
-> Estado: En desarrollo — Fase 4 (Git & GitHub)
+> Estado: En desarrollo — Fase 5 (HTML)
 > Repo: [GitHub](https://github.com/MozzVader/WebForge)
 
 ---
@@ -633,9 +633,9 @@ Las cheatsheets son secciones dedicadas con formato de **referencia rápida**. T
 - [x] Implementar `animations.css` (on-scroll)
 - [x] Implementar `scroll-animations.js`
 
-### Fase 4: Contenido — Git & GitHub
-- [ ] Escribir `sections/git-github.html`
-- [ ] Escribir `cheatsheets/git-cheatsheet.html`
+### Fase 4: Contenido — Git & GitHub ✅
+- [x] Escribir `sections/git-github.html`
+- [x] Escribir `cheatsheets/git-cheatsheet.html`
 
 ### Fase 5: Contenido — HTML
 - [x] Escribir `sections/html-basico.html`
@@ -726,4 +726,4 @@ Las cheatsheets son secciones dedicadas con formato de **referencia rápida**. T
 
 ---
 
-> **En progreso**: Fases 1-3 completadas. Próximo → Fase 4 (Git & GitHub).
+> **En progreso**: Fases 1-4 completadas. Próximo → Fase 5 (HTML).
