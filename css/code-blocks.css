@@ -1,0 +1,197 @@
+/* ============================================
+   WebForge — Code Blocks
+   ============================================ */
+
+.code-block {
+    position: relative;
+    margin: var(--space-6) 0;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--code-border);
+    overflow: hidden;
+    background-color: var(--code-bg);
+}
+
+.code-block-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-2) var(--space-4);
+    background-color: var(--bg-tertiary);
+    border-bottom: 1px solid var(--code-border);
+    font-size: var(--font-size-xs);
+}
+
+.code-block-lang {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--text-muted);
+    font-family: var(--font-code);
+    font-weight: var(--font-weight-semibold);
+    text-transform: uppercase;
+}
+
+.code-block-lang svg {
+    width: 14px;
+    height: 14px;
+}
+
+.code-block-copy {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-sm);
+    color: var(--text-muted);
+    font-size: var(--font-size-xs);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    background: none;
+    border: 1px solid transparent;
+}
+
+.code-block-copy:hover {
+    background-color: var(--bg-elevated);
+    color: var(--text-primary);
+    border-color: var(--border-color);
+}
+
+.code-block-copy.copied {
+    color: var(--accent-green);
+}
+
+.code-block-copy svg {
+    width: 14px;
+    height: 14px;
+}
+
+.code-block pre {
+    margin: 0;
+    padding: var(--space-5);
+    overflow-x: auto;
+    background-color: transparent !important;
+}
+
+.code-block code {
+    font-family: var(--font-code);
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-relaxed);
+    tab-size: 4;
+}
+
+/* Inline code within paragraphs (already handled in base.css) */
+
+/* Code result panel (used with tabs: Code / Result) */
+.code-result {
+    background-color: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: var(--space-5);
+    margin-top: var(--space-4);
+    font-family: var(--font-body);
+    color: var(--text-secondary);
+}
+
+/* Highlight.js theme override — GitHub Dark style */
+.hljs {
+    color: var(--code-plain);
+    background: transparent;
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-literal,
+.hljs-section,
+.hljs-link {
+    color: var(--code-keyword);
+}
+
+.hljs-string,
+.hljs-title,
+.hljs-name,
+.hljs-type,
+.hljs-attribute,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition,
+.hljs-variable,
+.hljs-template-tag,
+.hljs-template-variable {
+    color: var(--code-string);
+}
+
+.hljs-comment,
+.hljs-quote,
+.hljs-deletion,
+.hljs-meta {
+    color: var(--code-comment);
+    font-style: italic;
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-literal,
+.hljs-title,
+.hljs-section,
+.hljs-doctag,
+.hljs-type,
+.hljs-name,
+.hljs-strong {
+    font-weight: var(--font-weight-semibold);
+}
+
+.hljs-number,
+.hljs-regexp {
+    color: var(--code-number);
+}
+
+.hljs-built_in,
+.hljs-builtin-name {
+    color: var(--code-function);
+}
+
+.hljs-function .hljs-title,
+.hljs-title.function_ {
+    color: var(--code-function);
+}
+
+.hljs-tag {
+    color: var(--code-tag);
+}
+
+.hljs-attr,
+.hljs-attribute {
+    color: var(--code-attribute);
+}
+
+.hljs-operator {
+    color: var(--code-operator);
+}
+
+.hljs-property {
+    color: var(--code-property);
+}
+
+.hljs-subst {
+    color: var(--code-variable);
+}
+
+/* Line numbers */
+.code-block.line-numbers {
+    counter-reset: line;
+}
+
+.code-block.line-numbers pre .line {
+    counter-increment: line;
+}
+
+.code-block.line-numbers pre .line::before {
+    content: counter(line);
+    display: inline-block;
+    width: 3ch;
+    margin-right: var(--space-4);
+    text-align: right;
+    color: var(--code-line-number);
+    user-select: none;
+    font-size: var(--font-size-xs);
+}

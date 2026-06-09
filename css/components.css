@@ -1,0 +1,321 @@
+/* ============================================
+   WebForge — Reusable Components
+   ============================================ */
+
+/* === Buttons === */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-6);
+    font-family: var(--font-heading);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    border-radius: var(--radius-md);
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    text-decoration: none;
+    line-height: 1;
+}
+
+.btn svg {
+    width: 18px;
+    height: 18px;
+}
+
+.btn-primary {
+    background-color: var(--accent-blue);
+    color: var(--text-inverse);
+    border-color: var(--accent-blue);
+}
+
+.btn-primary:hover {
+    background-color: #4a96e8;
+    box-shadow: var(--shadow-glow-blue);
+    transform: translateY(-1px);
+}
+
+.btn-secondary {
+    background-color: var(--bg-tertiary);
+    color: var(--text-primary);
+    border-color: var(--border-color);
+}
+
+.btn-secondary:hover {
+    background-color: var(--bg-elevated);
+    border-color: var(--text-muted);
+    transform: translateY(-1px);
+}
+
+.btn-ghost {
+    background-color: transparent;
+    color: var(--text-secondary);
+    border-color: transparent;
+}
+
+.btn-ghost:hover {
+    background-color: var(--bg-tertiary);
+    color: var(--text-primary);
+}
+
+.btn-sm {
+    padding: var(--space-2) var(--space-4);
+    font-size: var(--font-size-xs);
+}
+
+/* === Cards === */
+.card {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    transition: all var(--transition-fast);
+}
+
+.card:hover {
+    border-color: var(--accent-blue);
+    box-shadow: var(--shadow-glow-blue);
+    transform: translateY(-2px);
+}
+
+.card-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-4);
+    font-size: 24px;
+}
+
+.card-icon svg {
+    width: 24px;
+    height: 24px;
+}
+
+.card-icon.blue { background-color: rgba(88, 166, 255, 0.15); color: var(--accent-blue); }
+.card-icon.cyan { background-color: rgba(57, 210, 192, 0.15); color: var(--accent-cyan); }
+.card-icon.green { background-color: rgba(63, 185, 80, 0.15); color: var(--accent-green); }
+.card-icon.purple { background-color: rgba(188, 140, 255, 0.15); color: var(--accent-purple); }
+.card-icon.red { background-color: rgba(255, 107, 107, 0.15); color: var(--accent-red); }
+.card-icon.orange { background-color: rgba(240, 136, 62, 0.15); color: var(--accent-orange); }
+
+.card-title {
+    font-family: var(--font-heading);
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: var(--space-2);
+}
+
+.card-description {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    line-height: var(--line-height-relaxed);
+}
+
+/* === Badges === */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.15em 0.6em;
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    border-radius: var(--radius-full);
+    line-height: 1;
+}
+
+.badge-blue { background-color: rgba(88, 166, 255, 0.15); color: var(--accent-blue); }
+.badge-cyan { background-color: rgba(57, 210, 192, 0.15); color: var(--accent-cyan); }
+.badge-green { background-color: rgba(63, 185, 80, 0.15); color: var(--accent-green); }
+.badge-purple { background-color: rgba(188, 140, 255, 0.15); color: var(--accent-purple); }
+.badge-red { background-color: rgba(255, 107, 107, 0.15); color: var(--accent-red); }
+.badge-orange { background-color: rgba(240, 136, 62, 0.15); color: var(--accent-orange); }
+
+/* === Callouts / Tips / Warnings === */
+.callout {
+    display: flex;
+    gap: var(--space-4);
+    padding: var(--space-5) var(--space-6);
+    border-radius: var(--radius-md);
+    margin: var(--space-6) 0;
+    border-left: 3px solid;
+}
+
+.callout-icon {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    margin-top: 2px;
+}
+
+.callout-content {
+    flex: 1;
+}
+
+.callout-title {
+    font-family: var(--font-heading);
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: var(--space-2);
+    font-size: var(--font-size-sm);
+}
+
+.callout p {
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--space-2);
+}
+
+.callout p:last-child {
+    margin-bottom: 0;
+}
+
+.callout-tip {
+    background-color: rgba(57, 210, 192, 0.08);
+    border-color: var(--accent-cyan);
+}
+
+.callout-tip .callout-icon { color: var(--accent-cyan); }
+.callout-tip .callout-title { color: var(--accent-cyan); }
+
+.callout-warning {
+    background-color: rgba(240, 136, 62, 0.08);
+    border-color: var(--accent-orange);
+}
+
+.callout-warning .callout-icon { color: var(--accent-orange); }
+.callout-warning .callout-title { color: var(--accent-orange); }
+
+.callout-danger {
+    background-color: rgba(255, 107, 107, 0.08);
+    border-color: var(--accent-red);
+}
+
+.callout-danger .callout-icon { color: var(--accent-red); }
+.callout-danger .callout-title { color: var(--accent-red); }
+
+.callout-info {
+    background-color: rgba(88, 166, 255, 0.08);
+    border-color: var(--accent-blue);
+}
+
+.callout-info .callout-icon { color: var(--accent-blue); }
+.callout-info .callout-title { color: var(--accent-blue); }
+
+/* === Tabs === */
+.tabs {
+    display: flex;
+    gap: var(--space-1);
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: var(--space-4);
+    overflow-x: auto;
+}
+
+.tab-btn {
+    padding: var(--space-3) var(--space-5);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--text-secondary);
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    white-space: nowrap;
+}
+
+.tab-btn:hover {
+    color: var(--text-primary);
+    background-color: var(--bg-tertiary);
+}
+
+.tab-btn.active {
+    color: var(--accent-blue);
+    border-bottom-color: var(--accent-blue);
+}
+
+.tab-panel {
+    display: none;
+}
+
+.tab-panel.active {
+    display: block;
+}
+
+/* === Section Title (for content pages) === */
+.section-header {
+    margin-bottom: var(--space-8);
+    padding-bottom: var(--space-6);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.section-header h1 {
+    margin-bottom: var(--space-3);
+    background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.section-header p {
+    font-size: var(--font-size-md);
+    color: var(--text-secondary);
+    max-width: 600px;
+}
+
+.section-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-bottom: var(--space-4);
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
+}
+
+.section-breadcrumb a {
+    color: var(--text-muted);
+    transition: color var(--transition-fast);
+}
+
+.section-breadcrumb a:hover {
+    color: var(--accent-blue);
+}
+
+.section-breadcrumb span {
+    color: var(--text-secondary);
+}
+
+/* === Sub-section (h2 blocks within a section) === */
+.sub-section {
+    margin-top: var(--space-12);
+    scroll-margin-top: calc(var(--header-height) + var(--space-6));
+}
+
+.sub-section h2 {
+    margin-bottom: var(--space-4);
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+}
+
+.sub-section h2 .heading-anchor {
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+    color: var(--accent-blue);
+}
+
+.sub-section h2:hover .heading-anchor {
+    opacity: 1;
+}
+
+.sub-section h2 .heading-anchor svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* === Content Grid (for landing page cards) === */
+.content-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--space-6);
+}

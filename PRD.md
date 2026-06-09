@@ -1,9 +1,9 @@
-# PRD — Compendio de Desarrollo Web
+# PRD — WebForge
 
 > **Documento de Requisitos del Producto (PRD)**
 > Última actualización: 2026-06-10
-> Estado: Planificación
-> Repo: [GitHub](https://github.com/MozzVader/Guiabasicawebdev)
+> Estado: En desarrollo — Fase 1
+> Repo: [GitHub](https://github.com/MozzVader/WebForge)
 
 ---
 
@@ -580,8 +580,8 @@ Las cheatsheets son secciones dedicadas con formato de **referencia rápida**. T
 ### Meta Tags principales
 
 ```html
-<title>Compendio de Desarrollo Web | Guía + Cheatsheet</title>
-<meta name="description" content="Guía completa y cheatsheet de referencia para desarrollo web: HTML, CSS, JavaScript, Git, SEO y más.">
+<title>WebForge | Guía + Cheatsheet de Desarrollo Web</title>
+<meta name="description" content="WebForge: guía completa y cheatsheet de referencia para desarrollo web: HTML, CSS, JavaScript, Git, SEO y más.">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta charset="UTF-8">
 ```
@@ -589,8 +589,8 @@ Las cheatsheets son secciones dedicadas con formato de **referencia rápida**. T
 ### Open Graph
 
 ```html
-<meta property="og:title" content="Compendio de Desarrollo Web">
-<meta property="og:description" content="Tu guía y cheatsheet para desarrollo web frontend">
+<meta property="og:title" content="WebForge — Compendio de Desarrollo Web">
+<meta property="og:description" content="WebForge: tu guía y cheatsheet para desarrollo web frontend">
 <meta property="og:image" content="/assets/images/og-image.png">
 <meta property="og:type" content="website">
 ```
@@ -607,14 +607,14 @@ Las cheatsheets son secciones dedicadas con formato de **referencia rápida**. T
 ## 10. Plan de Desarrollo (Fases)
 
 ### Fase 1: Cimentación
-- [ ] Configurar estructura de archivos y carpetas
-- [ ] Crear `variables.css` con toda la paleta de colores y tipografía
-- [ ] Crear `reset.css` y `base.css`
-- [ ] Crear componentes compartidos: `header.html`, `sidebar.html`, `footer.html`
-- [ ] Implementar `common-loader.js` para carga de componentes
-- [ ] Crear `index.html` (landing page) con diseño base
-- [ ] Configurar GitHub Pages (si no está ya)
-- [ ] Crear README.md del repo
+- [x] Configurar estructura de archivos y carpetas
+- [x] Crear `variables.css` con toda la paleta de colores y tipografía
+- [x] Crear `reset.css` y `base.css`
+- [x] Crear componentes compartidos: `header.html`, `sidebar.html`, `footer.html`
+- [x] Implementar `common-loader.js` para carga de componentes
+- [x] Crear `index.html` (landing page) con diseño base
+- [x] Configurar GitHub Pages (si no está ya)
+- [x] Crear README.md del repo
 
 ### Fase 2: Layout & Navegación
 - [ ] Implementar `layout.css` (grid sidebar + main)
@@ -724,4 +724,4 @@ Las cheatsheets son secciones dedicadas con formato de **referencia rápida**. T
 
 ---
 
-> **Próximo paso**: Confirmar este PRD y comenzar con la Fase 1.
+> **En progreso**: Fase 1 completada. Próximo → Fase 2 (Layout & Navegación).

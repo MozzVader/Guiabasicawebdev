@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Basico — WebForge</title>
+    <meta name="description" content="Aprende los fundamentos de HTML: estructura de un documento, etiquetas esenciales, texto, links, imagenes, listas, tablas y mas.">
+    <meta name="theme-color" content="#0d1117">
+    <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Highlight.js (CDN) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/code-blocks.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+
+    <div class="page-wrapper">
+        <!-- Header -->
+        <header class="site-header" id="site-header"></header>
+
+        <!-- Sidebar -->
+        <aside class="site-sidebar" id="site-sidebar"></aside>
+        <div class="sidebar-overlay"></div>
+
+        <!-- Main Content -->
+        <main class="main-content" role="main">
+
+            <!-- Breadcrumb -->
+            <div class="section-breadcrumb">
+                <a href="../index.html">Inicio</a>
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                <span>HTML</span>
+            </div>
+
+            <!-- Section Header -->
+            <div class="section-header animate-on-scroll">
+                <h1>HTML Basico</h1>
+                <p>Los cimientos de toda pagina web. Aprende la estructura fundamental de HTML, las etiquetas esenciales y como organizar tu contenido de manera semantica y accesible.</p>
+            </div>
+
+            <!-- Sub-section: Estructura de un documento -->
+            <section class="sub-section animate-on-scroll" id="estructura">
+                <h2>
+                    Estructura de un documento HTML
+                    <a href="#estructura" class="heading-anchor" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                    </a>
+                </h2>
+
+                <p>
+                    Todo documento HTML comienza con una estructura basica que el navegador necesita interpretar correctamente. Esta estructura incluye el tipo de documento (DOCTYPE), el elemento raiz <code>&lt;html&gt;</code>, y dos secciones principales: <code>&lt;head&gt;</code> para metadatos y <code>&lt;body&gt;</code> para el contenido visible.
+                </p>
+
+                <p>
+                    El <code>&lt;!DOCTYPE html&gt;</code> le indica al navegador que el documento usa HTML5, el estandar moderno. Sin esta declaracion, el navegador podria entrar en "modo quirks" y renderizar la pagina de forma inconsistente. Es el primer elemento que debe aparecer en cualquier archivo HTML y no tiene etiqueta de cierre.
+                </p>
+
+                <div class="code-block">
+                    <div class="code-block-header">
+                        <span class="code-block-lang">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                            HTML
+                        </span>
+                        <button class="code-block-copy" aria-label="Copiar codigo">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                            Copiar
+                        </button>
+                    </div>
+                    <pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang="es"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;meta name="description" content="Descripcion de tu pagina"&gt;
+    &lt;title&gt;Mi Pagina Web&lt;/title&gt;
+    &lt;link rel="stylesheet" href="styles.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;!-- Tu contenido visible va aqui --&gt;
+    &lt;h1&gt;Hola Mundo&lt;/h1&gt;
+    &lt;p&gt;Mi primera pagina web.&lt;/p&gt;
+
+    &lt;script src="app.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+                </div>
+
+                <div class="callout callout-tip">
+                    <svg class="callout-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>
+                    <div class="callout-content">
+                        <p class="callout-title">Tip</p>
+                        <p>El atributo <code>lang="es"</code> en la etiqueta <code>&lt;html&gt;</code> es importante para la accesibilidad y el SEO. Permite a los lectores de pantalla seleccionar el idioma correcto y ayuda a los motores de busqueda a entender el idioma de tu contenido.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sub-section: Etiquetas esenciales -->
+            <section class="sub-section animate-on-scroll" id="etiquetas">
+                <h2>
+                    Etiquetas esenciales
+                    <a href="#etiquetas" class="heading-anchor" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                    </a>
+                </h2>
+
+                <p>
+                    HTML proporciona una serie de etiquetas fundamentales que estructuran el contenido de cualquier pagina web. Estas etiquetas definen como se presenta y se organiza la informacion, desde titulos y parrafos hasta links e imagenes. Conocer estas etiquetas es el primer paso para escribir HTML correctamente.
+                </p>
+
+                <p>
+                    Las etiquetas de texto son las mas utilizadas en cualquier documento. Los encabezados <code>&lt;h1&gt;</code> a <code>&lt;h6&gt;</code> establecen la jerarquia del contenido, donde <code>&lt;h1&gt;</code> es el mas importante (generalmente uno por pagina) y <code>&lt;h6&gt;</code> el menos importante. Los parrafos <code>&lt;p&gt;</code> contienen bloques de texto, mientras que <code>&lt;strong&gt;</code> y <code>&lt;em&gt;</code> agregan enfasis semantico (no solo visual).
+                </p>
+
+                <div class="code-block">
+                    <div class="code-block-header">
+                        <span class="code-block-lang">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                            HTML
+                        </span>
+                        <button class="code-block-copy" aria-label="Copiar codigo">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                            Copiar
+                        </button>
+                    </div>
+                    <pre><code class="language-html">&lt;!-- Encabezados --&gt;
+&lt;h1&gt;Titulo principal&lt;/h1&gt;
+&lt;h2&gt;Subtitulo&lt;/h2&gt;
+&lt;h3&gt;Seccion terciaria&lt;/h3&gt;
+
+&lt;!-- Texto --&gt;
+&lt;p&gt;Un parrafo de texto normal.&lt;/p&gt;
+&lt;p&gt;Texto con &lt;strong&gt;enfasis fuerte&lt;/strong&gt;
+   y &lt;em&gt;enfasis italica&lt;/em&gt;.&lt;/p&gt;
+
+&lt;!-- Linea horizontal --&gt;
+&lt;hr&gt;
+
+&lt;!-- Salto de linea --&gt;
+&lt;p&gt;Linea uno.&lt;br&gt;Linea dos.&lt;/p&gt;</code></pre>
+                </div>
+
+                <div class="callout callout-info">
+                    <svg class="callout-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+                    <div class="callout-content">
+                        <p class="callout-title">Nota</p>
+                        <p>La etiqueta <code>&lt;strong&gt;</code> indica que el texto es importante (semantica), mientras que <code>&lt;b&gt;</code> solo lo pone en negrita visualmente. En la practica moderna, se prefiere <code>&lt;strong&gt;</code> y <code>&lt;em&gt;</code> por su significado semantico.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sub-section: Links -->
+            <section class="sub-section animate-on-scroll" id="links">
+                <h2>
+                    Links e imagenes
+                    <a href="#links" class="heading-anchor" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                    </a>
+                </h2>
+
+                <p>
+                    Los enlaces (<code>&lt;a&gt;</code>) son lo que convierte a la web en una "red" de documentos interconectados. La etiqueta <code>&lt;a&gt;</code> usa el atributo <code>href</code> para definir la URL de destino. El atributo <code>target="_blank"</code> abre el link en una nueva pestana, y <code>rel="noopener noreferrer"</code> es una practica de seguridad obligatoria cuando se usa <code>target="_blank"</code>.
+                </p>
+
+                <div class="code-block">
+                    <div class="code-block-header">
+                        <span class="code-block-lang">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                            HTML
+                        </span>
+                        <button class="code-block-copy" aria-label="Copiar codigo">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                            Copiar
+                        </button>
+                    </div>
+                    <pre><code class="language-html">&lt;!-- Link basico --&gt;
+&lt;a href="https://ejemplo.com"&gt;Visitar sitio&lt;/a&gt;
+
+&lt;!-- Link en nueva pestana (seguro) --&gt;
+&lt;a href="https://ejemplo.com"
+   target="_blank"
+   rel="noopener noreferrer"&gt;
+   Abrir en nueva pestana
+&lt;/a&gt;
+
+&lt;!-- Link a email --&gt;
+&lt;a href="mailto:contacto@ejemplo.com"&gt;
+   Enviar email
+&lt;/a&gt;
+
+&lt;!-- Imagen con texto alternativo --&gt;
+&lt;img src="foto.jpg"
+     alt="Descripcion de la imagen"
+     loading="lazy"
+     width="800"
+     height="600"&gt;
+
+&lt;!-- Imagen con figure y caption --&gt;
+&lt;figure&gt;
+    &lt;img src="diagrama.png" alt="Diagrama de flujo"&gt;
+    &lt;figcaption&gt;Figura 1: Diagrama de flujo del proceso&lt;/figcaption&gt;
+&lt;/figure&gt;</code></pre>
+                </div>
+
+                <div class="callout callout-warning">
+                    <svg class="callout-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+                    <div class="callout-content">
+                        <p class="callout-title">Importante</p>
+                        <p>El atributo <code>alt</code> en las imagenes es obligatorio por razones de accesibilidad. Si la imagen es decorativa, usa <code>alt=""</code> (vacio) para que los lectores de pantalla la ignoren. Siempre incluye <code>loading="lazy"</code> en imagenes que no estan en el primer viewport para mejorar la carga de la pagina.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sub-section: Listas -->
+            <section class="sub-section animate-on-scroll" id="listas">
+                <h2>
+                    Listas
+                    <a href="#listas" class="heading-anchor" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                    </a>
+                </h2>
+
+                <p>
+                    HTML ofrece tres tipos principales de listas: las no ordenadas (<code>&lt;ul&gt;</code>) que usan viñetas, las ordenadas (<code>&lt;ol&gt;</code>) que usan numeros, y las de definicion (<code>&lt;dl&gt;</code>) que asocian terminos con sus descripciones. Las listas son fundamentales para organizar contenido de manera legible y accesible, especialmente en navegacion, menus y contenido estructurado.
+                </p>
+
+                <div class="code-block">
+                    <div class="code-block-header">
+                        <span class="code-block-lang">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                            HTML
+                        </span>
+                        <button class="code-block-copy" aria-label="Copiar codigo">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                            Copiar
+                        </button>
+                    </div>
+                    <pre><code class="language-html">&lt;!-- Lista no ordenada --&gt;
+&lt;ul&gt;
+    &lt;li&gt;HTML&lt;/li&gt;
+    &lt;li&gt;CSS&lt;/li&gt;
+    &lt;li&gt;JavaScript&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;!-- Lista ordenada --&gt;
+&lt;ol&gt;
+    &lt;li&gt;Aprender HTML&lt;/li&gt;
+    &lt;li&gt;Aprender CSS&lt;/li&gt;
+    &lt;li&gt;Aprender JavaScript&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;!-- Lista de definicion --&gt;
+&lt;dl&gt;
+    &lt;dt&gt;HTML&lt;/dt&gt;
+    &lt;dd&gt;Lenguaje de marcado para estructurar contenido web.&lt;/dd&gt;
+    &lt;dt&gt;CSS&lt;/dt&gt;
+    &lt;dd&gt;Lenguaje de estilos para dar formato visual.&lt;/dd&gt;
+&lt;/dl&gt;</code></pre>
+                </div>
+            </section>
+
+            <!-- Sub-section: Tablas -->
+            <section class="sub-section animate-on-scroll" id="tablas">
+                <h2>
+                    Tablas
+                    <a href="#tablas" class="heading-anchor" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                    </a>
+                </h2>
+
+                <p>
+                    Las tablas HTML se usan para presentar datos tabulados (filas y columnas). La estructura correcta incluye <code>&lt;table&gt;</code> como contenedor, <code>&lt;thead&gt;</code> para la cabecera, <code>&lt;tbody&gt;</code> para el cuerpo, y <code>&lt;tfoot&gt;</code> opcional para el pie. Cada fila usa <code>&lt;tr&gt;</code>, las celdas de cabecera <code>&lt;th&gt;</code>, y las celdas de datos <code>&lt;td&gt;</code>. Es importante no usar tablas para maquetacion de layouts, para eso se usan Flexbox o Grid.
+                </p>
+
+                <div class="code-block">
+                    <div class="code-block-header">
+                        <span class="code-block-lang">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                            HTML
+                        </span>
+                        <button class="code-block-copy" aria-label="Copiar codigo">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                            Copiar
+                        </button>
+                    </div>
+                    <pre><code class="language-html">&lt;table&gt;
+    &lt;thead&gt;
+        &lt;tr&gt;
+            &lt;th scope="col"&gt;Tecnologia&lt;/th&gt;
+            &lt;th scope="col"&gt;Tipo&lt;/th&gt;
+            &lt;th scope="col"&gt;Uso&lt;/th&gt;
+        &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+        &lt;tr&gt;
+            &lt;td&gt;HTML&lt;/td&gt;
+            &lt;td&gt;Marcado&lt;/td&gt;
+            &lt;td&gt;Estructura&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+            &lt;td&gt;CSS&lt;/td&gt;
+            &lt;td&gt;Estilos&lt;/td&gt;
+            &lt;td&gt;Presentacion&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+            &lt;td&gt;JavaScript&lt;/td&gt;
+            &lt;td&gt;Programacion&lt;/td&gt;
+            &lt;td&gt;Interactividad&lt;/td&gt;
+        &lt;/tr&gt;
+    &lt;/tbody&gt;
+&lt;/table&gt;</code></pre>
+                </div>
+
+                <div class="callout callout-danger">
+                    <svg class="callout-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
+                    <div class="callout-content">
+                        <p class="callout-title">Evita esto</p>
+                        <p>Nunca uses tablas para maquetar el layout de una pagina. Es una practica obsoleta que causa problemas de accesibilidad y mantenimiento. Para layouts usa <code>display: flex</code> o <code>display: grid</code> en CSS.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Navigation between sections -->
+            <nav class="section-nav mt-8" style="display: flex; justify-content: space-between; padding-top: var(--space-6); border-top: 1px solid var(--border-color);">
+                <a href="../sections/html-semantico.html" class="btn btn-secondary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                    HTML Semantico
+                </a>
+                <a href="../cheatsheets/html-cheatsheet.html" class="btn btn-secondary">
+                    HTML Cheatsheet
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                </a>
+            </nav>
+
+        </main>
+
+        <!-- Footer -->
+        <footer class="site-footer" id="site-footer"></footer>
+    </div>
+
+    <!-- Highlight.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+    <!-- App JS -->
+    <script type="module" src="../js/app.js"></script>
+</body>
+</html>

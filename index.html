@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebForge | Guia + Cheatsheet de Desarrollo Web</title>
+    <meta name="description" content="WebForge: guia completa y cheatsheet de referencia para desarrollo web frontend. HTML, CSS, JavaScript, Git, SEO y mas.">
+    <meta property="og:title" content="WebForge — Compendio de Desarrollo Web">
+    <meta property="og:description" content="Tu guia y cheatsheet para desarrollo web frontend">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#0d1117">
+    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Highlight.js (CDN) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/code-blocks.css">
+    <link rel="stylesheet" href="css/landing.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body class="landing-page">
+
+    <div class="page-wrapper landing-page">
+        <!-- Header -->
+        <header class="site-header" id="site-header"></header>
+
+        <!-- Sidebar (hidden on landing) -->
+        <aside class="site-sidebar" id="site-sidebar"></aside>
+        <div class="sidebar-overlay"></div>
+
+        <!-- Main Content -->
+        <main class="main-content" role="main">
+
+            <!-- Hero Section -->
+            <section class="hero animate-on-scroll">
+                <div class="hero-badge">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                    </svg>
+                    Open Source &middot; Gratuito &middot; Bilingue
+                </div>
+
+                <h1 class="hero-title">
+                    Tu guia completa para<br>
+                    <span class="gradient-text">desarrollo web</span> frontend
+                </h1>
+
+                <p class="hero-description">
+                    Aprende y repasa los fundamentos de HTML, CSS y JavaScript con
+                    ejemplos practicos, codigo funcional y cheatsheets de referencia rapida.
+                    Hecho por devs, para devs.
+                </p>
+
+                <div class="hero-cta">
+                    <a href="sections/html-basico.html" class="btn btn-primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                        Explorar contenido
+                    </a>
+                    <a href="cheatsheets/html-cheatsheet.html" class="btn btn-secondary">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
+                        Ir a Cheatsheets
+                    </a>
+                </div>
+
+                <!-- Decorative code block -->
+                <div class="hero-visual">
+                    <div class="hero-code">
+                        <div class="hero-code-header">
+                            <span class="hero-code-dot red"></span>
+                            <span class="hero-code-dot yellow"></span>
+                            <span class="hero-code-dot green"></span>
+                        </div>
+                        <pre><code><span class="comment">// Tu proximo proyecto web empieza aqui</span>
+
+<span class="kw">const</span> <span class="prop">saludo</span> = <span class="str">"Bienvenido a WebForge"</span>;
+
+<span class="kw">function</span> <span class="fn">construir</span>(<span class="prop">tecnologias</span>) {
+  <span class="kw">return</span> <span class="prop">tecnologias</span>.<span class="fn">map</span>(<span class="prop">t</span> => {
+    <span class="kw">return</span> <span class="str">`Forjando con ${<span class="prop">t</span>}...`</span>;
+  });
+}
+
+<span class="fn">construir</span>([<span class="str">"HTML"</span>, <span class="str">"CSS"</span>, <span class="str">"JS"</span>]);</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Stats Section -->
+            <section class="stats-section animate-on-scroll">
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-item-number">5+</div>
+                        <div class="stat-item-label">Temas principales</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-item-number">22</div>
+                        <div class="stat-item-label">Secciones de contenido</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-item-number">5</div>
+                        <div class="stat-item-label">Cheatsheets</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-item-number">100%</div>
+                        <div class="stat-item-label">Open source</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Features / Topics Section -->
+            <section class="features-section">
+                <h2 class="features-title animate-on-scroll">Que vas a encontrar</h2>
+                <p class="features-subtitle animate-on-scroll">
+                    Contenido organizado por tema, con ejemplos de codigo y cheatsheets de referencia rapida.
+                </p>
+
+                <div class="content-grid stagger-children">
+                    <!-- Git & GitHub -->
+                    <a href="sections/git-github.html" class="card card-lift animate-on-scroll">
+                        <div class="card-icon orange">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M6 21V9a9 9 0 0 0 9 9"/>
+                            </svg>
+                        </div>
+                        <h3 class="card-title">Git &amp; GitHub</h3>
+                        <p class="card-description">Control de versiones con Git: commits, branches, merge, pull requests y flujo de trabajo con GitHub.</p>
+                    </a>
+
+                    <!-- HTML -->
+                    <a href="sections/html-basico.html" class="card card-lift animate-on-scroll">
+                        <div class="card-icon red">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
+                            </svg>
+                        </div>
+                        <h3 class="card-title">HTML</h3>
+                        <p class="card-description">Estructura semantica, formularios, multimedia, accesibilidad y buenas practicas desde lo basico.</p>
+                    </a>
+
+                    <!-- CSS -->
+                    <a href="sections/css-basico.html" class="card card-lift animate-on-scroll">
+                        <div class="card-icon blue">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/>
+                            </svg>
+                        </div>
+                        <h3 class="card-title">CSS</h3>
+                        <p class="card-description">Flexbox, Grid, responsive design, animaciones, variables CSS, frameworks y maquetacion profesional.</p>
+                    </a>
+
+                    <!-- JavaScript -->
+                    <a href="sections/js-basico.html" class="card card-lift animate-on-scroll">
+                        <div class="card-icon cyan">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                            </svg>
+                        </div>
+                        <h3 class="card-title">JavaScript</h3>
+                        <p class="card-description">ES6+, manipulacion del DOM, eventos, asincronia, fetch API, almacenamiento y mas.</p>
+                    </a>
+
+                    <!-- Cheatsheets -->
+                    <a href="cheatsheets/html-cheatsheet.html" class="card card-lift animate-on-scroll">
+                        <div class="card-icon purple">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/><line x1="10" x2="8" y1="9" y2="9"/>
+                            </svg>
+                        </div>
+                        <h3 class="card-title">Cheatsheets</h3>
+                        <p class="card-description">Referencias rapidas para HTML, CSS, JS, Git y SEO. Tablas compactas, listas para imprimir.</p>
+                    </a>
+
+                    <!-- SEO & Performance -->
+                    <a href="sections/seo-performance.html" class="card card-lift animate-on-scroll">
+                        <div class="card-icon green">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
+                            </svg>
+                        </div>
+                        <h3 class="card-title">SEO &amp; Performance</h3>
+                        <p class="card-description">Meta tags, Open Graph, Core Web Vitals, optimizacion de imagenes y herramientas de desarrollo.</p>
+                    </a>
+                </div>
+            </section>
+
+            <!-- Creator Section -->
+            <section class="creator-section animate-on-scroll">
+                <h2>Sobre el proyecto</h2>
+                <div class="creator-card">
+                    <div class="creator-avatar">MV</div>
+                    <h3 class="creator-name">MozzVader</h3>
+                    <p class="creator-bio">
+                        WebForge es un proyecto open source que nace con la idea de crear un recurso
+                        gratuito, practico y visualmente atractivo para aprender desarrollo web.
+                        Contribuciones son bienvenidas.
+                    </p>
+                    <div class="creator-links">
+                        <a href="https://github.com/MozzVader/WebForge" target="_blank" rel="noopener noreferrer" class="creator-link">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+                            GitHub
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- Footer -->
+        <footer class="site-footer" id="site-footer"></footer>
+    </div>
+
+    <!-- Highlight.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+    <!-- App JS -->
+    <script type="module" src="js/app.js"></script>
+</body>
+</html>

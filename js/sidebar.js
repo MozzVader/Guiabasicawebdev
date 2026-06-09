@@ -1,0 +1,107 @@
+/**
+ * WebForge — Sidebar Controller
+ * Handles sidebar toggle, accordion, hamburger menu, and overlay.
+ */
+
+/**
+ * Initializes sidebar functionality after components are loaded
+ */
+export const initSidebar = () => {
+    const sidebar = document.querySelector('.site-sidebar');
+    const overlay = document.querySelector('.sidebar-overlay');
+    const hamburger = document.querySelector('.hamburger-btn');
+    const pageWrapper = document.querySelector('.page-wrapper');
+
+    if (!sidebar) return; // Landing page has no sidebar
+
+    // === Hamburger Toggle (mobile/tablet) ===
+    if (hamburger) {
+        hamburger.addEventListener('click', () => {
+            const isOpen = sidebar.classList.contains('open');
+            sidebar.classList.toggle('open');
+            if (overlay) overlay.classList.toggle('active', !isOpen);
+            document.body.style.overflow = isOpen ? '' : 'hidden';
+        });
+    }
+
+    // === Overlay Close ===
+    if (overlay) {
+        overlay.addEventListener('click', () => {
+            sidebar.classList.remove('open');
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+    }
+
+    // === Accordion Categories ===
+    const categoryHeaders = sidebar.querySelectorAll('.sidebar-category-header');
+    categoryHeaders.forEach((header) => {
+        header.addEventListener('click', () => {
+            header.parentElement.classList.toggle('collapsed');
+        });
+    });
+
+    // === Highlight active link based on current page ===
+    highlightActiveLink();
+
+    // === Scroll spy (only on section pages) ===
+    if (pageWrapper && !pageWrapper.classList.contains('landing-page')) {
+        initScrollSpy();
+    }
+};
+
+/**
+ * Highlights the sidebar link matching the current page URL
+ */
+const highlightActiveLink = () => {
+    const links = document.querySelectorAll('.sidebar-link');
+    const currentPath = window.location.pathname;
+
+    links.forEach((link) => {
+        link.classList.remove('active');
+        const href = link.getAttribute('href');
+        if (!href) return;
+
+        // Match the end of the path
+        if (currentPath.endsWith(href) ||
+            currentPath.endsWith(href.replace('../', ''))) {
+            link.classList.add('active');
+            // Expand parent category
+            const category = link.closest('.sidebar-category');
+            if (category) category.classList.remove('collapsed');
+        }
+    });
+};
+
+/**
+ * Scroll spy: highlights sidebar sub-section links based on scroll position
+ */
+const initScrollSpy = () => {
+    const subSections = document.querySelectorAll('.sub-section[id]');
+    if (subSections.length === 0) return;
+
+    const observer = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.id;
+                    // Update active states for sub-section links
+                    document.querySelectorAll('.sidebar-sublink').forEach((link) => {
+                        link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+                    });
+                }
+            });
+        },
+        {
+            rootMargin: `-${parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-height')) || 60}px 0px -70% 0px`,
+            threshold: 0,
+        }
+    );
+
+    subSections.forEach((section) => observer.observe(section));
+};
+
+// Initialize after components are loaded
+document.addEventListener('components:loaded', initSidebar);
+
+export default initSidebar;

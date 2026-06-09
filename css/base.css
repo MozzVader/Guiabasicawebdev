@@ -1,0 +1,193 @@
+/* ============================================
+   WebForge — Base Styles
+   ============================================ */
+
+/* === Body & Grid Background === */
+body {
+    font-family: var(--font-body);
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-regular);
+    color: var(--text-primary);
+    background-color: var(--bg-primary);
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+        linear-gradient(var(--grid-color) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+    background-size: var(--grid-size) var(--grid-size);
+    pointer-events: none;
+    z-index: var(--z-grid);
+}
+
+/* === Typography === */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-tight);
+    color: var(--text-primary);
+}
+
+h1 { font-size: var(--font-size-3xl); font-weight: var(--font-weight-bold); }
+h2 { font-size: var(--font-size-2xl); font-weight: var(--font-weight-semibold); }
+h3 { font-size: var(--font-size-xl); font-weight: var(--font-weight-semibold); }
+h4 { font-size: var(--font-size-lg); font-weight: var(--font-weight-medium); }
+h5 { font-size: var(--font-size-md); font-weight: var(--font-weight-medium); }
+h6 { font-size: var(--font-size-base); font-weight: var(--font-weight-medium); }
+
+p {
+    margin-bottom: var(--space-4);
+    color: var(--text-secondary);
+    line-height: var(--line-height-relaxed);
+}
+
+p:last-child {
+    margin-bottom: 0;
+}
+
+/* === Links === */
+.link {
+    color: var(--accent-blue);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+    border-bottom: 1px solid transparent;
+}
+
+.link:hover {
+    color: var(--accent-cyan);
+    border-bottom-color: var(--accent-cyan);
+}
+
+/* === Inline Code === */
+code:not([class*="hljs"]):not(.code-block code) {
+    font-family: var(--font-code);
+    font-size: 0.875em;
+    background-color: var(--bg-tertiary);
+    color: var(--accent-blue);
+    padding: 0.15em 0.4em;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-color);
+}
+
+/* === Strong / Emphasis === */
+strong, b {
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
+}
+
+em, i {
+    font-style: italic;
+}
+
+/* === Lists === */
+.content-list {
+    padding-left: var(--space-6);
+    margin-bottom: var(--space-4);
+    color: var(--text-secondary);
+}
+
+.content-list li {
+    margin-bottom: var(--space-2);
+    line-height: var(--line-height-relaxed);
+    position: relative;
+}
+
+.content-list li::marker {
+    color: var(--accent-blue);
+}
+
+/* === Blockquote === */
+blockquote {
+    border-left: 3px solid var(--accent-blue);
+    padding: var(--space-4) var(--space-6);
+    margin: var(--space-6) 0;
+    background-color: var(--bg-secondary);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    color: var(--text-secondary);
+    font-style: italic;
+}
+
+blockquote p:last-child {
+    margin-bottom: 0;
+}
+
+/* === Horizontal Rule === */
+hr {
+    border: none;
+    border-top: 1px solid var(--border-color);
+    margin: var(--space-8) 0;
+}
+
+/* === Selection === */
+::selection {
+    background-color: var(--accent-blue);
+    color: var(--text-inverse);
+}
+
+/* === Scrollbar === */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--text-muted);
+}
+
+/* Firefox scrollbar */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-color) var(--bg-primary);
+}
+
+/* === Focus Visible === */
+:focus-visible {
+    outline: 2px solid var(--accent-blue);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+}
+
+/* === Utility Classes === */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+.text-accent-blue { color: var(--accent-blue); }
+.text-accent-cyan { color: var(--accent-cyan); }
+.text-accent-red { color: var(--accent-red); }
+.text-accent-green { color: var(--accent-green); }
+.text-accent-purple { color: var(--accent-purple); }
+.text-muted { color: var(--text-muted); }
+.text-secondary { color: var(--text-secondary); }
+
+.mt-4 { margin-top: var(--space-4); }
+.mt-6 { margin-top: var(--space-6); }
+.mt-8 { margin-top: var(--space-8); }
+.mb-4 { margin-bottom: var(--space-4); }
+.mb-6 { margin-bottom: var(--space-6); }
+.mb-8 { margin-bottom: var(--space-8); }
