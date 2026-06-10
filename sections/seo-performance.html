@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEO &amp; Performance — WebForge</title>
+    <meta name="description" content="SEO b&aacute;sico y performance web: meta tags, Open Graph, Core Web Vitals, lazy loading, optimizaci&oacute;n de im&aacute;genes, Lighthouse y structured data.">
+    <meta name="theme-color" content="#0d1117">
+    <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Highlight.js (CDN) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/code-blocks.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+
+    <div class="page-wrapper">
+        <!-- Header -->
+        <header class="site-header" id="site-header"></header>
+
+        <!-- Sidebar -->
+        <aside class="site-sidebar" id="site-sidebar"></aside>
+        <div class="sidebar-overlay"></div>
+
+        <!-- Main Content -->
+        <main class="main-content" role="main">
+
+            <!-- Breadcrumb -->
+            <div class="section-breadcrumb">
+                <a href="../index.html">Inicio</a>
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                <span>SEO</span>
+            </div>
+
+            <!-- Section Header -->
+            <div class="section-header animate-on-scroll">
+                <h1>SEO &amp; Performance</h1>
+                <p>Que tu sitio web sea incre&iacute;ble no sirve de nada si nadie lo encuentra. <strong>SEO</strong> (Search Engine Optimization) es el conjunto de t&eacute;cnicas que hacen que Google y otros buscadores entiendan, indexen y muestren tu p&aacute;gina en los resultados de b&uacute;squeda. Pero SEO no es solo meter palabras clave: es tener un sitio r&aacute;pido, accesible, bien estructurado y con contenido de calidad. Y aqu&iacute; es donde entra la <strong>performance</strong>: un sitio r&aacute;pido no solo rankea mejor en Google, sino que retiene a los usuarios, mejora la conversi&oacute;n y reduce el costo de anuncios. Esta secci&oacute;n te ense&ntilde;a las bases de SEO t&eacute;cnico y las m&eacute;tricas de performance que realmente importan.</p>
+            </div>
+
+            <!-- ===================== META TAGS ===================== -->
+            <section class="sub-section animate-on-scroll" id="meta-tags">
+                <h2>
+                    Meta Tags Esenciales
+                    <a href="#meta-tags" class="heading-anchor" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                    </a>
+                </h2>
+
+                <p>
+                    Los <strong>meta tags</strong> son fragmentos de informaci&oacute;n en el <code>&lt;head&gt;</code> de tu HTML que le dicen a los buscadores y a las redes sociales de qu&eacute; trata tu p&aacute;gina. No son visibles directamente para el usuario que navega el sitio, pero son lo primero que lee Google cuando visita tu p&aacute;gina. Los meta tags correctos pueden marcar la diferencia entre aparecer en la primera posici&oacute;n de Google o quedar enterrado en la p&aacute;gina 5. No son "magia" para rankear, son la base m&iacute;nima que todo sitio necesita para ser interpretado correctamente.
+                </p>
+
+                <div class="code-block">
+                    <div class="code-block-header">
+                        <span class="code-block-lang">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                            HTML
+                        </span>
+                        <button class="code-block-copy" aria-label="Copiar codigo">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                            Copiar
+                        </button>
+                    </div>
+                    <pre><code class="language-html">&lt;head&gt;
+    &lt;!-- Obligatorios: encoding y viewport --&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+
+    &lt;!-- SEO b&aacute;sico --&gt;
+    &lt;title&gt;T&iacute;tulo de la p&aacute;gina &mdash; Nombre del sitio&lt;/title&gt;
+    &lt;meta name="description" content="Descripci&oacute;n de 150-160 caracteres que aparece en Google."&gt;
+    &lt;meta name="robots" content="index, follow"&gt;
+
+    &lt;!-- Autor y keywords (keywords ya no son un factor de ranking, pero no da&ntilde;an) --&gt;
+    &lt;meta name="author" content="Tu nombre"&gt;
+    &lt;meta name="keywords" content="desarrollo web, html, css, javascript"&gt;
+
+    &lt;!-- Color de la barra del navegador en mobile --&gt;
+    &lt;meta name="theme-color" content="#0d1117"&gt;
+
+    &lt;!-- Canonical: evita contenido duplicado --&gt;
+    &lt;link rel="canonical" href="https://ejemplo.com/pagina"&gt;
+
+    &lt;!-- Favicon --&gt;
+    &lt;link rel="icon" type="image/svg+xml" href="/favicon.svg"&gt;
+    &lt;link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"&gt;
+    &lt;link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"&gt;
+&lt;/head&gt;</code></pre>
+                </div>
+
+                <p>
+                    El <code>&lt;title&gt;</code> es el meta tag m&aacute;s importante de todos. Es lo que aparece como t&iacute;tulo azul clickeable en los resultados de Google, lo que se muestra en la pesta&ntilde;a del navegador, y lo que se comparte por defecto en redes sociales. Deber&iacute;a tener entre 50-60 caracteres, incluir la palabra clave principal al principio, y describir claramente el contenido de la p&aacute;gina. La <code>description</code> es el texto que aparece debajo del t&iacute;tulo en Google: no afecta directamente el ranking, pero afecta el CTR (Click-Through Rate), que s&iacute; es una se&ntilde;al de calidad para Google. Manten&eacute;la entre 150-160 caracteres y hac&eacute;la atractiva para que la gente quiera hacer click.
+                </p>
+
+                <h3>Meta tag robots</h3>
+
+                <p>
+                    El meta tag <code>robots</code> le dice a los crawlers de Google qu&eacute; pueden y qu&eacute; no pueden hacer con tu p&aacute;gina. Los valores m&aacute;s comunes son <code>index</code> (permite indexar la p&aacute;gina), <code>noindex</code> (no la indexa pero sigue los links), <code>follow</code> (sigue los links de la p&aacute;gina para descubrir m&aacute;s contenido), y <code>nofollow</code> (no sigue los links). El valor por defecto es <code>index, follow</code>, as&iacute; que normalmente no necesit&aacute;s incluirlo expl&iacute;citamente. Lo us&aacute;s cuando quer&eacute;s evitar que Google indexe una p&aacute;gina (como p&aacute;ginas de admin, resultados de b&uacute;squeda interna, o contenido duplicado), o cuando no quer&eacute;s que pase link juice a otras p&aacute;ginas.
+                </p>
+
+                <div class="code-block">
+                    <div class="code-block-header">
+                        <span class="code-block-lang">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                            HTML &mdash; Valores de robots
+                        </span>
+                    </div>
+                    <pre><code class="language-html">&lt;!-- No indexar esta p&aacute;gina (pero seguir sus links) --&gt;
+&lt;meta name="robots" content="noindex, follow"&gt;
+
+&lt;!-- Indexar pero no seguir los links --&gt;
+&lt;meta name="robots" content="index, nofollow"&gt;
+
+&lt;!-- No indexar ni seguir links (p&aacute;ginas privadas) --&gt;
+&lt;meta name="robots" content="noindex, nofollow"&gt;
+
+&lt;!-- No mostrar el snippet en los resultados de b&uacute;squeda --&gt;
+&lt;meta name="robots" content="nosnippet"&gt;
+
+&lt;!-- No guardar cach&eacute; de la p&aacute;gina --&gt;
+&lt;meta name="robots" content="noarchive"&gt;</code></pre>
+                </div>
+
+                <div class="callout callout-tip">
+                    <svg class="callout-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>
+                    <div class="callout-content">
+                        <p class="callout-title">El tag canonical evita contenido duplicado</p>
+                        <p>Si ten&eacute;s una p&aacute;gina accesible desde m&uacute;ltiples URLs (por ejemplo <code>/producto?id=1</code> y <code>/producto/zapatillas</code>), el tag <code>rel="canonical"</code> le dice a Google cu&aacute;l es la URL "oficial". Sin &eacute;l, Google podr&iacute;a considerarlas como p&aacute;ginas duplicadas y dividir el ranking entre ambas. Si us&aacute;s par&aacute;metros de URL para filtros, ordenamiento o tracking, <strong>siempre</strong> agreg&aacute; un canonical a la URL limpia.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===================== OPEN GRAPH ===================== -->
+            <section class="sub-section animate-on-scroll" id="open-graph">
+                <h2>
+                    Open Graph &amp; Social Cards
+                    <a href="#open-graph" class="heading-anchor" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                    </a>
+                </h2>
+
+                <p>
+                    Cuando alguien comparte tu p&aacute;gina en Twitter, Facebook, LinkedIn o WhatsApp, las redes sociales leen los meta tags de <strong>Open Graph</strong> (<code>og:*</code>) para generar una tarjeta visual con t&iacute;tulo, descripci&oacute;n e imagen. Sin estos tags, las redes sociales intentan adivinar el contenido (y generalmente lo hacen mal: toman un texto aleatorio como descripci&oacute;n o no muestran imagen). Con Open Graph, control&aacute;s exactamente c&oacute;mo se ve tu p&aacute;gina cuando se comparte, lo que aumenta dr&aacute;sticamente el CTR de los links compartidos.
+                </p>
+
+                <div class="code-block">
+                    <div class="code-block-header">
+                        <span class="code-block-lang">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                            HTML &mdash; Open Graph completo
+                        </span>
+                        <button class="code-block-copy" aria-label="Copiar codigo">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                            Copiar
+                        </button>
+                    </div>
+                    <pre><code class="language-html">&lt;head&gt;
+    &lt;!-- Open Graph (Facebook, LinkedIn, WhatsApp, etc.) --&gt;
+    &lt;meta property="og:type" content="website"&gt;
+    &lt;meta property="og:url" content="https://ejemplo.com/pagina"&gt;
+    &lt;meta property="og:title" content="T&iacute;tulo atractivo para compartir"&gt;
+    &lt;meta property="og:description" content="Descripci&oacute;n corta y tentadora para redes sociales."&gt;
+    &lt;meta property="og:image" content="https://ejemplo.com/og-image.png"&gt;
+    &lt;meta property="og:image:width" content="1200"&gt;
+    &lt;meta property="og:image:height" content="630"&gt;
+    &lt;meta property="og:locale" content="es_AR"&gt;
+    &lt;meta property="og:site_name" content="Nombre de tu sitio"&gt;
+
+    &lt;!-- Twitter Card (X) --&gt;
+    &lt;meta name="twitter:card" content="summary_large_image"&gt;
+    &lt;meta name="twitter:title" content="T&iacute;tulo para Twitter"&gt;
+    &lt;meta name="twitter:description" content="Descripci&oacute;n para Twitter."&gt;
+    &lt;meta name="twitter:image" content="https://ejemplo.com/og-image.png"&gt;
+    &lt;meta name="twitter:creator" content="@tu_usuario"&gt;
+&lt;/head&gt;</code></pre>
+                </div>
+
+                <p>
+                    La imagen OG es el elemento m&aacute;s importante de Open Graph. Deber&iacute;a ser de <strong>1200x630 p&iacute;xeles</strong> (la proporci&oacute;n 1.91:1 que usan Facebook y LinkedIn). Si la imagen es m&aacute;s chica, las redes sociales la recortan y se ve mal. Si es m&aacute;s grande, la comprimen. Un buen OG image tiene: texto grande y legible, colores que contrasten con el fondo de la red social, y un logo o marca identificativa. No pong&aacute;s texto demasiado peque&ntilde;o porque en mobile se vuelve ilegible. Herramientas como <strong>og-image.vercel.app</strong> te generan im&aacute;genes OG din&aacute;micamente a partir de un template.
+                </p>
+
+                <div class="code-block">
+                    <div class="code-block-header">
+                        <span class="code-block-lang">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                            Valores de og:type y twitter:card
+                        </span>
+                    </div>
+                    <pre><code class="language-plaintext">| Valor                    | Cu&aacute;ndo usarlo                                    |
+|--------------------------|------------------------------------------------------|
+| og:type=website          | P&aacute;ginas principales, landing pages               |
+| og:type=article          | Posts de blog, noticias, art&iacute;culos              |
+| og:type=profile          | Perfil de persona                                     |
+| og:type=video.other      | P&aacute;ginas con video principal                       |
+| twitter:card=summary     | Card peque&ntilde;o con imagen cuadrada (144x144)     |
+| twitter:card=summary_large_image | Card grande con imagen rectangular (igual que OG) |</code></pre>
+                </div>
+
+                <div class="callout callout-info">
+                    <svg class="callout-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+                    <div class="callout-content">
+                        <p class="callout-title">Probar tus Open Graph tags</p>
+                        <p>Facebook tiene un herramienta llamada <strong>Sharing Debugger</strong> (developers.facebook.com/tools/debug/) donde peg&aacute;s tu URL y te muestra exactamente c&oacute;mo se ve tu link al compartirlo. Twitter tiene algo similar en <strong>Card Validator</strong> (cards-dev.twitter.com/validator). Us&aacute;las despu&eacute;s de agregar los tags OG para verificar que todo se vea bien. Si cambi&aacute;s la imagen OG, puede que las redes sociales tarden horas en actualizar su cach&eacute; &mdash; forz&aacute; el refresco con estas herramientas.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===================== SEMANTIC HTML Y SEO ===================== -->
+            <section class="sub-section animate-on-scroll" id="semantico-seo">
+                <h2>
+                    HTML Sem&aacute;ntico y su Impacto en SEO
+                    <a href="#semantico-seo" class="heading-anchor" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                    </a>
+                </h2>
+
+                <p>
+                    Google no "ve" tu p&aacute;gina como un humano: lee el HTML y lo interpreta. Cuando us&aacute;s etiquetas sem&aacute;nticas como <code>&lt;header&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;article&gt;</code>, <code>&lt;section&gt;</code> y <code>&lt;footer&gt;</code>, le est&aacute;s dando informaci&oacute;n sobre la <strong>estructura y el significado</strong> de tu contenido, no solo sobre c&oacute;mo se ve. Un <code>&lt;h1&gt;</code> le dice a Google "este es el t&iacute;tulo principal", un <code>&lt;article&gt;</code> le dice "esto es un contenido independiente que podr&iacute;a aparecer en un feed", y un <code>&lt;nav&gt;</code> le dice "esto es navegaci&oacute;n, no contenido principal". Todo esto ayuda a Google a entender mejor tu p&aacute;gina y, en consecuencia, a rankearla mejor.
+                </p>
+
+                <div class="code-block">
+                    <div class="code-block-header">
+                        <span class="code-block-lang">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                            HTML &mdash; Estructura sem&aacute;ntica SEO-friendly
+                        </span>
+                        <button class="code-block-copy" aria-label="Copiar codigo">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                            Copiar
+                        </button>
+                    </div>
+                    <pre><code class="language-html">&lt;body&gt;
+    &lt;header&gt;
+        &lt;nav aria-label="Navegacion principal"&gt;
+            &lt;!-- Logo y links principales --&gt;
+        &lt;/nav&gt;
+    &lt;/header&gt;
+
+    &lt;main&gt;
+        &lt;!-- Un SOLO h1 por p&aacute;gina --&gt;
+        &lt;h1&gt;T&iacute;tulo principal de la p&aacute;gina&lt;/h1&gt;
+
+        &lt;article&gt;
+            &lt;h2&gt;T&iacute;tulo del art&iacute;culo&lt;/h2&gt;
+            &lt;p&gt;Contenido del art&iacute;culo...&lt;/p&gt;
+
+            &lt;section&gt;
+                &lt;h3&gt;Subsecci&oacute;n dentro del art&iacute;culo&lt;/h3&gt;
+                &lt;p&gt;M&aacute;s contenido...&lt;/p&gt;
+            &lt;/section&gt;
+        &lt;/article&gt;
+
+        &lt;aside&gt;
+            &lt;!-- Contenido complementario (sidebar, Related posts, etc.) --&gt;
+        &lt;/aside&gt;
+    &lt;/main&gt;
+
+    &lt;footer&gt;
+        &lt;!-- Copyright, links secundarios, sitemap --&gt;
+    &lt;/footer&gt;
+&lt;/body&gt;</code></pre>
+                </div>
+
+                <h3>Jerarqu&iacute;a de headings</h3>
+
+                <p>
+                    Los headings (<code>&lt;h1&gt;</code> a <code>&lt;h6&gt;</code>) son uno de los factores de SEO on-page m&aacute;s importantes. Google usa la jerarqu&iacute;a de headings para entender la estructura de tu contenido, igual que un &iacute;ndice de un libro. Las reglas son simples pero estrictas: <strong>un solo <code>&lt;h1&gt;</code> por p&aacute;gina</strong> (es el t&iacute;tulo principal), los <code>&lt;h2&gt;</code> son las secciones principales, los <code>&lt;h3&gt;</code> son subsecciones dentro de un <code>&lt;h2&gt;</code>, y as&iacute; sucesivamente. Nunca saltees niveles (no vayas de <code>&lt;h2&gt;</code> a <code>&lt;h4&gt;</code>), y no uses headings solo por el tama&ntilde;o visual (para eso est&aacute; CSS). Incluir palabras clave relevantes en los headings ayuda, pero no los fuerces: el contenido primero.
+                </p>
+
+                <div class="callout callout-danger">
+                    <svg class="callout-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
+                    <div class="callout-content">
+                        <p class="callout-title">Errores comunes que matan tu SEO</p>
+                        <p>No tener <code>&lt;title&gt;</code> o dejarlo vac&iacute;o. Usar m&uacute;ltiples <code>&lt;h1&gt;</code> en la misma p&aacute;gina. Tener la misma meta description en todas las p&aacute;ginas. Im&aacute;genes sin atributo <code>alt</code> (Google no puede "ver" im&aacute;genes). Contenido oculto con <code>display: none</code> o texto del mismo color que el fondo (Google penaliza esto). Links rotos (404) que generan una mala experiencia de rastreo. JavaScript que renderiza contenido cr&iacute;tico que Googlebot no puede ejecutar.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===================== STRUCTURED DATA ===================== -->
+            <section class="sub-section animate-on-scroll" id="structured-data">
+                <h2>
+                    Structured Data (JSON-LD)
+                    <a href="#structured-data" class="heading-anchor" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                    </a>
+                </h2>
+
+                <p>
+                    <strong>Structured data</strong> (datos estructurados) es una forma de agregar informaci&oacute;n expl&iacute;cita sobre tu p&aacute;gina en un formato est&aacute;ndar que los buscadores pueden leer directamente. Es como darle a Google una "ficha t&eacute;cnica" de tu contenido en vez de que tenga que adivinarla. Cuando agreg&aacute;s structured data, tu p&aacute;gina puede aparecer con <strong>rich snippets</strong> en los resultados de b&uacute;squeda: estrellas de rese&ntilde;as, precios de productos, fechas de eventos, preguntas frecuentes expandibles, y m&aacute;s. Estos rich snippets hacen que tu resultado destaque visualmente y aumentan el CTR significativamente.
+                </p>
+
+                <p>
+                    El formato m&aacute;s usado y recomendado hoy es <strong>JSON-LD</strong> (JavaScript Object Notation for Linked Data). Se agrega como un bloque <code>&lt;script type="application/ld+json"&gt;</code> dentro del <code>&lt;head&gt;</code> y es f&aacute;cil de leer, escribir y generar din&aacute;micamente. Los tipos de datos se definen en <strong>schema.org</strong>, un vocabulario compartido por Google, Bing, Yahoo y Yandex.
+                </p>
+
+                <div class="code-block">
+                    <div class="code-block-header">
+                        <span class="code-block-lang">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                            JSON-LD &mdash; Art&iacute;culo (BlogPost)
+                        </span>
+                        <button class="code-block-copy" aria-label="Copiar codigo">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                            Copiar
+                        </button>
+                    </div>
+                    <pre><code class="language-json">{
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Gu&iacute;a completa de Flexbox en CSS",
+    "description": "Aprend&eacute; a usar Flexbox desde cero con ejemplos pr&aacute;cticos.",
+    "image": "https://ejemplo.com/images/flexbox-guide.png",
+    "author": {
+        "@type": "Person",
+        "name": "Mar&iacute;a Garc&iacute;a",
+        "url": "https://ejemplo.com/autor/maria"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "WebForge",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://ejemplo.com/logo.png"
+        }
+    },
+    "datePublished": "2026-06-10",
+    "dateModified": "2026-06-11"
+}</code></pre>
+                </div>
+
+                <div class="code-block">
+                    <div class="code-block-header">
+                        <span class="code-block-lang">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                            JSON-LD &mdash; FAQ (Preguntas Frecuentes)
+                        </span>
+                        <button class="code-block-copy" aria-label="Copiar codigo">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                            Copiar
+                        </button>
+                    </div>
+                    <pre><code class="language-json">{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "&iquest;Qu&eacute; es CSS Flexbox?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Flexbox es un m&oacute;dulo de CSS que permite alinear y distribuir elementos dentro de un contenedor de manera flexible y eficiente."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "&iquest;Cu&aacute;l es la diferencia entre justify-content y align-items?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "justify-content controla la alineaci&oacute;n en el eje principal (horizontal por defecto), mientras que align-items controla la alineaci&oacute;n en el eje transversal (vertical por defecto)."
+            }
+        }
+    ]
+}</code></pre>
+                </div>
+
+                <p>
+                    Google ofrece una herramienta llamada <strong>Rich Results Test</strong> (search.google.com/test/rich-results) donde peg&aacute;s la URL de tu p&aacute;gina o el c&oacute;digo JSON-LD y te dice si es v&aacute;lido, si es elegible para rich snippets, y si hay errores. Tambi&eacute;n pod&eacute;s ver todos los rich snippets disponibles en <strong>Google Search Gallery</strong> (developers.google.com/search/docs/appearance/structured-data/search-gallery). Los tipos m&aacute;s &uacute;tiles para sitios comunes son: <code>Article</code> / <code>BlogPosting</code> (para blogs), <code>FAQPage</code> (para preguntas frecuentes), <code>BreadcrumbList</code> (para breadcrumbs en los resultados), <code>HowTo</code> (para tutoriales paso a paso), y <code>Organization</code> (para datos de la empresa en la p&aacute;gina principal).
+                </p>
+            </section>
+
+            <!-- ===================== CORE WEB VITALS ===================== -->
+            <section class="sub-section animate-on-scroll" id="core-web-vitals">
+                <h2>
+                    Core Web Vitals
+                    <a href="#core-web-vitals" class="heading-anchor" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                    </a>
+                </h2>
+
+                <p>
+                    Los <strong>Core Web Vitals</strong> son un conjunto de m&eacute;tricas de Google que miden la experiencia real del usuario en tu sitio web. Desde 2021, Google las usa como <strong>factor de ranking</strong>: dos sitios con contenido similar, el m&aacute;s r&aacute;pido y estable va a rankear mejor. No son las &uacute;nicas m&eacute;tricas que importan, pero son las que Google considera "core" (fundamentales). Hay tres m&eacute;tricas principales: <strong>LCP</strong> (velocidad de carga), <strong>INP</strong> (responsividad interactiva, antes llamado FID), y <strong>CLS</strong> (estabilidad visual). Entender qu&eacute; miden y c&oacute;mo optimizarlas es esencial para cualquier desarrollador web.
+                </p>
+
+                <h3>LCP (Largest Contentful Paint)</h3>
+
+                <p>
+                    <strong>LCP</strong> mide cu&aacute;nto tarda en renderizarse el elemento m&aacute;s grande visible en el viewport. "Elemento m&aacute;s grande" puede ser una imagen hero, un bloque de texto grande, un video o un fondo degradado. Es la m&eacute;trica que mide <strong>"&iquest;cu&aacute;nto tarda en cargar lo que el usuario ve?"</strong>. Un LCP bueno es menor a 2.5 segundos, aceptable entre 2.5s y 4s, y malo si supera los 4s. Para mejorarlo, necesit&aacute;s que el servidor responda r&aacute;pido, que los recursos cr&iacute;ticos se carguen pronto, y que las im&aacute;genes grandes est&eacute;n optimizadas.
+                </p>
+
+                <h3>INP (Interaction to Next Paint)</h3>
+
+                <p>
+                    <strong>INP</strong> mide cu&aacute;nto tarda tu p&aacute;gina en responder a una interacci&oacute;n del usuario (un click, un tap, una tecla). Es el reemplazo de FID (First Input Delay) desde marzo de 2024. Mientras que FID solo med&iacute;a el retraso inicial, INP mide la latencia de <strong>todas</strong> las interacciones durante toda la visita a la p&aacute;gina y toma el peor caso (o el percentil 98). Un INP bueno es menor a 200ms. Si tu p&aacute;gina se "congela" cuando el usuario hace click en un bot&oacute;n o scrollea, tu INP va a ser malo. Las causas t&iacute;picas son: JavaScript pesado que bloquea el hilo principal, handlers de eventos que hacen mucho trabajo sincr&oacute;nico, o layouts complejos que se recalculan en cada interacci&oacute;n.
+                </p>
+
+                <h3>CLS (Cumulative Layout Shift)</h3>
+
+                <p>
+                    <strong>CLS</strong> mide cu&aacute;nto se mueve el contenido visualmente de forma inesperada mientras la p&aacute;gina carga. Es la m&eacute;trica que mide la <strong>estabilidad visual</strong>. &iquest;Alguna vez intentaste hacer click en un bot&oacute;n y justo antes de tocarlo la p&aacute;gina se movi&oacute; y terminaste clickeando en un anuncio? Eso es un CLS alto, y es una de las experiencias m&aacute;s frustrantes para los usuarios. Un CLS bueno es menor a 0.1. Las causas m&aacute;s comunes son: im&aacute;genes y iframes sin dimensiones expl&iacute;citas (ancho y alto), contenido que se inyecta din&aacute;micamente arriba del contenido existente, y fuentes web que causan FOIT (Flash of Invisible Text) o FOUT (Flash of Unstyled Text).
+                </p>
+
+                <div class="code-block">
+                    <div class="code-block-header">
+                        <span class="code-block-lang">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                            Resumen de Core Web Vitals
+                        </span>
+                    </div>
+                    <pre><code class="language-plaintext">| M&eacute;trica | Qu&eacute; mide                          | Bueno  | Malo   |
+|-----------|--------------------------------------|--------|--------|
+| LCP       | Velocidad de carga del contenido    | &lt; 2.5s | &gt; 4.0s |
+| INP       | Responsividad a interacciones       | &lt; 200ms| &gt; 500ms|
+| CLS       | Estabilidad visual (layout shifts)  | &lt; 0.1  | &gt; 0.25 |</code></pre>
+                </div>
+
+                <div class="code-block">
+                    <div class="code-block-header">
+                        <span class="code-block-lang">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                            HTML &mdash; Prevenir CLS en im&aacute;genes
+                        </span>
+                        <button class="code-block-copy" aria-label="Copiar codigo">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                            Copiar
+                        </button>
+                    </div>
+                    <pre><code class="language-html">&lt;!-- MAL: sin dimensiones, el navegador no reserva espacio --&gt;
+&lt;img src="hero.jpg" alt="Hero"&gt;
+
+&lt;!-- BIEN: width y height reservan el espacio antes de cargar --&gt;
+&lt;img src="hero.jpg" alt="Hero" width="1200" height="600" loading="lazy"&gt;
+
+&lt;!-- MEJOR: aspect-ratio CSS + width 100% (responsive sin CLS) --&gt;
+&lt;img src="hero.jpg" alt="Hero"
+     style="width: 100%; aspect-ratio: 2/1; object-fit: cover;"
+     loading="lazy"&gt;
+
+&lt;!-- Para iframes (YouTube, mapas): siempre envolver en un container con aspect-ratio --&gt;
+&lt;div style="aspect-ratio: 16/9; width: 100%;"&gt;
+    &lt;iframe src="https://www.youtube.com/embed/..." style="width:100%;height:100%;"&gt;&lt;/iframe&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+
+                <div class="callout callout-tip">
+                    <svg class="callout-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>
+                    <div class="callout-content">
+                        <p class="callout-title">&iquest;D&oacute;nde veo mis Core Web Vitals reales?</p>
+                        <p>La herramienta definitiva es <strong>Google Search Console</strong> (search.google.com/search-console) &rarr; "Experience del usuario" &rarr; "Core Web Vitals". Te muestra las m&eacute;tricas reales de los usuarios de tu sitio (no datos de laboratorio). Para medir en tiempo real durante el desarrollo, us&aacute; <strong>Chrome DevTools</strong> &rarr; panel Performance &rarr; medir LCP y CLS. Para datos de campo de cualquier p&aacute;gina, us&aacute; <strong>PageSpeed Insights</strong> (pagespeed.web.dev).</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===================== LAZY LOADING ===================== -->
+            <section class="sub-section animate-on-scroll" id="lazy-loading">
+                <h2>
+                    Lazy Loading
+                    <a href="#lazy-loading" class="heading-anchor" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                    </a>
+                </h2>
+
+                <p>
+                    <strong>Lazy loading</strong> (carga diferida) es la t&eacute;cnica de no cargar un recurso hasta que el usuario realmente lo necesita. La aplicaci&oacute;n m&aacute;s com&uacute;n son las im&aacute;genes: si ten&eacute;s una p&aacute;gina con 30 im&aacute;genes, no tiene sentido cargar las 30 de una vez si el usuario solo ve las primeras 3 en su pantalla. Con lazy loading, las im&aacute;genes fuera del viewport se cargan cuando el usuario hace scroll hacia ellas. Esto reduce el tiempo de carga inicial, ahorra ancho de banda, y mejora el LCP porque el navegador se concentra en cargar solo lo que es visible.
+                </p>
+
+                <h3>loading="lazy" (nativo)</h3>
+
+                <p>
+                    Los navegadores modernos soportan el atributo <code>loading="lazy"</code> en im&aacute;genes e iframes. Es la forma m&aacute;s simple de lazy loading: no necesit&aacute;s JavaScript, no necesit&aacute;s una librer&iacute;a, y el navegador se encarga de todo. Cuando el usuario se acerca al elemento (antes de que entre al viewport, con un margen de seguridad), el navegador lo carga autom&aacute;ticamente. Soporte: Chrome, Edge, Firefox y Safari 15.4+. Para navegadores m&aacute;s viejos, el atributo se ignora y la imagen se carga normalmente (graceful degradation).
+                </p>
+
+                <div class="code-block">
+                    <div class="code-block-header">
+                        <span class="code-block-lang">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                            HTML &mdash; Lazy loading nativo
+                        </span>
+                        <button class="code-block-copy" aria-label="Copiar codigo">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                            Copiar
+                        </button>
+                    </div>
+                    <pre><code class="language-html">&lt;!-- Lazy loading nativo: la forma m&aacute;s simple --&gt;
+&lt;img src="foto-abajo.jpg"
+     alt="Foto de la galeria"
+     width="800"
+     height="600"
+     loading="lazy"
+     decoding="async"&gt;
+
+&lt;!-- Imagen hero (arriba del fold): NO uses lazy loading --&gt;
+&lt;img src="hero.jpg"
+     alt="Imagen principal"
+     width="1200"
+     height="600"
+     fetchpriority="high"
+     decoding="async"&gt;
+
+&lt;!-- Iframe de YouTube con lazy loading --&gt;
+&lt;iframe src="https://www.youtube.com/embed/VIDEO_ID"
+        loading="lazy"
+        width="800"
+        height="450"
+        allowfullscreen&gt;&lt;/iframe&gt;</code></pre>
+                </div>
+
+                <p>
+                    Dos detalles importantes: primero, <strong>no apliqu&eacute;s lazy loading a im&aacute;genes que est&aacute;n arriba del fold</strong> (en la primera pantalla visible), porque eso retrasar&iacute;a su carga y empeorar&iacute;a el LCP. Esas im&aacute;genes deber&iacute;an cargarse inmediatamente, idealmente con <code>fetchpriority="high"</code> para indicarle al navegador que son prioritarias. Segundo, <code>decoding="async"</code> le dice al navegador que puede decodificar la imagen de forma as&iacute;ncrona sin bloquear el renderizado del resto de la p&aacute;gina. Es un atributo poco conocido pero que puede mejorar la percepci&oacute;n de velocidad.
+                </p>
+
+                <h3>Intersection Observer (lazy loading con JavaScript)</h3>
+
+                <p>
+                    Para escenarios m&aacute;s avanzados (como cargar componentes enteros, ejecutar animaciones, o lazy loading de im&aacute;genes con fallback para navegadores viejos), us&aacute;s la API <strong>Intersection Observer</strong>. Esta API te permite detectar cuando un elemento entra o sale del viewport de forma eficiente (mucho mejor que escuchar el evento <code>scroll</code>, que es costoso en performance). El navegador te avisa cuando el elemento se vuelve visible y reci&eacute;n ah&iacute; ejecut&aacute;s la acci&oacute;n (cargar la imagen, inicializar el componente, etc.).
+                </p>
+
+                <div class="code-block">
+                    <div class="code-block-header">
+                        <span class="code-block-lang">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                            JavaScript &mdash; Lazy loading con Intersection Observer
+                        </span>
+                        <button class="code-block-copy" aria-label="Copiar codigo">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                            Copiar
+                        </button>
+                    </div>
+                    <pre><code class="language-javascript">// === Lazy loading de im&aacute;genes con Intersection Observer ===
+// El HTML usa data-src en vez de src:
+// &lt;img data-src="foto.jpg" alt="Foto" class="lazy"&gt;
+
+const lazyImages = document.querySelectorAll("img.lazy");
+
+const imageObserver = new IntersectionObserver((entries, observer) =&gt; {
+    entries.forEach((entry) =&gt; {
+        if (entry.isIntersecting) {
+            const img = entry.target;
+            img.src = img.dataset.src;
+
+            // Si us&aacute;s srcset, tambi&eacute;n lo movemos
+            if (img.dataset.srcset) {
+                img.srcset = img.dataset.srcset;
+            }
+
+            img.classList.remove("lazy");
+            img.classList.add("loaded");
+            observer.unobserve(img); // dejar de observar una vez cargada
+        }
+    });
+}, {
+    // rootMargin: "200px" empieza a cargar 200px antes de que sea visible
+    rootMargin: "200px",
+    threshold: 0.01
+});
+
+lazyImages.forEach((img) =&gt; imageObserver.observe(img));
+
+// === Lazy loading gen&eacute;rico para cualquier componente ===
+function createLazyLoader(selector, loadCallback) {
+    const elements = document.querySelectorAll(selector);
+
+    const observer = new IntersectionObserver((entries) =&gt; {
+        entries.forEach((entry) =&gt; {
+            if (entry.isIntersecting) {
+                loadCallback(entry.target);
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { rootMargin: "100px" });
+
+    elements.forEach((el) =&gt; observer.observe(el));
+}
+
+// Uso: cargar un widget pesado solo cuando es visible
+createLazyLoader(".heavy-widget", (widget) =&gt; {
+    widget.innerHTML = "&lt;div&gt;Widget cargado!&lt;/div&gt;";
+});</code></pre>
+                </div>
+            </section>
+
+            <!-- ===================== OPTIMIZACION DE IMAGENES ===================== -->
+            <section class="sub-section animate-on-scroll" id="imagenes">
+                <h2>
+                    Optimizaci&oacute;n de Im&aacute;genes
+                    <a href="#imagenes" class="heading-anchor" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                    </a>
+                </h2>
+
+                <p>
+                    Las im&aacute;genes representan habitualmente entre el 50% y el 65% del peso total de una p&aacute;gina web. Optimizarlas es, por lejos, la acci&oacute;n individual que m&aacute;s impacto tiene en la velocidad de carga. No se trata de usar im&aacute;genes de baja calidad: se trata de usar el <strong>formato correcto</strong>, el <strong>tama&ntilde;o correcto</strong> para cada dispositivo, y servir solo lo que el usuario necesita. Una foto de fondo que se ve a 400px de ancho en mobile no deber&iacute;a descargar una versi&oacute;n de 2000px.
+                </p>
+
+                <h3>Formatos modernos: WebP y AVIF</h3>
+
+                <p>
+                    <strong>WebP</strong> es un formato de imagen desarrollado por Google que ofrece una compresi&oacute;n entre un 25% y un 35% mejor que JPEG para fotos, y un 26% mejor que PNG para gr&aacute;ficos con transparencia. Casi todos los navegadores modernos lo soportan (Chrome, Edge, Firefox, Safari 14+). <strong>AVIF</strong> es el formato siguiente, basado en el c&oacute;dec de video AV1, y ofrece una compresi&oacute;n a&uacute;n mejor (hasta un 50% m&aacute;s peque&ntilde;o que JPEG con calidad similar). Soporte: Chrome, Firefox, Safari 16.4+. La estrategia recomendada es: servir AVIF con fallback a WebP con fallback a JPEG/PNG, usando el elemento <code>&lt;picture&gt;</code>.
+                </p>
+
+                <div class="code-block">
+                    <div class="code-block-header">
+                        <span class="code-block-lang">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                            HTML &mdash; &lt;picture&gt; con m&uacute;ltiples formatos
+                        </span>
+                        <button class="code-block-copy" aria-label="Copiar codigo">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                            Copiar
+                        </button>
+                    </div>
+                    <pre><code class="language-html">&lt;!-- El navegador usa la primera &lt;source&gt; que soporte --&gt;
+&lt;picture&gt;
+    &lt;!-- Navegadores que soportan AVIF --&gt;
+    &lt;source type="image/avif" srcset="hero.avif"&gt;
+
+    &lt;!-- Navegadores que soportan WebP --&gt;
+    &lt;source type="image/webp" srcset="hero.webp"&gt;
+
+    &lt;!-- Fallback: JPEG para navegadores viejos --&gt;
+    &lt;img src="hero.jpg"
+         alt="Descripcion de la imagen"
+         width="1200"
+         height="600"
+         decoding="async"&gt;
+&lt;/picture&gt;</code></pre>
+                </div>
+
+                <h3>srcset y sizes (im&aacute;genes responsivas)</h3>
+
+                <p>
+                    Con <code>srcset</code> y <code>sizes</code>, le decimos al navegador: "ten&eacute;s estas versiones de la imagen en distintos tama&ntilde;os, y la imagen se va a mostrar a este ancho en la pantalla". El navegador elige autom&aacute;ticamente la versi&oacute;n &oacute;ptima seg&uacute;n el tama&ntilde;o de la pantalla del dispositivo, su densidad de p&iacute;xeles (1x, 2x, 3x), y la velocidad de conexi&oacute;n actual. Esto evita descargar una imagen de 2000px en un celular que solo la muestra a 400px, ahorrando una cantidad enorme de ancho de banda.
+                </p>
+
+                <div class="code-block">
+                    <div class="code-block-header">
+                        <span class="code-block-lang">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                            HTML &mdash; srcset y sizes
+                        </span>
+                        <button class="code-block-copy" aria-label="Copiar codigo">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                            Copiar
+                        </button>
+                    </div>
+                    <pre><code class="language-html">&lt;!-- srcset con descriptor "w" (ancho en p&iacute;xeles) + sizes --&gt;
+&lt;img src="foto-800.jpg"
+     srcset="foto-400.jpg 400w,
+             foto-800.jpg 800w,
+             foto-1200.jpg 1200w,
+             foto-1600.jpg 1600w"
+     sizes="(max-width: 768px) 100vw,
+            (max-width: 1024px) 50vw,
+            33vw"
+     alt="Foto responsiva"
+     width="800"
+     height="600"
+     loading="lazy"&gt;
+
+&lt;!-- srcset con descriptor "x" (densidad de p&iacute;xeles) --&gt;
+&lt;img src="logo@1x.png"
+     srcset="logo@1x.png 1x,
+             logo@2x.png 2x,
+             logo@3x.png 3x"
+     alt="Logo"&gt;</code></pre>
+                </div>
+
+                <p>
+                    El atributo <code>sizes</code> es clave y suele confundirse. No define el tama&ntilde;o de la imagen, sino <strong>cu&aacute;nto ancho va a ocupar la imagen en la pantalla</strong> seg&uacute;n el viewport. <code>100vw</code> significa "el 100% del ancho de la pantalla" (full-width), <code>50vw</code> es la mitad, y <code>33vw</code> es un tercio. Con esta informaci&oacute;n, el navegador calcula qu&eacute; versi&oacute;n del <code>srcset</code> necesita descargar. Si no inclu&iacute;s <code>sizes</code>, el navegador asume <code>100vw</code> y podr&iacute;a descargar una versi&oacute;n m&aacute;s grande de la necesaria. Acordate: <code>sizes</code> siempre va con <code>srcset</code> que usa descriptores <code>w</code>, no es necesario con descriptores <code>x</code>.
+                </p>
+
+                <div class="code-block">
+                    <div class="code-block-header">
+                        <span class="code-block-lang">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                            Gu&iacute;a r&aacute;pida de formatos de imagen
+                        </span>
+                    </div>
+                    <pre><code class="language-plaintext">| Formato | Fotos | Gr&aacute;ficos | Transparencia | Animaci&oacute;n | Compresion  |
+|---------|-------|-------------|----------------|--------------|-------------|
+| JPEG    | Excelente | Malo      | No             | No           | Lossy       |
+| PNG     | Malo  | Excelente   | Si             | No           | Lossless    |
+| WebP    | Excelente | Bueno     | Si             | Si           | Ambos       |
+| AVIF    | Excelente | Bueno     | Si             | Si           | Ambos       |
+| SVG     | No    | Excelente   | Si             | Si (CSS/SMIL)| Vectorial   |
+
+Regla general:
+- Fotos &rarr; AVIF &gt; WebP &gt; JPEG
+- Iconos/logos &rarr; SVG (siempre)
+- Capturas de pantalla &rarr; PNG o WebP lossless</code></pre>
+                </div>
+
+                <div class="callout callout-tip">
+                    <svg class="callout-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>
+                    <div class="callout-content">
+                        <p class="callout-title">Herramientas para optimizar im&aacute;genes</p>
+                        <p><strong>squoosh.app</strong> (de Google): comprime im&aacute;genes en el navegador, convierte entre formatos, y ajusta la calidad visualmente. <strong>sharp</strong> (npm): librer&iacute;a de Node.js para optimizar im&aacute;genes en batch. <strong>ImageOptim</strong> (Mac) / <strong>FileOptimizer</strong> (Windows): apps de escritorio para comprimir sin perder calidad visible. Para proyectos grandes, us&aacute; un CDN de im&aacute;genes como <strong>Cloudinary</strong> o <strong>Imgix</strong> que optimiza y transforma im&aacute;genes on-the-fly con par&aacute;metros en la URL.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===================== LIGHTHOUSE ===================== -->
+            <section class="sub-section animate-on-scroll" id="lighthouse">
+                <h2>
+                    Lighthouse
+                    <a href="#lighthouse" class="heading-anchor" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                    </a>
+                </h2>
+
+                <p>
+                    <strong>Lighthouse</strong> es una herramienta de Google (integrada en Chrome DevTools y disponible como CLI o extensi&oacute;n) que audita tu p&aacute;gina en cinco categor&iacute;as: Performance, Accessibility, Best Practices, SEO y PWA. Genera un reporte con puntuaciones de 0 a 100 para cada categor&iacute;a, junto con sugerencias espec&iacute;ficas y priorizadas para mejorar. Es la herramienta m&aacute;s r&aacute;pida y accesible para auditar la calidad general de tu sitio, y es el punto de partida de cualquier optimizaci&oacute;n de performance o SEO.
+                </p>
+
+                <h3>C&oacute;mo usar Lighthouse</h3>
+
+                <p>
+                    La forma m&aacute;s f&aacute;cil es desde Chrome DevTools: abr&iacute;s las DevTools (<code>F12</code>), vas a la pesta&ntilde;a "Lighthouse", seleccion&aacute;s las categor&iacute;as que quer&eacute;s auditar (Performance, Accessibility, SEO, etc.), eleg&iacute;s el dispositivo (Mobile o Desktop), y hac&eacute;s click en "Analyze page load". En 30-60 segundos ten&eacute;s un reporte completo. Tambi&eacute;n pod&eacute;s usar <strong>PageSpeed Insights</strong> (pagespeed.web.dev) para medir cualquier URL sin instalar nada, o el CLI de Lighthouse para automatizar auditor&iacute;as en tu pipeline de CI/CD.
+                </p>
+
+                <div class="code-block">
+                    <div class="code-block-header">
+                        <span class="code-block-lang">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                            Categor&iacute;as y qu&eacute; miden
+                        </span>
+                    </div>
+                    <pre><code class="language-plaintext">| Categor&iacute;a       | Qu&eacute; eval&uacute;a                                              |
+|-----------------|---------------------------------------------------------|
+| Performance     | LCP, INP, CLS, tiempos de carga, tama&ntilde;o de recursos   |
+| Accessibility   | Contraste, ARIA, navegaci&oacute;n por teclado, alt en imgs   |
+| Best Practices  | HTTPS, console errors, APIs obsoletas                 |
+| SEO             | Meta tags, robots.txt, canonical, structured data      |
+| PWA             | Service worker, manifest, offline support             |</code></pre>
+                </div>
+
+                <h3>C&oacute;mo interpretar el reporte</h3>
+
+                <p>
+                    El reporte de Lighthouse se divide en tres secciones principales: las puntuaciones (los c&iacute;rculos de colores), las m&eacute;tricas (Core Web Vitals y otras), y las oportunidades/diagn&oacute;sticos. Las <strong>oportunidades</strong> son sugerencias concretas de optimizaci&oacute;n que incluyen el ahorro estimado en segundos o kilobytes (por ejemplo: "Comprimir im&aacute;genes: ahorra 150 KB"). Los <strong>diagn&oacute;sticos</strong> son informaci&oacute;n sobre tu p&aacute;gina que no necesariamente es un problema pero vale la pena revisar. Las <strong>auditor&iacute;as aprobadas</strong> son las cosas que ya est&aacute;n bien.
+                </p>
+
+                <p>
+                    Una puntuaci&oacute;n de 90+ es verde (buena), 50-89 es naranja (necesita mejoras), y menor a 50 es roja (mala). Pero no te obsesiones con llegar a 100: es m&aacute;s importante priorizar las oportunidades que m&aacute;s impacto tienen. Si "Comprimir im&aacute;genes" te ahorra 2 segundos, prioriz&aacute; eso antes que "Eliminar JavaScript no utilizado" que te ahorra 0.1s. Lighthouse te muestra el ahorro estimado para que puedas priorizar por impacto, no por n&uacute;mero de auditor&iacute;as.
+                </p>
+
+                <div class="code-block">
+                    <div class="code-block-header">
+                        <span class="code-block-lang">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                            Bash &mdash; Lighthouse CLI
+                        </span>
+                        <button class="code-block-copy" aria-label="Copiar codigo">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                            Copiar
+                        </button>
+                    </div>
+                    <pre><code class="language-bash"># Instalar Lighthouse CLI
+npm install -g lighthouse
+
+# Auditar una p&aacute;gina (genera un HTML con el reporte)
+lighthouse https://ejemplo.com --output html --output-path ./reporte.html
+
+# Solo performance, modo mobile
+lighthouse https://ejemplo.com --only-categories=performance --emulated-form-factor=mobile
+
+# Solo SEO
+lighthouse https://ejemplo.com --only-categories=seo --output json --output-path ./seo.json
+
+# Modo headless (sin abrir navegador)
+lighthouse https://ejemplo.com --chrome-flags="--headless" --output html</code></pre>
+                </div>
+
+                <div class="callout callout-warning">
+                    <svg class="callout-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+                    <div class="callout-content">
+                        <p class="callout-title">Datos de laboratorio vs datos de campo</p>
+                        <p>Lighthouse te da <strong>datos de laboratorio</strong>: miden tu sitio en un entorno controlado (tu computadora, con tu conexi&oacute;n, sin cach&eacute;). Son &uacute;tiles para desarrollo, pero no reflejan la experiencia real de los usuarios. Los <strong>datos de campo</strong> (Core Web Vitals reales de Google Search Console) miden la experiencia real de miles de usuarios con distintos dispositivos, conexiones y ubicaciones. Siempre valid&aacute; tus optimizaciones de laboratorio con datos de campo antes de declarar victoria.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===================== CHECKLIST SEO ===================== -->
+            <section class="sub-section animate-on-scroll" id="checklist">
+                <h2>
+                    Checklist SEO R&aacute;pido
+                    <a href="#checklist" class="heading-anchor" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                    </a>
+                </h2>
+
+                <p>
+                    Esta checklist resume las acciones m&aacute;s importantes de SEO t&eacute;cnico y performance que deber&iacute;as aplicar a cada p&aacute;gina de tu sitio. No es exhaustiva, pero cubre el 80% del impacto con el 20% del esfuerzo. Si hac&eacute;s todo lo que est&aacute; en esta lista, tu sitio va a estar en mejor posici&oacute;n que el 90% de los sitios web en t&eacute;rminos de SEO t&eacute;cnico. Para la referencia completa y r&aacute;pida, consult&aacute; el <a href="../cheatsheets/seo-cheatsheet.html">SEO Cheatsheet</a>.
+                </p>
+
+                <div class="code-block">
+                    <div class="code-block-header">
+                        <span class="code-block-lang">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                            SEO Checklist
+                        </span>
+                    </div>
+                    <pre><code class="language-plaintext">CADA P&Aacute;GINA debe tener:
+ [ ] &lt;title&gt; &uacute;nico (50-60 caracteres, keyword al inicio)
+ [ ] &lt;meta name="description"&gt; &uacute;nico (150-160 caracteres, atractivo)
+ [ ] &lt;meta name="viewport"&gt; con width=device-width
+ [ ] Un solo &lt;h1&gt; con la keyword principal
+ [ ] Jerarqu&iacute;a de headings correcta (h1 &gt; h2 &gt; h3, sin saltar)
+ [ ] &lt;link rel="canonical"&gt; para evitar contenido duplicado
+ [ ] Im&aacute;genes con alt descriptivo (no "imagen1.jpg")
+ [ ] Open Graph tags (og:title, og:description, og:image)
+ [ ] Estructura HTML sem&aacute;ntica (main, nav, article, footer)
+ [ ] URLs limpias y legibles (/blog/flexbox-guide, no /page?id=123)
+
+PERFORMANCE:
+ [ ] Im&aacute;genes en WebP/AVIF (no JPEG/PNG sin optimizar)
+ [ ] Im&aacute;genes con width/height (previene CLS)
+ [ ] loading="lazy" en im&aacute;genes fuera del fold
+ [ ] fetchpriority="high" en im&aacute;genes hero
+ [ ] CSS cr&iacute;tico inline o preload
+ [ ] JavaScript defer/async (no bloqueante)
+ [ ] Lighthouse Performance &gt; 90 (mobile)
+ [ ] LCP &lt; 2.5s, INP &lt; 200ms, CLS &lt; 0.1
+
+EXTRAS:
+ [ ] sitemap.xml generado y enviado a Google Search Console
+ [ ] robots.txt configurado correctamente
+ [ ] HTTPS activo (certificado SSL)
+ [ ] JSON-LD structured data para rich snippets
+ [ ] 404 page personalizada
+ [ ] Redirecciones 301 para p&aacute;ginas movidas</code></pre>
+                </div>
+            </section>
+
+            <!-- Navegación entre secciones -->
+            <nav class="section-nav mt-8" style="display: flex; justify-content: space-between; padding-top: var(--space-6); border-top: 1px solid var(--border-color);">
+                <a href="../sections/herramientas-workflow.html" class="btn btn-secondary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                    Herramientas
+                </a>
+                <a href="../cheatsheets/seo-cheatsheet.html" class="btn btn-secondary">
+                    SEO Cheatsheet
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                </a>
+            </nav>
+
+        </main>
+
+        <!-- Footer -->
+        <footer class="site-footer" id="site-footer"></footer>
+    </div>
+
+    <!-- Highlight.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/json.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/bash.min.js"></script>
+    <script>hljs.highlightAll();</script>
+
+    <!-- App JS -->
+    <script type="module" src="../js/app.js"></script>
+</body>
+</html>
