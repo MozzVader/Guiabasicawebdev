@@ -1,6 +1,19 @@
-# WebForge ⚡
+<div align="center">
 
-Tu guía y cheatsheet de desarrollo web frontend.
+# ⚡ WebForge
+
+**Tu guía y cheatsheet de desarrollo web frontend.**
+
+[![Live Demo](https://img.shields.io/badge/demo-live-58a6ff?style=flat-square&logo=github&logoColor=white)](https://mozzvader.github.io/WebForge/)
+[![License: MIT](https://img.shields.io/badge/license-MIT-3fb950?style=flat-square)](./LICENSE)
+[![HTML5](https://img.shields.io/badge/HTML5-e34f26?style=flat-square&logo=html5&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/HTML)
+[![CSS3](https://img.shields.io/badge/CSS3-1572b6?style=flat-square&logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
+[![JavaScript](https://img.shields.io/badge/JavaScript-f7df1e?style=flat-square&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+[![Vanilla](https://img.shields.io/badge/vanilla-0-dependencies-ff6b6b?style=flat-square)](https://mozzvader.github.io/WebForge/)
+
+</div>
+
+---
 
 ## ¿Qué es WebForge?
 
@@ -13,7 +26,7 @@ WebForge es un recurso web open source que funciona simultáneamente como **guí
 - **CSS** — Básico, Flexbox, Grid, responsive, animaciones, frameworks
 - **JavaScript** — Básico, ES6+, DOM, eventos, asincronía, almacenamiento
 - **SEO** — Meta tags, Open Graph, Core Web Vitals, sitemap, structured data
-- **Extras** — Herramientas & Workflow, Recursos (próximamente)
+- **Extras** — Herramientas & Workflow, Recursos
 
 ## Tecnologías
 
@@ -21,7 +34,7 @@ WebForge es un recurso web open source que funciona simultáneamente como **guí
 - CSS3 con Custom Properties
 - Vanilla JavaScript (ES6+)
 - [Highlight.js](https://highlightjs.org/) para syntax highlighting
-- [Lucide Icons](https://lucide.dev/) para iconografía
+- Iconos SVG inline
 
 ## Estructura del proyecto
 
@@ -32,6 +45,7 @@ WebForge es un recurso web open source que funciona simultáneamente como **guí
 ├── components/             # Componentes HTML compartidos (header, sidebar, footer)
 ├── css/                    # Estilos CSS modulares
 ├── js/                     # JavaScript modular
+├── data/                   # Datos (índice de búsqueda)
 ├── assets/                 # Imágenes, fuentes
 ├── sitemap.xml             # Sitemap para buscadores
 ├── robots.txt              # Directivas para crawlers
@@ -41,7 +55,7 @@ WebForge es un recurso web open source que funciona simultáneamente como **guí
 
 ## Development
 
-Abre `index.html` directamente en tu navegador, o usa un servidor local:
+Abre `index.html` directamente en tu navegador, o usá un servidor local:
 
 ```bash
 # Con Python
@@ -70,4 +84,8 @@ Las contribuciones son bienvenidas. Leé el [PRD](./PRD.md) para entender la vis
 
 ---
 
-**[Ver documento PRD completo](./PRD.md)**
+<div align="center">
+
+**[Ver documento PRD completo](./PRD.md)** · **[Ver sitio en vivo](https://mozzvader.github.io/WebForge/)**
+
+</div>

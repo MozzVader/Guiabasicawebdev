@@ -17,7 +17,7 @@ Un recurso web gratuito, open-source y bilingüe (español/inglés) que funciona
 - **Bello sobre funcional**: Si es útil pero feo, no sirve. El diseño es parte del contenido.
 - **Accesible**: Mobile-first, contrastes adecuados, navegación clara.
 - **Mantenible**: Código modular, archivos separados por sección, fácil de actualizar.
-- **Open source**: Licencia permissiva, contribuciones bienvenidas.
+- **Open source**: Licencia permisiva, contribuciones bienvenidas.
 
 ---
 
@@ -49,7 +49,7 @@ Un recurso web gratuito, open-source y bilingüe (español/inglés) que funciona
 ### Dependencias externas (CDN)
 
 - **Google Fonts**: Space Grotesk (headings), Inter (body), JetBrains Mono (código)
-- **Lucide Icons**: iconos SVG inline o via CDN
+- **Lucide Icons**: iconos SVG inline o vía CDN
 - **Highlight.js**: syntax highlighting para bloques de código
 
 ### Lo que NO usamos
@@ -144,7 +144,7 @@ Un recurso web gratuito, open-source y bilingüe (español/inglés) que funciona
 
 ### 4.2 Arquitectura de Navegación
 
-**Enfoque: Multi-page site con componentes compartidos via JS**
+**Enfoque: Multi-page site con componentes compartidos vía JS**
 
 Dado que el contenido superará las 5000 líneas, usamos HTMLs separados por sección. El header, sidebar y footer se cargan dinámicamente con JavaScript (`fetch` + `innerHTML`) para evitar duplicar código.
 
@@ -177,7 +177,7 @@ Dado que el contenido superará las 5000 líneas, usamos HTMLs separados por sec
 - **Tablet (768-1024px)**: Sidebar colapsable, se abre como overlay con hamburger menu.
 - **Mobile (<768px)**: Sidebar oculta, hamburger menu en header, contenido full-width.
 
-### 4.3 Componentes Compartidos (Cargados via JS)
+### 4.3 Componentes Compartidos (Cargados vía JS)
 
 | Componente | Archivo | Descripción |
 |-----------|---------|-------------|
@@ -550,7 +550,7 @@ Las cheatsheets son secciones dedicadas con formato de **referencia rápida**. T
 
 - Barra de búsqueda en el header
 - Filtra secciones en tiempo real (debounce 300ms)
-- Muestra resultados con highlight del texto匹配
+- Muestra resultados con highlight del texto resaltado
 - Busca en: títulos, descripciones, keywords de cada sección
 - Implementación: índice simple en JS con `filter()`, sin backend
 
@@ -572,7 +572,7 @@ Las cheatsheets son secciones dedicadas con formato de **referencia rápida**. T
 - En cada bloque de código
 - Copia al clipboard con `navigator.clipboard.writeText()`
 - Feedback visual: ícono cambia a checkmark por 2 segundos
-- Texto del botón: "Copiar" → "Copiado!"
+- Texto del botón: "Copiar" → "¡Copiado!"
 
 ### 8.5 Sidebar Colapsable
 
@@ -685,7 +685,7 @@ Las cheatsheets son secciones dedicadas con formato de **referencia rápida**. T
 - [x] Escribir `sections/seo-performance.html`
 - [x] Escribir `cheatsheets/seo-cheatsheet.html`
 - [x] Escribir `sections/herramientas-workflow.html`
-- [x] Reorganizar men&uacute;: SEO como categor&iacute;a propia, Extras con Herramientas + Recursos
+- [x] Reorganizar menú: SEO como categoría propia, Extras con Herramientas + Recursos
 - [ ] Escribir `sections/recursos.html` (links, tutoriales, videos, comunidades)
 
 ### Fase 9: Funcionalidades Extra & Polish
