@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preprocesadores CSS — WebForge</title>
+    <meta name="description" content="Preprocesadores CSS: qu&eacute; son, por qu&eacute; nacieron y c&oacute;mo funcionan. SASS (variables, nesting, mixins, functions, partials, @use, @forward), LESS comparaci&oacute;n con SASS, PostCSS y el enfoque moderno de plugins. &iquest;Vale la pena hoy con CSS nativo?">
+    <meta name="theme-color" content="#0d1117">
+    <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Highlight.js (CDN) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/code-blocks.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+
+    <div class="page-wrapper">
+        <!-- Header -->
+        <header class="site-header" id="site-header"></header>
+
+        <!-- Sidebar -->
+        <aside class="site-sidebar" id="site-sidebar"></aside>
+        <div class="sidebar-overlay"></div>
+
+        <!-- Main Content -->
+        <main class="main-content" role="main">
+
+            <!-- Breadcrumb -->
+            <div class="section-breadcrumb">
+                <a href="../index.html">Inicio</a>
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                <span>CSS</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                <span>Preprocesadores CSS</span>
+            </div>
+
+            <!-- Section Header -->
+            <div class="section-header animate-on-scroll">
+                <h1>Preprocesadores CSS</h1>
+                <p>Los preprocesadores CSS son herramientas que a&ntilde;aden funcionalidades de programaci&oacute;n al CSS: variables, anidamiento, mixins (funciones reutilizables), funciones matem&aacute;ticas, herencia, modularidad y m&aacute;s. El preprocesador toma un archivo con esta sintaxis extendida y lo compila a CSS plano que el navegador entiende. Los tres principales son <strong>SASS</strong> (el m&aacute;s usado, con sintaxis .scss o .sass), <strong>LESS</strong> (popularizado por Bootstrap) y <strong>PostCSS</strong> (el enfoque moderno basado en plugins). La pregunta clave hoy es: &iquest;siguen siendo necesarios cuando CSS nativo tiene variables, nesting y funciones?</p>
+            </div>
+
+            <p>
+                Los preprocesadores nacieron en una &eacute;poca donde CSS era extremadamente limitado: no hab&iacute;a variables nativas, no hab&iacute;a anidamiento, no hab&iacute;a funciones, y repet&iacute;as el mismo valor de color decenas de veces. SASS apareci&oacute; en 2006, LESS en 2009, y ambos resolvieron problemas reales que hicieron que el desarrollo CSS fuera viable en proyectos grandes. Hoy, CSS nativo ha adoptado muchas de esas features (Custom Properties, <code>@nest</code>, <code>color-mix()</code>, <code>clamp()</code>), pero los preprocesadores a&uacute;n ofrecen ventajas en proyectos complejos: mejor modularidad, mixins avanzados, funciones matem&aacute;ticas y un ecosistema maduro de librer&iacute;as.
+            </p>
+
+            <!-- Sub-section: SASS -->
+            <section class="sub-section animate-on-scroll" id="sass">
+                <h2>
+                    SASS: el preprocesador m&aacute;s popular
+                    <a href="#sass" class="heading-anchor" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                    </a>
+                </h2>
+
+                <p>
+                    SASS (Syntactically Awesome Style Sheets) es el preprocesador CSS m&aacute;s usado del mundo. Tiene dos sintaxis: <strong>SCSS</strong> (extensi&oacute;n <code>.scss</code>) que es un superset de CSS (todo CSS v&aacute;lido es SCSS v&aacute;lido), y <strong>SASS</strong> indented (extensi&oacute;n <code>.sass</code>) que usa indentaci&oacute;n en lugar de llaves y puntos y coma. La inmensa mayor&iacute;a de proyectos usan SCSS por ser m&aacute;s familiar y f&aacute;cil de migrar desde CSS. Se compila con el comando <code>sass</code> (Dart SASS, la implementaci&oacute;n moderna en Dart) o a trav&eacute;s de build tools como Vite, Webpack, Gulp o PostCSS.
+                </p>
+
+                <h3>Variables</h3>
+
+                <p>
+                    Las variables de SASS usan <code>$</code> como prefijo. A diferencia de las Custom Properties nativas de CSS (<code>--variable</code>), las variables de SASS se resuelven en tiempo de compilaci&oacute;n (no existen en el CSS final) y no pueden cambiar din&aacute;micamente con JavaScript. Sin embargo, son m&aacute;s flexibles para c&aacute;lculos matem&aacute;ticos, pueden contener cualquier tipo de dato (colores, listas, mapas), y no tienen las restricciones de cascada de las custom properties.
+                </p>
+
+                <div class="code-block">
+                    <div class="code-block-header">
+                        <span class="code-block-lang">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+                            SCSS
+                        </span>
+                        <button class="code-block-copy" aria-label="Copiar codigo">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                            Copiar
+                        </button>
+                    </div>
+                    <pre><code class="language-scss">// Variables SASS ($prefijo)
+// Se resuelven en compilacion, NO existen en el CSS final
+
+// Colores
+$color-primary: #3b82f6;
+$color-secondary: #8b5cf6;
+$color-success: #22c55e;
+$color-danger: #ef4444;
+
+// Tipografia
+$font-sans: 'Inter', system-ui, sans-serif;
+$font-mono: 'JetBrains Mono', monospace;
+$font-size-base: 1rem;   // 16px
+$font-size-lg: 1.25rem; // 20px
+
+// Espaciado
+$space-xs: 0.25rem;
+$space-sm: 0.5rem;
+$space-md: 1rem;
+$space-lg: 1.5rem;
+$space-xl: 3rem;
+
+// Layout
+$container-max: 1280px;
+$sidebar-width: 280px;
+$border-radius: 0.5rem;
+
+// Breakpoints
+$bp-sm: 640px;
+$bp-md: 768px;
+$bp-lg: 1024px;
+$bp-xl: 1280px;
+
+// Uso
+.card {
+    background: $color-primary;
+    font-family: $font-sans;
+    font-size: $font-size-base;
+    padding: $space-lg;
+    border-radius: $border-radius;
+}
+
+// SASS soporta operaciones matematicas
+$container-padding: $space-lg * 2; // 3rem
+$half-width: $container-max / 2;   // 640px</code></pre>
+                </div>
+
+                <h3>Nesting (anidamiento)</h3>
+
+                <p>
+                    El anidamiento es probablemente la feature m&aacute;s popular de SASS: permite escribir reglas CSS dentro de otras reglas, reflejando la estructura del HTML. Esto elimina la repetici&oacute;n de selectores y hace el c&oacute;digo m&aacute;s legible. Sin embargo, hay que usarlo con moderaci&oacute;n: un anidamiento profundo (m&aacute;s de 3-4 niveles) genera selectores CSS muy espec&iacute;ficos, dif&iacute;ciles de sobreescribir y con bajo rendimiento. La regla general es no anidar m&aacute;s de 3 niveles y nunca anidar solo por est&eacute;tica. N&oacute;tese que CSS nativo ya soporta <code>@nest</code> (disponible en Chrome 120+ y Safari 17.2+), pero la sintaxis de SASS sigue siendo m&aacute;s flexible.
+                </p>
+
+                <div class="code-block">
+                    <div class="code-block-header">
+                        <span class="code-block-lang">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/></svg>
+                            SCSS
+                        </span>
+                        <button class="code-block-copy" aria-label="Copiar codigo">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                            Copiar
+                        </button>
+                    </div>
+                    <pre><code class="language-scss">// Nesting basico
+// El &amp; referencia al selector padre
+.navbar {
+    display: flex;
+    align-items: center;
+    padding: $space-md $space-lg;
+
+    &amp; .logo {
+        flex-shrink: 0;
+        width: 120px;
+    }
+
+    &amp; .nav-links {
+        display: flex;
+        gap: $space-md;
+        list-style: none;
+    }
+
+    // &amp; tambien funciona para pseudo-elementos y states
+    &amp;:hover {
+        background: rgba(0, 0, 0, 0.05);
+    }
+
+    &amp;::after {
+        content: '';
+        display: block;
+        height: 1px;
+        background: $color-primary;
+    }
+}
+// CSS generado:
+// .navbar { display: flex; ... }
+// .navbar .logo { flex-shrink: 0; ... }
+// .navbar:hover { background: rgba(0,0,0,0.05); }
+// .navbar::after { ... }
+
+// Nesting con media queries (muy util)
+.card {
+    padding: $space-md;
+
+    @media (min-width: $bp-md) {
+        padding: $space-lg;
+    }
+
+    @media (min-width: $bp-lg) {
+        padding: $space-xl;
+    }
+}
+// CSS generado:
+// .card { padding: 1rem; }
+// @media (min-width: 768px) { .card { padding: 1.5rem; } }
+// @media (min-width: 1024px) { .card { padding: 3rem; } }
+
+// REGLA: max 3 niveles de anidamiento
+// MAL (5 niveles - specificity hell):
+// .page .section .container .card .card-body .title { }
+
+// BIEN (2 niveles, clases atomicas):
+.card {
+    &amp;-body {
+        // .card-body
+        &amp; .title {
+            // .card-body .title
+        }
+    }
+}</code></pre>
+                </div>
+
+                <h3>Mixins</h3>
+
+                <p>
+                    Los mixins son bloques de CSS reutilizables que aceptan par&aacute;metros. Son la herramienta m&aacute;s poderosa de SASS para evitar la repetici&oacute;n: en lugar de escribir las mismas propiedades de flexbox, media queries o centrado decenas de veces, defin&iacute;s un mixin y lo incluyes con <code>@include</code>. Los mixins pueden tener par&aacute;metros con valores por defecto, lo que los hace extremadamente flexibles. Son especialmente &uacute;tiles para vendor prefixes (aunque hoy PostCSS con Autoprefixer hace esto mejor), patrones de layout repetitivos y responsive patterns.
+                </p>
+
+                <div class="code-block">
+                    <div class="code-block-header">
+                        <span class="code-block-lang">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/></svg>
+                            SCSS
+                        </span>
+                        <button class="code-block-copy" aria-label="Copiar codigo">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                            Copiar
+                        </button>
+                    </div>
+                    <pre><code class="language-scss">// Definir un mixin con @mixin
+@mixin flex-center($direction: row, $gap: 1rem) {
+    display: flex;
+    flex-direction: $direction;
+    align-items: center;
+    justify-content: center;
+    gap: $gap;
+}
+
+// Usar con @include
+.navbar {
+    @include flex-center(row, 1.5rem);
+}
+
+.card-content {
+    @include flex-center(column, 0.75rem);
+}
+
+// ============================================
+// Mixin para responsive (mucho mas limpio)
+// ============================================
+@mixin respond-to($breakpoint) {
+    @if $breakpoint == 'sm' {
+        @media (min-width: $bp-sm) { @content; }
+    } @else if $breakpoint == 'md' {
+        @media (min-width: $bp-md) { @content; }
+    } @else if $breakpoint == 'lg' {
+        @media (min-width: $bp-lg) { @content; }
+    } @else if $breakpoint == 'xl' {
+        @media (min-width: $bp-xl) { @content; }
+    }
+}
+
+// Uso: mucho mas legible que escribir el breakpoint completo
+.grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: $space-md;
+
+    @include respond-to('md') {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include respond-to('lg') {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+// ============================================
+// Mixin para centrar (el clasico)
+// ============================================
+@mixin center-both {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hero {
+    @include center-both;
+    min-height: 100vh;
+}
+
+// ============================================
+// Mixin con @content (bloque de contenido)
+// ============================================
+@mixin card-base($padding: $space-lg) {
+    background: var(--surface);
+    border: 1px solid var(--border-color);
+    border-radius: $border-radius;
+    padding: $padding;
+
+    @content; // Se inyecta contenido adicional aqui
+}
+
+.card {
+    @include card-base {
+        // Todo esto se inserta dentro del mixin
+        &amp;:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+    }
+}</code></pre>
+                </div>
+
+                <h3>Functions</h3>
+
+                <p>
+                    SASS incluye funciones nativas para manipular colores, n&uacute;meros, strings y listas. A diferencia de los mixins que generan bloques de CSS, las funciones <em>retornan un valor</em>. Pued&eacute;s crear tus propias funciones con <code>@function</code> y usarlas en cualquier lugar donde un valor sea v&aacute;lido. Las funciones de colores son especialmente &uacute;tiles para generar variaciones de un color base (m&aacute;s claro, m&aacute;s oscuro, transparente) sin necesidad de definir decenas de variables de color manualmente.
+                </p>
+
+                <div class="code-block">
+                    <div class="code-block-header">
+                        <span class="code-block-lang">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/></svg>
+                            SCSS
+                        </span>
+                        <button class="code-block-copy" aria-label="Copiar codigo">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                            Copiar
+                        </button>
+                    </div>
+                    <pre><code class="language-scss">// ============================================
+// Funciones nativas de SASS
+// ============================================
+
+// Funciones de color
+$primary: #3b82f6;
+$primary-light: lighten($primary, 20%);    // #74a8f8
+$primary-dark: darken($primary, 15%);      // #2563eb
+$primary-transparent: rgba($primary, 0.5); // rgba(59, 130, 246, 0.5)
+$complementary: complement($primary);        // #f6823b
+$desaturated: desaturate($primary, 30%);      // #6d8fbf
+
+// Funciones matematicas
+$column-width: calc(100% / 3);     // 33.33%
+$gutter-total: $space-md * 3;       // 3rem
+$total: ceil(4.3);                  // 5 (redondeo hacia arriba)
+$half: floor(4.7);                  // 4 (redondeo hacia abajo)
+$random: random(100);               // Numero aleatorio entre 0 y 100
+
+// Funciones de strings
+$selector: to-upper-case(card);     // CARD
+$class-name: unquote($variable);   // Convierte string a tipo sin comillas
+
+// ============================================
+// Funciones custom con @function
+// ============================================
+
+// Convertir px a rem
+@function to-rem($pixels) {
+    @return ($pixels / 16px) * 1rem;
+}
+
+h1 { font-size: to-rem(32px); }  // 2rem
+h2 { font-size: to-rem(24px); }  // 1.5rem
+
+// Generar un ancho fluido con clamp
+@function fluid-size($min, $max, $vw-factor: 5) {
+    @return clamp($min, #{$vw-factor}vw, $max);
+}
+
+.hero-title {
+    font-size: fluid-size(2rem, 4rem);
+}
+
+// Calcular z-index en capas
+@function z($layer) {
+    $z-layers: (
+        'base': 0,
+        'dropdown': 100,
+        'sticky': 200,
+        'fixed': 300,
+        'modal-backdrop': 400,
+        'modal': 500,
+        'toast': 600,
+    );
+    @return map-get($z-layers, $layer);
+}
+
+.header     { z-index: z('fixed'); }          // 300
+.modal      { z-index: z('modal'); }          // 500
+.toast      { z-index: z('toast'); }          // 600
+
+// Generar color alpha
+@function alpha($color, $opacity) {
+    @return rgba($color, $opacity);
+}
+
+.overlay {
+    background: alpha(#000000, 0.5); // rgba(0, 0, 0, 0.5)
+}</code></pre>
+                </div>
+
+                <h3>Partials, @use y @forward</h3>
+
+                <p>
+                    SASS permite organizar tu CSS en archivos parciales (archivos que empiezan con <code>_</code> y no generan archivos CSS individuales). Estos partials se importan con <code>@use</code> (reemplaz&oacute; al viejo <code>@import</code> que fue deprecado). <code>@use</code> carga un archivo y hace sus variables, mixins y funciones disponibles bajo un namespace (el nombre del archivo). <code>@forward</code> expone las variables/mixins de un partial para que otros archivos puedan acceder a ellas cuando importan ese archivo. Este sistema de modularidad es una de las mayores fortalezas de SASS frente a CSS nativo.
+                </p>
+
+                <div class="code-block">
+                    <div class="code-block-header">
+                        <span class="code-block-lang">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="M2 12h2"/><path d="m6.34 17.66-1.41 1.41"/></svg>
+                            SCSS
+                        </span>
+                        <button class="code-block-copy" aria-label="Copiar codigo">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                            Copiar
+                        </button>
+                    </div>
+                    <pre><code class="language-scss">// ============================================
+// Estructura de archivos SASS
+// ============================================
+//
+// scss/
+//   _variables.scss    -- Variables globales
+//   _mixins.scss       -- Mixins globales
+//   _functions.scss    -- Funciones custom
+//   _reset.scss        -- Reset/normalize
+//   _base.scss         -- Estilos base (tipografia, links)
+//   _layout.scss       -- Layout (grid, containers)
+//   components/
+//     _buttons.scss    -- Botones
+//     _cards.scss      -- Cards
+//     _navbar.scss     -- Navegacion
+//   pages/
+//     _home.scss       -- Estilos especificos del home
+//   main.scss          -- Archivo principal (importa todo)
+
+// ============================================
+// _variables.scss (partial)
+// ============================================
+$color-primary: #3b82f6;
+$color-secondary: #8b5cf6;
+$font-sans: 'Inter', system-ui, sans-serif;
+$bp-md: 768px;
+
+// ============================================
+// _mixins.scss (partial)
+// ============================================
+@mixin respond-to($bp) {
+    @media (min-width: $bp) { @content; }
+}
+
+// ============================================
+// @forward: re-exportar variables/mixins
+// ============================================
+// En _variables.scss o un archivo _index.scss:
+@forward 'variables';
+@forward 'mixins';
+@forward 'functions';
+
+// Ahora quien importe este archivo obtiene todo
+
+// ============================================
+// @use: importar con namespace
+// ============================================
+// main.scss
+@use 'variables' as vars;
+@use 'mixins' as mx;
+
+.card {
+    background: vars.$color-primary;
+    padding: vars.$space-lg;
+
+    @include mx.respond-to(vars.$bp-md) {
+        padding: vars.$space-xl;
+    }
+}
+
+// Tambien se puede importar sin namespace:
+@use 'variables' as *;
+
+.card {
+    background: $color-primary; // Sin prefijo
+}
+
+// ============================================
+// @import (DEPRECADO - no usar)
+// ============================================
+// @import 'variables'; // NO USAR
+// Problemas:
+// - Variables globales contaminan el scope
+// - Se carga multiples veces sin warning
+// - Se deprec&oacute; en Dart Sass 1.33+
+// Usa @use en su lugar</code></pre>
+                </div>
+
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>Directiva</th>
+                            <th>Qu&eacute; hace</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Partial</td>
+                            <td><code>_nombre.scss</code></td>
+                            <td>Archivo que empieza con <code>_</code>. No genera CSS individual, solo se importa.</td>
+                        </tr>
+                        <tr>
+                            <td>Importar</td>
+                            <td><code>@use 'archivo'</code></td>
+                            <td>Importa un partial y expone sus miembros bajo un namespace. Carga una sola vez.</td>
+                        </tr>
+                        <tr>
+                            <td>Re-exportar</td>
+                            <td><code>@forward 'archivo'</code></td>
+                            <td>Hace disponibles las variables/mixins de un partial para quien importe este archivo.</td>
+                        </tr>
+                        <tr>
+                            <td>Configurar</td>
+                            <td><code>@use 'archivo' with (...)</code></td>
+                            <td>Sobreescribe las variables de un partial al importarlo (para librer&iacute;as configurables).</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Sub-section: LESS -->
+            <section class="sub-section animate-on-scroll" id="less">
+                <h2>
+                    LESS: comparaci&oacute;n con SASS
+                    <a href="#less" class="heading-anchor" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                    </a>
+                </h2>
+
+                <p>
+                    LESS (Leaner Style Sheets) fue creado en 2009 por Alexis Sellier y se populariz&oacute; masivamente porque Bootstrap lo us&oacute; como preprocesador hasta la versi&oacute;n 4. Se ejecuta en JavaScript (puede compilarse en el navegador con <code>less.js</code>) y su sintaxis es muy similar a CSS, lo que lo hace f&aacute;cil de aprender. Sin embargo, hoy en d&iacute;a SASS es dominante: tiene mejor tooling, m&aacute;s librer&iacute;as, mejor modularidad (@use vs import) y una comunidad m&aacute;s activa. LESS se usa menos, pero a&uacute;n aparece en proyectos legacy basados en Bootstrap 3/4.
+                </p>
+
+                <div class="code-block">
+                    <div class="code-block-header">
+                        <span class="code-block-lang">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/></svg>
+                            LESS
+                        </span>
+                        <button class="code-block-copy" aria-label="Copiar codigo">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                            Copiar
+                        </button>
+                    </div>
+                    <pre><code class="language-scss">// Variables LESS (igual que CSS custom properties)
+@color-primary: #3b82f6;
+@font-sans: 'Inter', system-ui, sans-serif;
+
+// Nesting (similar a SASS, usa &amp; para el padre)
+.navbar {
+    display: flex;
+    padding: 1rem;
+
+    .logo {
+        width: 120px;
+    }
+
+    &amp;:hover {
+        background: rgba(0, 0, 0, 0.05);
+    }
+}
+
+// Mixins con .mixin-name()
+.center-flex() {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card {
+    .center-flex(); // Sin @include, se llama directamente
+}
+
+// Mixins con parametros (igual que SASS)
+.responsive(@min-width) {
+    @media (min-width: @min-width) {
+        .content();
+    }
+}
+
+// Funciones matematicas (similar a SASS)
+@container-width: (1200px / 3); // 400px
+
+// Operaciones (similar)
+@result: @color-primary + #333;
+@double: 10px * 2; // 20px</code></pre>
+                </div>
+
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>Aspecto</th>
+                            <th>SASS</th>
+                            <th>LESS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Variables</strong></td>
+                            <td><code>$color: blue;</code></td>
+                            <td><code>@color: blue;</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Nesting</strong></td>
+                            <td>Igual (<code>&amp;</code> para el padre)</td>
+                            <td>Igual (<code>&amp;</code> para el padre)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Mixins</strong></td>
+                            <td><code>@mixin name { ... }</code> + <code>@include name;</code></td>
+                            <td><code>.name() { ... }</code> + <code>.name();</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Modularidad</strong></td>
+                            <td><code>@use</code> / <code>@forward</code> (namespaced, moderno)</td>
+                            <td><code>@import</code> (global, obsoleto)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Compilador</strong></td>
+                            <td>Dart (VM), npm, CLI independiente</td>
+                            <td>JavaScript (puede correr en browser)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Comunidad</strong></td>
+                            <td>Muy activa, mas librer&iacute;as (Compass, Bourbon)</td>
+                            <td>Menos activa, principalmente por Bootstrap legacy</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Uso actual</strong></td>
+                            <td>Dominante en nuevos proyectos</td>
+                            <td>Principalmente proyectos legacy con Bootstrap 3/4</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Sub-section: PostCSS -->
+            <section class="sub-section animate-on-scroll" id="postcss">
+                <h2>
+                    PostCSS: el enfoque moderno de plugins
+                    <a href="#postcss" class="heading-anchor" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                    </a>
+                </h2>
+
+                <p>
+                    PostCSS no es un preprocesador en el sentido tradicional&mdash;es una herramienta de <strong>transformaci&oacute;n de CSS</strong> que funciona con plugins. Cada plugin hace una cosa espec&iacute;fica: agregar vendor prefixes, transpilar sintaxis futura de CSS, optimizar el CSS final, lintear, eliminar CSS unused, etc. La ventaja es que eleg&iacute;s exactamente qu&eacute; transformaciones necesit&aacute;s, en lugar de adoptar todo el ecosistema de un preprocesador. Es el est&aacute;ndar de facto en la industria: Vite, Nuxt, Next.js y la mayor&iacute;a de build tools modernos lo usan internamente.
+                </p>
+
+                <div class="code-block">
+                    <div class="code-block-header">
+                        <span class="code-block-lang">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/></svg>
+                            JS
+                        </span>
+                        <button class="code-block-copy" aria-label="Copiar codigo">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                            Copiar
+                        </button>
+                    </div>
+                    <pre><code class="language-js">// postcss.config.js — configuracion tipica
+
+export default {
+    plugins: [
+        // 1. Autoprefixer: agrega vendor prefixes automaticamente
+        // .card { gap: 1rem; }
+        // => .card { -webkit-gap: 1rem; gap: 1rem; }
+        require('autoprefixer')({
+            overrideBrowserslist: ['> 1%', 'last 2 versions']
+        }),
+
+        // 2. postcss-preset-env: usa sintaxis futura de CSS hoy
+        // Convierte @nest, :has(), color-mix(), etc. a CSS compatible
+        require('postcss-preset-env')({
+            stage: 3, // Nivel de estandar (0-4)
+            features: {
+                'nesting-rules': true,
+                'is-pseudo-class': true,
+            }
+        }),
+
+        // 3. cssnano: minifica el CSS para produccion
+        // Solo en build de produccion, no en desarrollo
+        ...(process.env.NODE_ENV === 'production'
+            ? [require('cssnano')({ preset: 'default' })]
+            : []),
+
+        // 4. postcss-import: permite @import en CSS (como partials)
+        require('postcss-import'),
+
+        // 5. css-mqpacker: combina media queries iguales
+        // (reduce el tamaño del CSS final)
+        require('css-mqpacker')({
+            sort: true
+        }),
+    ]
+};</code></pre>
+                </div>
+
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>Plugin</th>
+                            <th>Qu&eacute; hace</th>
+                            <th>Equivalente SASS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Autoprefixer</strong></td>
+                            <td>Agrega <code>-webkit-</code>, <code>-moz-</code>, etc. basado en browserslist.</td>
+                            <td>Mixins de vendor prefixes (manual, obsoleto).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>postcss-preset-env</strong></td>
+                            <td>Transpila CSS futurista (<code>@nest</code>, <code>:has()</code>, <code>color-mix()</code>).</td>
+                            <td>No tiene equivalente (SASS no transpila).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>postcss-import</strong></td>
+                            <td>Permite <code>@import</code> en CSS y los combina en un archivo.</td>
+                            <td><code>@use</code> / <code>@forward</code>.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>cssnano</strong></td>
+                            <td>Minifica CSS (elimina espacios, comentarios, optimiza valores).</td>
+                            <td>No tiene equivalente directo.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>PurgeCSS</strong></td>
+                            <td>Elimina CSS no usado (scanea tus archivos por selectores).</td>
+                            <td>No tiene equivalente (SASS no analiza uso).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Stylelint</strong></td>
+                            <td>Linting: detecta errores y aplica convenciones de c&oacute;digo.</td>
+                            <td>No tiene equivalente.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="callout callout-tip">
+                    <svg class="callout-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>
+                    <div class="callout-content">
+                        <p class="callout-title">PostCSS y SASS no son excluyentes</p>
+                        <p>Lo m&aacute;s com&uacute;n en la industria actual es usar <strong>ambos</strong>: SASS para escribir los estilos (variables, nesting, mixins, modularidad) y PostCSS para el pipeline de build (autoprefixer, transpilaci&oacute;n de CSS futurista, minificaci&oacute;n, purge de CSS unused). Vite, por ejemplo, soporta SASS out-of-the-box y usa PostCSS internamente.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sub-section: Vale la pena hoy? -->
+            <section class="sub-section animate-on-scroll" id="vale-la-pena">
+                <h2>
+                    &iquest;Vale la pena usar un preprocesador hoy?
+                    <a href="#vale-la-pena" class="heading-anchor" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                    </a>
+                </h2>
+
+                <p>
+                    Esta es la pregunta del mill&oacute;n. CSS nativo ha avanzado much&iacute;s: tiene Custom Properties, <code>@nest</code> (Chrome 120+, Safari 17.2+), <code>color-mix()</code>, <code>clamp()</code>, <code>:has()</code>, Container Queries, <code>@layer</code> para cascada, y m&aacute;s. Muchas features que antes necesitaban SASS ahora son nativas. Sin embargo, la respuesta depende del tama&ntilde;o y complejidad del proyecto. Para un sitio peque&ntilde;o como WebForge, CSS puro es suficiente. Para una aplicaci&oacute;n con cientos de componentes, temas m&uacute;ltiples y un equipo grande, SASS a&uacute;n ofrece ventajas significativas en modularidad y mantenibilidad.
+                </p>
+
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>CSS Nativo</th>
+                            <th>SASS</th>
+                            <th>Veredicto</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Variables</strong></td>
+                            <td>Custom Properties (<code>--var</code>)</td>
+                            <td><code>$var</code></td>
+                            <td><strong>CSS gana</strong>: las custom properties son din&aacute;micas, responden a media queries, se heredan, y pueden cambiar con JS.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Nesting</strong></td>
+                            <td><code>@nest</code> (2023-2024)</td>
+                            <td>Nesting nativo</td>
+                            <td><strong>Empate</strong>: la sintaxis <code>@nest</code> es m&aacute;s verbosa, pero ya est&aacute; soportada en navegadores modernos.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Mixins</strong></td>
+                            <td>No tiene (aproximaci&oacute;n con <code>@property</code>)</td>
+                            <td><code>@mixin / @include</code></td>
+                            <td><strong>SASS gana</strong>: los mixins siguen sin equivalente nativo para bloques de CSS reutilizables.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Funciones</strong></td>
+                            <td><code>clamp()</code>, <code>min()</code>, <code>max()</code>, <code>color-mix()</code></td>
+                            <td>Funciones nativas + custom</td>
+                            <td><strong>Empate</strong>: CSS tiene funciones crecientes, pero SASS permite crear funciones custom con l&oacute;gica arbitraria.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Modularidad</strong></td>
+                            <td><code>@import</code> (deprecado), CSS Modules</td>
+                            <td><code>@use / @forward</code></td>
+                            <td><strong>SASS gana</strong>: el sistema de namespaces de <code>@use</code> es superior a <code>@import</code> de CSS.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Theming</strong></td>
+                            <td>Custom Properties + <code>[data-theme]</code></td>
+                            <td>Maps + loops</td>
+                            <td><strong>Empate</strong>: CSS puede hacer theming con custom properties, pero SASS lo hace m&aacute;s elegante con loops.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Build step</strong></td>
+                            <td>Ninguno (CSS puro funciona directamente)</td>
+                            <td>Requiere compilaci&oacute;n</td>
+                            <td><strong>CSS gana</strong>: no necesitas Node.js, npm, ni ning&uacute;n build tool.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="code-block">
+                    <div class="code-block-header">
+                        <span class="code-block-lang">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/></svg>
+                            CSS
+                        </span>
+                        <button class="code-block-copy" aria-label="Copiar codigo">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                            Copiar
+                        </button>
+                    </div>
+                    <pre><code class="language-css">/* ============================================
+   CSS Nativo 2024: lo que ya no necesita SASS
+   ============================================ */
+
+/* Variables: Custom Properties nativas */
+:root {
+    --color-primary: #3b82f6;
+    --space-md: 1rem;
+}
+
+.card {
+    background: var(--color-primary);
+    padding: var(--space-md);
+}
+
+/* Nesting: @nest (Chrome 120+, Safari 17.2+) */
+.card {
+    padding: 1rem;
+
+    &amp; .title {
+        font-size: 1.5rem;
+    }
+
+    &amp;:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    @media (min-width: 768px) {
+        padding: 2rem;
+    }
+}
+
+/* Funciones: clamp(), min(), max() */
+.container {
+    width: min(90%, 1200px);
+    font-size: clamp(1rem, 3vw, 2rem);
+}
+
+/* Colores: color-mix() */
+.button {
+    background: color-mix(in srgb, var(--color-primary) 80%, white);
+}
+
+/* Container Queries */
+.card-wrapper {
+    container-type: inline-size;
+}
+
+@container (min-width: 400px) {
+    .card {
+        display: grid;
+        grid-template-columns: 150px 1fr;
+    }
+}
+
+/* ============================================
+   Conclusi&oacute;n: WebForge usa CSS puro
+   ============================================
+   Para un proyecto educativo como WebForge:
+   - No hay build step (serve directo con Live Server)
+   - CSS moderno cubre todas las necesidades
+   - La simplicidad es un valor pedagogico
+   - Los lectores aprenden CSS, no SASS
+
+   SASS vale la pena cuando:
+   - Proyecto grande (100+ componentes)
+   - Equipo de multiples devs
+   - Necesitas theming avanzado
+   - Quieres mixins complejos
+   - Ya tienes un build step (Vite, Webpack) */</code></pre>
+                </div>
+
+                <div class="callout callout-warning">
+                    <svg class="callout-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+                    <div class="callout-content">
+                        <p class="callout-title">El nesting nativo a&uacute;n no es universal</p>
+                        <p><code>@nest</code> es relativamente nuevo (2023-2024). Si tu proyecto necesita soportar navegadores m&aacute;s antiguos (Chrome &lt; 120, Safari &lt; 17.2), necesit&aacute;s un transpilador como <code>postcss-preset-env</code> con la feature <code>nesting-rules</code> habilitada para convertir el nesting a CSS plano. Esto significa que, en la pr&aacute;ctica, necesitar&aacute;s PostCSS de todos modos si quer&eacute;s usar nesting en producci&oacute;n.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Navigation -->
+            <nav class="section-nav mt-8" style="display: flex; justify-content: space-between; padding-top: var(--space-6); border-top: 1px solid var(--border-color);">
+                <a href="css-responsive.html" class="btn btn-secondary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                    Responsive Design
+                </a>
+                <a href="css-frameworks.html" class="btn btn-secondary">
+                    Frameworks CSS
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                </a>
+            </nav>
+
+        </main>
+
+        <!-- Footer -->
+        <footer class="site-footer" id="site-footer"></footer>
+    </div>
+
+    <!-- Highlight.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+    <!-- App JS -->
+    <script type="module" src="../js/app.js"></script>
+</body>
+</html>
