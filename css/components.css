@@ -203,23 +203,23 @@
 .callout-info .callout-title { color: var(--accent-blue); }
 
 .callout-tool {
-    background-color: rgba(57, 210, 192, 0.06);
-    border-left: 3px dashed var(--accent-cyan);
+    background-color: rgba(188, 140, 255, 0.08);
+    border-left: 3px dashed var(--accent-purple);
 }
 
-.callout-tool .callout-icon { color: var(--accent-cyan); }
-.callout-tool .callout-title { color: var(--accent-cyan); }
+.callout-tool .callout-icon { color: var(--accent-purple); }
+.callout-tool .callout-title { color: var(--accent-purple); }
 
 .callout-tool a {
-    color: var(--accent-cyan);
+    color: var(--accent-purple);
     text-decoration: underline;
     text-underline-offset: 2px;
-    text-decoration-color: rgba(57, 210, 192, 0.4);
+    text-decoration-color: rgba(188, 140, 255, 0.4);
     transition: text-decoration-color 0.2s ease;
 }
 
 .callout-tool a:hover {
-    text-decoration-color: var(--accent-cyan);
+    text-decoration-color: var(--accent-purple);
 }
 
 /* === Tabs === */
