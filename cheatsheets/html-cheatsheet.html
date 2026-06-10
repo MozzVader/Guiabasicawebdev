@@ -1234,76 +1234,123 @@
             <!-- ===================== EVENTOS HTML ===================== -->
             <section class="cheatsheet-section animate-on-scroll" id="eventos">
                 <h2 class="cheatsheet-section-title">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
                     Atributos de Eventos (inline)
                 </h2>
+
+                <p class="cheatsheet-intro">
+                    Los atributos de evento (prefijo <code>on</code>) permiten ejecutar c&oacute;digo JavaScript directamente desde el HTML cuando ocurre una acci&oacute;n del usuario o del navegador. Su valor es un string con c&oacute;digo JS que se ejecuta en el momento exacto del evento. Casi cualquier elemento HTML puede recibir eventos de mouse y teclado, mientras que otros son espec&iacute;ficos de ciertos tags (ej: <code>onsubmit</code> solo en <code>&lt;form&gt;</code>, <code>onload</code> en <code>&lt;img&gt;</code>/<code>&lt;body&gt;</code>/<code>&lt;script&gt;</code>, <code>onchange</code> en inputs y selects).
+                </p>
+
+                <p class="cheatsheet-intro" style="margin-bottom: var(--space-4);">
+                    <strong>En proyectos reales</strong>, el enfoque moderno es usar <code>element.addEventListener('evento', fn)</code> desde JavaScript (separaci&oacute;n de responsabilidades). Los atributos inline siguen siendo &uacute;tiles para prototipos r&aacute;pidos, ejemplos educativos y casos puntuales como <code>&lt;body onload="init()"&gt;</code> o <code>onerror</code> en im&aacute;genes de fallback.
+                </p>
+
                 <div class="cheatsheet-table-wrapper">
                     <table class="cheatsheet-table">
                         <thead>
                             <tr>
                                 <th>Atributo</th>
                                 <th>Descripcion</th>
+                                <th>Tags comunes</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td><span class="code-cell">onclick="fn()"</span></td>
-                                <td>Click del mouse</td>
+                                <td>Click del mouse (o tap en mobile)</td>
+                                <td>Cualquier elemento visible</td>
                             </tr>
                             <tr>
                                 <td><span class="code-cell">ondblclick="fn()"</span></td>
-                                <td>Doble click</td>
+                                <td>Doble click rapido</td>
+                                <td>Cualquier elemento visible</td>
                             </tr>
                             <tr>
                                 <td><span class="code-cell">oninput="fn()"</span></td>
-                                <td>Cada vez que cambia el valor del input</td>
+                                <td>Se dispara en cada cambio del valor (tiempo real)</td>
+                                <td><code>&lt;input&gt;</code>, <code>&lt;textarea&gt;</code></td>
                             </tr>
                             <tr>
                                 <td><span class="code-cell">onchange="fn()"</span></td>
-                                <td>Al perder foco con cambio de valor</td>
+                                <td>Se dispara al perder foco si el valor cambio</td>
+                                <td><code>&lt;input&gt;</code>, <code>&lt;select&gt;</code>, <code>&lt;textarea&gt;</code></td>
                             </tr>
                             <tr>
                                 <td><span class="code-cell">onsubmit="fn()"</span></td>
-                                <td>Al enviar formulario</td>
+                                <td>Al enviar el formulario (antes del env&iacute;o)</td>
+                                <td><code>&lt;form&gt;</code></td>
                             </tr>
                             <tr>
                                 <td><span class="code-cell">onfocus / onblur</span></td>
-                                <td>Ganar / perder foco</td>
+                                <td>Elemento gana / pierde el foco</td>
+                                <td><code>&lt;input&gt;</code>, <code>&lt;select&gt;</code>, <code>&lt;textarea&gt;</code>, <code>&lt;a&gt;</code>, <code>&lt;button&gt;</code></td>
                             </tr>
                             <tr>
-                                <td><span class="code-cell">onkeydown / onkeyup / onkeypress</span></td>
-                                <td>Presionar / soltar tecla</td>
+                                <td><span class="code-cell">onkeydown / onkeyup</span></td>
+                                <td>Tecla presionada / soltada</td>
+                                <td>Elementos con foco (inputs, <code>&lt;body&gt;</code>)</td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">onkeypress</span></td>
+                                <td>Tecla presionada (deprecado, usar onkeydown)</td>
+                                <td>Elementos con foco</td>
                             </tr>
                             <tr>
                                 <td><span class="code-cell">onmouseover / onmouseout</span></td>
                                 <td>Mouse entra / sale del elemento</td>
+                                <td>Cualquier elemento visible</td>
                             </tr>
                             <tr>
-                                <td><span class="code-cell">onload</span></td>
-                                <td>Recurso cargado (img, body)</td>
+                                <td><span class="code-cell">onmousemove</span></td>
+                                <td>Mouse se mueve dentro del elemento</td>
+                                <td>Cualquier elemento visible</td>
                             </tr>
                             <tr>
-                                <td><span class="code-cell">onerror</span></td>
-                                <td>Error al cargar recurso</td>
+                                <td><span class="code-cell">onload="fn()"</span></td>
+                                <td>Recurso termin&oacute; de cargar</td>
+                                <td><code>&lt;body&gt;</code>, <code>&lt;img&gt;</code>, <code>&lt;script&gt;</code>, <code>&lt;iframe&gt;</code></td>
                             </tr>
                             <tr>
-                                <td><span class="code-cell">onscroll</span></td>
-                                <td>Scroll del elemento o ventana</td>
+                                <td><span class="code-cell">onerror="fn()"</span></td>
+                                <td>Error al cargar recurso (ideal para img fallback)</td>
+                                <td><code>&lt;img&gt;</code>, <code>&lt;script&gt;</code>, <code>&lt;video&gt;</code>, <code>&lt;audio&gt;</code></td>
                             </tr>
                             <tr>
-                                <td><span class="code-cell">onresize</span></td>
-                                <td>Redimensionar ventana</td>
+                                <td><span class="code-cell">onscroll="fn()"</span></td>
+                                <td>Se hizo scroll en el elemento</td>
+                                <td>Elementos con <code>overflow: auto/scroll</code>, <code>&lt;body&gt;</code></td>
                             </tr>
                             <tr>
-                                <td><span class="code-cell">ondragstart / ondrop</span></td>
-                                <td>Drag &amp; drop</td>
+                                <td><span class="code-cell">onresize="fn()"</span></td>
+                                <td>Ventana fue redimensionada</td>
+                                <td><code>&lt;body&gt;</code></td>
                             </tr>
                             <tr>
-                                <td><span class="code-cell">oncontextmenu="return false"</span></td>
-                                <td>Deshabilitar menu contextual (click derecho)</td>
+                                <td><span class="code-cell">ondragstart / ondrag / ondrop</span></td>
+                                <td>Drag &amp; drop nativo</td>
+                                <td>Elementos con <code>draggable="true"</code></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">oncontextmenu="fn()"</span></td>
+                                <td>Click derecho (men&uacute; contextual)</td>
+                                <td>Cualquier elemento (return false para deshabilitar)</td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">ontouchstart / ontouchend</span></td>
+                                <td>Touch start / touch end (mobile)</td>
+                                <td>Cualquier elemento visible en m&oacute;vil</td>
                             </tr>
                         </tbody>
                     </table>
+                </div>
+
+                <div class="callout callout-warning">
+                    <svg class="callout-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+                    <div class="callout-content">
+                        <p class="callout-title">Inline vs addEventListener</p>
+                        <p>Los atributos inline ejecutan c&oacute;digo en el scope global y solo permiten un handler por evento. Con <code>addEventListener</code> pod&eacute;s registrar m&uacute;ltiples handlers, usar opciones avanzadas (<code>{ once: true, passive: true, capture: true }</code>), y eliminar listeners con <code>removeEventListener</code>. La separaci&oacute;n HTML/JS tambi&eacute;n mejora la mantenibilidad y facilita el testing. Regla pr&aacute;ctica: si el handler necesita m&aacute;s de una l&iacute;nea de JS, us&aacute; <code>addEventListener</code>.</p>
+                    </div>
                 </div>
             </section>
 
