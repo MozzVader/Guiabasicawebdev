@@ -1,6 +1,7 @@
 /**
  * WebForge — Scroll Animations
  * Animates elements into view using IntersectionObserver.
+ * Only initializes after components are loaded to avoid double-init.
  */
 
 /**
@@ -34,11 +35,9 @@ export const initScrollAnimations = () => {
     elements.forEach((el) => observer.observe(el));
 };
 
-// Initialize on DOM ready and after components load
-document.addEventListener('DOMContentLoaded', initScrollAnimations);
+// Initialize only after components are loaded
 document.addEventListener('components:loaded', () => {
-    // Re-init in case new elements were loaded with components
-    setTimeout(initScrollAnimations, 100);
+    setTimeout(initScrollAnimations, 50);
 });
 
 export default initScrollAnimations;

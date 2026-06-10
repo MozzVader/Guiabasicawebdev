@@ -1,13 +1,16 @@
 /**
  * WebForge — In-Page Search
  * Fetches a JSON index of all pages and provides instant search
- * with keyboard navigation.
+ * with keyboard navigation. Search index is lazy-loaded on first
+ * focus of the search input to avoid unnecessary network requests.
  */
 
 let searchIndex = [];
 let resultsContainer = null;
 let activeIndex = -1;
 let currentResults = [];
+let indexLoaded = false;
+let indexLoading = false;
 
 /**
  * Determines the correct base path for the search index
@@ -15,7 +18,7 @@ let currentResults = [];
  */
 function getBasePath() {
     const path = window.location.pathname;
-    if (path.includes('/sections/')) return '../';
+    if (path.includes('/sections/') || path.includes('/cheatsheets/')) return '../';
     if (path.endsWith('/') || path.endsWith('index.html')) return './';
     return './';
 }
@@ -93,7 +96,6 @@ function highlightMatch(text, query) {
     if (idx === -1) return text;
 
     // Map the index back to the original string
-    // We need to find which original characters correspond to the match
     let plainIdx = 0;
     let origStart = -1;
     let origEnd = -1;
@@ -123,6 +125,10 @@ function createResultsContainer(input) {
     container.id = 'search-results';
     container.setAttribute('role', 'listbox');
     container.setAttribute('aria-label', 'Resultados de búsqueda');
+    input.setAttribute('aria-haspopup', 'listbox');
+    input.setAttribute('aria-autocomplete', 'list');
+    input.setAttribute('aria-controls', 'search-results');
+    input.setAttribute('aria-expanded', 'false');
     input.parentNode.appendChild(container);
     return container;
 }
@@ -136,6 +142,10 @@ function renderResults(results, query, input) {
     currentResults = results;
     activeIndex = -1;
 
+    const hasResults = results.length > 0 && query && query.length >= 2;
+
+    input.setAttribute('aria-expanded', String(hasResults));
+
     if (!query || query.length < 2 || results.length === 0) {
         resultsContainer.innerHTML = '';
         resultsContainer.classList.remove('active');
@@ -146,6 +156,7 @@ function renderResults(results, query, input) {
                     No se encontraron resultados para "<strong>${escapeHtml(query)}</strong>"
                 </div>`;
             resultsContainer.classList.add('active');
+            input.setAttribute('aria-expanded', 'true');
         }
         return;
     }
@@ -177,14 +188,14 @@ function renderResults(results, query, input) {
             'JavaScript': 'var(--accent-yellow)',
             'Git': 'var(--accent-red)',
             'SEO': 'var(--accent-green)',
-            'Herramientas': 'var(--text-muted)',
+            'Herramientas': 'var(--text-secondary)',
             'Recursos': 'var(--accent-purple)',
-            'General': 'var(--text-muted)',
+            'General': 'var(--text-secondary)',
         };
-        const catColor = catColors[page.category] || 'var(--text-muted)';
+        const catColor = catColors[page.category] || 'var(--text-secondary)';
 
         html += `
-            <a href="${url}" class="search-result-item" role="option" data-index="${i}">
+            <a href="${url}" class="search-result-item${i === 0 ? '' : ''}" role="option" id="search-result-${i}" aria-selected="${i === 0 ? 'true' : 'false'}" data-index="${i}">
                 <div class="search-result-content">
                     <div class="search-result-title">${highlightMatch(escapeHtml(page.title), query)}</div>
                     ${matchContext ? `<div class="search-result-context">${matchContext}</div>` : ''}
@@ -195,6 +206,7 @@ function renderResults(results, query, input) {
 
     resultsContainer.innerHTML = html;
     resultsContainer.classList.add('active');
+    input.setAttribute('aria-expanded', 'true');
 }
 
 /**
@@ -216,6 +228,7 @@ function updateActiveItem(direction) {
     // Remove previous active
     if (activeIndex >= 0 && activeIndex < items.length) {
         items[activeIndex].classList.remove('active');
+        items[activeIndex].setAttribute('aria-selected', 'false');
     }
 
     if (direction === 'down') {
@@ -225,6 +238,7 @@ function updateActiveItem(direction) {
     }
 
     items[activeIndex].classList.add('active');
+    items[activeIndex].setAttribute('aria-selected', 'true');
     items[activeIndex].scrollIntoView({ block: 'nearest' });
 }
 
@@ -241,13 +255,41 @@ function navigateToActive() {
 /**
  * Closes the search results dropdown.
  */
-function closeResults() {
+function closeResults(input) {
     if (resultsContainer) {
         resultsContainer.innerHTML = '';
         resultsContainer.classList.remove('active');
     }
+    if (input) {
+        input.setAttribute('aria-expanded', 'false');
+    }
     activeIndex = -1;
     currentResults = [];
+}
+
+/**
+ * Loads the search index (lazy, only once)
+ */
+function loadSearchIndex() {
+    if (indexLoaded || indexLoading) return;
+    indexLoading = true;
+
+    const basePath = getBasePath();
+    fetch(basePath + 'data/search-index.json')
+        .then(res => {
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            return res.json();
+        })
+        .then(data => {
+            searchIndex = data;
+            indexLoaded = true;
+        })
+        .catch(err => {
+            console.warn('WebForge: Failed to load search index:', err);
+        })
+        .finally(() => {
+            indexLoading = false;
+        });
 }
 
 /**
@@ -258,7 +300,14 @@ function performSearch(query, input) {
     clearTimeout(debounceTimer);
     debounceTimer = setTimeout(() => {
         if (query.length < 2) {
-            closeResults();
+            closeResults(input);
+            return;
+        }
+
+        if (!indexLoaded) {
+            // Index not loaded yet, try again shortly
+            if (!indexLoading) loadSearchIndex();
+            debounceTimer = setTimeout(() => performSearch(query, input), 200);
             return;
         }
 
@@ -282,20 +331,6 @@ export function initSearch() {
 
     // Create results container
     resultsContainer = createResultsContainer(input);
-
-    // Load search index
-    const basePath = getBasePath();
-    fetch(basePath + 'data/search-index.json')
-        .then(res => {
-            if (!res.ok) throw new Error(`HTTP ${res.status}`);
-            return res.json();
-        })
-        .then(data => {
-            searchIndex = data;
-        })
-        .catch(err => {
-            console.warn('WebForge: Failed to load search index:', err);
-        });
 
     // Input events
     input.addEventListener('input', (e) => {
@@ -323,15 +358,16 @@ export function initSearch() {
                 break;
             case 'Escape':
                 e.preventDefault();
-                closeResults();
+                closeResults(input);
                 input.blur();
                 break;
         }
     });
 
-    // Focus: show results if there's a query
+    // Focus: load index lazily + show results if there's a query
     input.addEventListener('focus', () => {
-        if (input.value.length >= 2) {
+        loadSearchIndex();
+        if (input.value.length >= 2 && indexLoaded) {
             performSearch(input.value, input);
         }
     });
@@ -339,13 +375,13 @@ export function initSearch() {
     // Close on click outside
     document.addEventListener('click', (e) => {
         if (!e.target.closest('.header-search')) {
-            closeResults();
+            closeResults(input);
         }
     });
 
     // Close on scroll (main content)
     document.querySelector('.main-content')?.addEventListener('scroll', () => {
-        closeResults();
+        closeResults(input);
     }, { passive: true });
 }
 

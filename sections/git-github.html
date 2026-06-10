@@ -27,6 +27,9 @@
     <!-- Highlight.js (CDN) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
 
+    <!-- Preload largest component -->
+    <link rel="preload" href="../components/sidebar.html" as="fetch" crossorigin>
+
     <!-- CSS -->
     <link rel="stylesheet" href="../css/variables.css">
     <link rel="stylesheet" href="../css/reset.css">
@@ -39,6 +42,8 @@
 </head>
 <body>
 
+    <a href="#main-content" class="skip-link">Saltar al contenido</a>
+
     <div class="page-wrapper">
         <!-- Header -->
         <header class="site-header" id="site-header"></header>
@@ -48,14 +53,14 @@
         <div class="sidebar-overlay"></div>
 
         <!-- Main Content -->
-        <main class="main-content" role="main">
+        <main class="main-content" id="main-content">
 
             <!-- Breadcrumb -->
-            <div class="section-breadcrumb">
+            <nav class="section-breadcrumb" aria-label="Breadcrumb">
                 <a href="../index.html">Inicio</a>
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                <svg xmlns= aria-hidden="true""http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
                 <span>Git &amp; GitHub</span>
-            </div>
+            </nav>
 
             <!-- Section Header -->
             <div class="section-header animate-on-scroll">
@@ -883,7 +888,7 @@ git merge upstream/main</code></pre>
     </div>
 
     <!-- Highlight.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/gitignore.min.js"></script>
 
     <!-- App JS -->

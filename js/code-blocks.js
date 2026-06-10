@@ -37,9 +37,26 @@ export const initHighlighting = async () => {
         document.querySelectorAll('.code-block pre code').forEach((block) => {
             if (!block.dataset.highlighted) {
                 hljs.highlightElement(block);
+                block.dataset.highlighted = 'true';
             }
         });
     }
+};
+
+/**
+ * Shows visual and accessible feedback after copying
+ */
+const showCopiedFeedback = (btn) => {
+    const originalHTML = btn.innerHTML;
+    btn.classList.add('copied');
+    btn.setAttribute('aria-label', 'Copiado');
+    btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Copiado`;
+
+    setTimeout(() => {
+        btn.classList.remove('copied');
+        btn.setAttribute('aria-label', 'Copiar código');
+        btn.innerHTML = originalHTML;
+    }, 2000);
 };
 
 /**
@@ -83,32 +100,13 @@ export const initCopyButtons = () => {
     });
 };
 
-/**
- * Shows visual feedback after copying
- */
-const showCopiedFeedback = (btn) => {
-    const originalHTML = btn.innerHTML;
-    btn.classList.add('copied');
-    btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Copiado`;
-
-    setTimeout(() => {
-        btn.classList.remove('copied');
-        btn.innerHTML = originalHTML;
-    }, 2000);
-};
-
-// Initialize on DOM ready
-document.addEventListener('DOMContentLoaded', () => {
-    initHighlighting();
-    initCopyButtons();
-});
-
-// Re-initialize after shared components load (new code blocks might exist)
+// Initialize only after components are loaded (no DOMContentLoaded double-init)
 document.addEventListener('components:loaded', () => {
+    // Small delay to ensure DOM is fully updated after component injection
     setTimeout(() => {
         initHighlighting();
         initCopyButtons();
-    }, 150);
+    }, 100);
 });
 
 export default { initHighlighting, initCopyButtons };

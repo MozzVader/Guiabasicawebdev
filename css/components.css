@@ -328,7 +328,7 @@
 
 .resource-card-arrow {
     flex-shrink: 0;
-    color: var(--text-tertiary);
+    color: var(--text-muted);
     transition: transform 0.2s ease, color 0.2s ease;
 }
 
@@ -391,7 +391,7 @@
 
 .resource-card--video .resource-card-channel {
     font-size: var(--font-size-xs, 0.75rem);
-    color: var(--text-tertiary);
+    color: var(--text-muted);
     margin-bottom: var(--space-1, 4px);
     display: flex;
     align-items: center;
@@ -556,7 +556,7 @@
     margin: 10px 0;
     font-size: var(--font-size-sm);
     line-height: var(--line-height-relaxed);
-    background: #10141894;
+    background: var(--bg-secondary);
     border-radius: 12px;
     overflow: hidden;
 }
@@ -570,7 +570,7 @@
     color: var(--text-primary);
     border: none;
     border-bottom: 3px solid var(--border-color);
-    background: #0d1117;
+    background: var(--bg-primary);
 }
 
 .styled-table tbody tr {

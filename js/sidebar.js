@@ -19,25 +19,62 @@ export const initSidebar = () => {
         hamburger.addEventListener('click', () => {
             const isOpen = sidebar.classList.contains('open');
             sidebar.classList.toggle('open');
-            if (overlay) overlay.classList.toggle('active', !isOpen);
+            if (overlay) {
+                overlay.classList.toggle('active', !isOpen);
+                overlay.setAttribute('aria-hidden', String(isOpen));
+            }
             document.body.style.overflow = isOpen ? '' : 'hidden';
+            hamburger.setAttribute('aria-expanded', String(!isOpen));
         });
     }
 
-    // === Overlay Close ===
+    // === Overlay Close (mouse + keyboard) ===
     if (overlay) {
-        overlay.addEventListener('click', () => {
+        overlay.setAttribute('tabindex', '-1');
+        overlay.setAttribute('aria-hidden', 'true');
+
+        const closeSidebar = () => {
             sidebar.classList.remove('open');
             overlay.classList.remove('active');
+            overlay.setAttribute('aria-hidden', 'true');
             document.body.style.overflow = '';
+            if (hamburger) {
+                hamburger.setAttribute('aria-expanded', 'false');
+                hamburger.focus();
+            }
+        };
+
+        overlay.addEventListener('click', closeSidebar);
+        overlay.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' || e.key === 'Enter') {
+                e.preventDefault();
+                closeSidebar();
+            }
         });
     }
 
-    // === Accordion Categories ===
+    // === Accordion Categories (keyboard accessible) ===
     const categoryHeaders = sidebar.querySelectorAll('.sidebar-category-header');
     categoryHeaders.forEach((header) => {
-        header.addEventListener('click', () => {
+        const linksContainer = header.nextElementSibling;
+        const isCollapsed = header.parentElement.classList.contains('collapsed');
+        header.setAttribute('role', 'button');
+        header.setAttribute('tabindex', '0');
+        header.setAttribute('aria-expanded', String(!isCollapsed));
+        header.setAttribute('aria-controls', linksContainer?.id || '');
+
+        const toggle = () => {
             header.parentElement.classList.toggle('collapsed');
+            const nowCollapsed = header.parentElement.classList.contains('collapsed');
+            header.setAttribute('aria-expanded', String(!nowCollapsed));
+        };
+
+        header.addEventListener('click', toggle);
+        header.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                toggle();
+            }
         });
     });
 

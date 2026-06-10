@@ -24,6 +24,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 
+    <!-- Preload largest component -->
+    <link rel="preload" href="../components/sidebar.html" as="fetch" crossorigin>
+
     <!-- CSS -->
     <link rel="stylesheet" href="../css/variables.css">
     <link rel="stylesheet" href="../css/reset.css">
@@ -35,6 +38,8 @@
 </head>
 <body>
 
+    <a href="#main-content" class="skip-link">Saltar al contenido</a>
+
     <div class="page-wrapper">
         <!-- Header -->
         <header class="site-header" id="site-header"></header>
@@ -44,14 +49,14 @@
         <div class="sidebar-overlay"></div>
 
         <!-- Main Content -->
-        <main class="main-content" role="main">
+        <main class="main-content" id="main-content">
 
             <!-- Breadcrumb -->
-            <div class="section-breadcrumb">
+            <nav class="section-breadcrumb" aria-label="Breadcrumb">
                 <a href="../index.html">Inicio</a>
-                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                <svg xmlns= aria-hidden="true""http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
                 <span>Recursos</span>
-            </div>
+            </nav>
 
             <!-- Section Header -->
             <div class="section-header animate-on-scroll">
@@ -171,7 +176,7 @@
                     <!-- Video: Curso HTML HolaMundo -->
                     <a href="https://www.youtube.com/watch?v=MJkdaVFHrto" target="_blank" rel="noopener" class="resource-card resource-card--video">
                         <div class="resource-card-thumb">
-                            <img src="https://i.ytimg.com/vi/MJkdaVFHrto/hqdefault.jpg" alt="Aprende HTML ahora! curso completo GRATIS desde cero" loading="lazy">
+                            <img src="https://i.ytimg.com/vi/MJkdaVFHrto/hqdefault.jpg" alt="Aprende HTML ahora! curso completo GRATIS desde cero" loading="lazy" width="480" height="360">
                             <div class="play-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="5 3 19 12 5 21 5 3"/></svg>
                             </div>
@@ -192,7 +197,7 @@
                     <!-- Video: Midudev -->
                     <a href="https://www.youtube.com/c/midudev" target="_blank" rel="noopener" class="resource-card resource-card--video">
                         <div class="resource-card-thumb">
-                            <img src="https://i.ytimg.com/vi/bB2b3Gi3VqM/hqdefault.jpg" alt="midudev - Canal de YouTube" loading="lazy">
+                            <img src="https://i.ytimg.com/vi/bB2b3Gi3VqM/hqdefault.jpg" alt="midudev - Canal de YouTube" loading="lazy" width="480" height="360">
                             <div class="play-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="5 3 19 12 5 21 5 3"/></svg>
                             </div>
@@ -213,7 +218,7 @@
                     <!-- freeCodeCamp -->
                     <a href="https://www.youtube.com/c/freecodecamp" target="_blank" rel="noopener" class="resource-card resource-card--video">
                         <div class="resource-card-thumb">
-                            <img src="https://i.ytimg.com/vi/nu_pCVPKzTk/hqdefault.jpg" alt="freeCodeCamp.org - Canal de YouTube" loading="lazy">
+                            <img src="https://i.ytimg.com/vi/nu_pCVPKzTk/hqdefault.jpg" alt="freeCodeCamp.org - Canal de YouTube" loading="lazy" width="480" height="360">
                             <div class="play-icon">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="5 3 19 12 5 21 5 3"/></svg>
                             </div>

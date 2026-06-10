@@ -11,7 +11,8 @@
 
     --text-primary: #e6edf3;
     --text-secondary: #8b949e;
-    --text-muted: #484f58;
+    --text-muted: #6e7681;
+    --text-tertiary: #484f58;
     --text-inverse: #0d1117;
 
     /* Accent colors */
@@ -42,7 +43,7 @@
     /* Code / Syntax Highlighting */
     --code-bg: #0d1117;
     --code-border: #30363d;
-    --code-keyword: #ff7b72;
+    --code-keyword: #ff8f87;
     --code-string: #a5d6ff;
     --code-comment: #8b949e;
     --code-function: #d2a8ff;
@@ -158,10 +159,10 @@
     --shadow-glow-cyan: 0 0 20px rgba(0, 180, 160, 0.12);
 
     /* Accent colors — slightly deeper for light bg contrast */
-    --accent-blue: #3884f4;
+    --accent-blue: #2563eb;
     --accent-cyan: #00b4a0;
     --accent-green: #1a7f37;
-    --accent-purple: #8250df;
+    --accent-purple: #6f42c1;
     --accent-red: #cf222e;
     --accent-orange: #bc4c00;
 
