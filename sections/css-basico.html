@@ -186,6 +186,122 @@ input:not([disabled]) {
                     Las pseudo-clases (<code>:</code>) seleccionan elementos seg&uacute;n un estado o condici&oacute;n din&aacute;mica, como <code>:hover</code>, <code>:focus</code>, <code>:first-child</code>, <code>:nth-child()</code>, o <code>:checked</code>. Los pseudo-elementos (<code>::</code>) crean elementos virtuales que no existen en el HTML, como <code>::before</code>, <code>::after</code>, <code>::first-line</code>, o <code>::placeholder</code>. Juntos te permiten estilar estados interactivos, contenido generado y partes espec&iacute;ficas de un elemento sin modificar el HTML.
                 </p>
 
+                <p>
+                    A continuaci&oacute;n, una referencia r&aacute;pida de las pseudo-clases y pseudo-elementos m&aacute;s usados, con el contexto de cada uno: en qu&eacute; elementos aplican, para qu&eacute; sirven y cu&aacute;ndo conviene usarlos. Las pseudo-clases de interacci&oacute;n son fundamentales para la experiencia de usuario, mientras que las estructurales permiten estilar listas, tablas y grids sin agregar clases extra al HTML.
+                </p>
+
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>Pseudo-clase / Pseudo-elemento</th>
+                            <th>Qu&eacute; hace</th>
+                            <th>Cu&aacute;ndo usarla</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>:hover</code></td>
+                            <td>Se activa cuando el cursor del mouse est&aacute; sobre el elemento.</td>
+                            <td>Botones, enlaces, cards, filas de tablas&mdash;cualquier elemento interactivo. Es la pseudo-clase m&aacute;s usada para feedback visual inmediato.</td>
+                        </tr>
+                        <tr>
+                            <td><code>:focus</code></td>
+                            <td>Se activa cuando un elemento recibe el foco (click, tab, touch).</td>
+                            <td>Inputs, textareas, selects, botones&mdash;indica qu&eacute; elemento est&aacute; activo. Nota: <code>:focus-visible</code> es preferible porque solo muestra el outline al navegar con teclado.</td>
+                        </tr>
+                        <tr>
+                            <td><code>:focus-visible</code></td>
+                            <td>Como <code>:focus</code>, pero solo se activa al navegar con teclado.</td>
+                            <td>Botones, enlaces y cualquier elemento focusable. Recomendada para accesibilidad: muestra el outline para usuarios de teclado sin el anillo visual al hacer click con mouse.</td>
+                        </tr>
+                        <tr>
+                            <td><code>:active</code></td>
+                            <td>Se activa en el momento exacto del click (mouse apretado).</td>
+                            <td>Botones&mdash;da sensaci&oacute;n de "presionado". Se combina con <code>:hover</code> para un efecto completo: hover &rarr; active &rarr; normal.</td>
+                        </tr>
+                        <tr>
+                            <td><code>:visited</code></td>
+                            <td>Se aplica a enlaces que el usuario ya visit&oacute;.</td>
+                            <td>Links (<code>&lt;a&gt;</code> con <code>href</code>). Permite diferenciar enlaces ya visitados. Por seguridad solo permite cambiar color, background-color, border-color y outline-color.</td>
+                        </tr>
+                        <tr>
+                            <td><code>:first-child</code></td>
+                            <td>Selecciona el primer hijo de su padre.</td>
+                            <td>Listas (<code>&lt;li&gt;</code>), filas de tablas (<code>&lt;tr&gt;</code>), cards en un grid. Ideal para eliminar el borde/margen superior del primer &iacute;tem y evitar bordes dobles.</td>
+                        </tr>
+                        <tr>
+                            <td><code>:last-child</code></td>
+                            <td>Selecciona el &uacute;ltimo hijo de su padre.</td>
+                            <td>Contraparte de <code>:first-child</code>. Se usa para eliminar el borde/margen inferior del &uacute;ltimo &iacute;tem de una lista o grid.</td>
+                        </tr>
+                        <tr>
+                            <td><code>:nth-child(n)</code></td>
+                            <td>Selecciona hijos seg&uacute;n su posici&oacute;n con una f&oacute;rmula.</td>
+                            <td>Tablas (zebra-striping con <code>even</code>/<code>odd</code>), grids (cada N-&eacute;simo &iacute;tem), sliders. Acepta n&uacute;meros, palabras clave y f&oacute;rmulas como <code>:nth-child(3n+1)</code>.</td>
+                        </tr>
+                        <tr>
+                            <td><code>:first-of-type</code></td>
+                            <td>Selecciona el primer hermano de su tipo.</td>
+                            <td>Distinto de <code>:first-child</code>: selecciona el primer <code>&lt;p&gt;</code> dentro de un contenedor sin importar si hay otros elementos antes. &Uacute;til cuando los hijos no son todos del mismo tipo.</td>
+                        </tr>
+                        <tr>
+                            <td><code>:last-of-type</code></td>
+                            <td>Selecciona el &uacute;ltimo hermano de su tipo.</td>
+                            <td>Misma l&oacute;gica que <code>:first-of-type</code> pero para el &uacute;ltimo. Ideal para estilar el &uacute;ltimo p&aacute;rrafo de un art&iacute;culo, por ejemplo.</td>
+                        </tr>
+                        <tr>
+                            <td><code>:not(selector)</code></td>
+                            <td>Selecciona elementos que NO coinciden con el selector dado.</td>
+                            <td>Excluir deshabilitados (<code>:not([disabled])</code>), excluir la primera fila de una tabla, excluir clases espec&iacute;ficas. Reduce la necesidad de reglas de "override".</td>
+                        </tr>
+                        <tr>
+                            <td><code>:checked</code></td>
+                            <td>Selecciona checkboxes y radios marcados.</td>
+                            <td>Inputs tipo <code>checkbox</code> y <code>radio</code>. Se usa para custom checkboxes/radios, o para estilar un label contenedor seg&uacute;n el estado del checkbox asociado.</td>
+                        </tr>
+                        <tr>
+                            <td><code>:disabled</code></td>
+                            <td>Selecciona elementos de formulario deshabilitados.</td>
+                            <td>Inputs, botones, selects con atributo <code>disabled</code>. Da un estilo visual claro (opacidad reducida, cursor not-allowed) que indica que no se puede interactuar.</td>
+                        </tr>
+                        <tr>
+                            <td><code>:empty</code></td>
+                            <td>Selecciona elementos que no tienen hijos (ni texto).</td>
+                            <td>Debugging&mdash;resalta elementos vac&iacute;os que no deber&iacute;an estarlo. Tambi&eacute;n &uacute;til para ocultar contenedores vac&iacute;os en layouts din&aacute;micos.</td>
+                        </tr>
+                        <tr>
+                            <td><code>::before</code></td>
+                            <td>Crea un pseudo-elemento como primer hijo del elemento.</td>
+                            <td>Requiere <code>content: ""</code>. Se usa para decoraciones (barras, &iacute;conos), breadcrumbs (separadores), tooltips y overlays. No existe en el DOM pero s&iacute; es visible.</td>
+                        </tr>
+                        <tr>
+                            <td><code>::after</code></td>
+                            <td>Crea un pseudo-elemento como &uacute;ltimo hijo del elemento.</td>
+                            <td>Mismos usos que <code>::before</code> pero despu&eacute;s del contenido. Muy usado para clearfix, labels flotantes (<code>content: attr(data-label)</code>) e iconos decorativos.</td>
+                        </tr>
+                        <tr>
+                            <td><code>::placeholder</code></td>
+                            <td>Estiliza el texto placeholder de inputs y textareas.</td>
+                            <td>Inputs y textareas con atributo <code>placeholder</code>. Permite cambiar color, opacidad y fuente del texto de ayuda que desaparece al escribir.</td>
+                        </tr>
+                        <tr>
+                            <td><code>::selection</code></td>
+                            <td>Estiliza el texto que el usuario selecciona con el cursor.</td>
+                            <td>Se aplica global (<code>::selection</code>) o a elementos espec&iacute;ficos. Permite personalizar el color de fondo y texto de la selecci&oacute;n para que matchee tu branding.</td>
+                        </tr>
+                        <tr>
+                            <td><code>::first-line</code></td>
+                            <td>Estiliza la primera l&iacute;nea de texto de un elemento block.</td>
+                            <td>Art&iacute;culos y p&aacute;rrafos largos. Permite hacer un "lead" tipogr&aacute;fico sin <code>&lt;span&gt;</code> extra. Solo acepta propiedades de tipograf&iacute;a y color.</td>
+                        </tr>
+                        <tr>
+                            <td><code>::first-letter</code></td>
+                            <td>Estiliza la primera letra de un elemento block.</td>
+                            <td>Drop caps (letrina)&mdash;la primera letra grande y decorativa en art&iacute;culos. Solo acepta propiedades tipogr&aacute;ficas, color, background, border, margin y padding.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
                 <div class="code-block">
                     <div class="code-block-header">
                         <span class="code-block-lang">
