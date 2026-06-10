@@ -7,31 +7,172 @@
     <meta name="description" content="La pagina que buscas no existe. Volv&eacute; al inicio de WebForge para encontrar el contenido que necesit&aacute;s.">
     <meta name="robots" content="noindex, nofollow">
     <meta name="theme-color" content="#0d1117">
-    <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="/css/variables.css">
-    <link rel="stylesheet" href="/css/reset.css">
-    <link rel="stylesheet" href="/css/base.css">
-    <link rel="stylesheet" href="/css/layout.css">
-    <link rel="stylesheet" href="/css/components.css">
-    <link rel="stylesheet" href="/css/landing.css">
-    <link rel="stylesheet" href="/css/animations.css">
-    <link rel="stylesheet" href="/css/responsive.css">
-
     <style>
+        /* === Self-contained 404 — No external CSS dependencies === */
+
+        /* --- Design Tokens --- */
+        :root {
+            --bg-primary: #0d1117;
+            --bg-secondary: #161b22;
+            --bg-tertiary: #21262d;
+            --bg-elevated: #2d333b;
+
+            --text-primary: #e6edf3;
+            --text-secondary: #8b949e;
+            --text-muted: #484f58;
+            --text-inverse: #0d1117;
+
+            --accent-blue: #58a6ff;
+            --accent-cyan: #39d2c0;
+            --accent-red: #ff6b6b;
+            --accent-green: #3fb950;
+            --accent-purple: #bc8cff;
+            --accent-orange: #f0883e;
+
+            --border-color: #30363d;
+            --grid-color: rgba(88, 166, 255, 0.04);
+            --grid-size: 40px;
+
+            --shadow-glow-blue: 0 0 20px rgba(88, 166, 255, 0.15);
+
+            --code-keyword: #ff7b72;
+            --code-string: #a5d6ff;
+            --code-function: #d2a8ff;
+            --code-property: #79c0ff;
+
+            --font-heading: 'Space Grotesk', 'Segoe UI', system-ui, sans-serif;
+            --font-body: 'Inter', 'Segoe UI', system-ui, sans-serif;
+            --font-code: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+
+            --font-size-xs: 0.75rem;
+            --font-size-sm: 0.875rem;
+            --font-size-base: 1rem;
+            --font-size-md: 1.125rem;
+            --font-size-lg: 1.25rem;
+            --font-size-xl: 1.5rem;
+            --font-size-2xl: 2rem;
+
+            --font-weight-regular: 400;
+            --font-weight-medium: 500;
+            --font-weight-semibold: 600;
+            --font-weight-bold: 700;
+
+            --line-height-relaxed: 1.8;
+
+            --space-1: 0.25rem;
+            --space-2: 0.5rem;
+            --space-3: 0.75rem;
+            --space-4: 1rem;
+            --space-5: 1.25rem;
+            --space-6: 1.5rem;
+            --space-8: 2rem;
+
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-full: 9999px;
+
+            --transition-fast: 150ms ease;
+            --z-grid: -1;
+        }
+
+        /* --- Minimal Reset --- */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* --- Body & Grid Background --- */
+        body {
+            font-family: var(--font-body);
+            font-size: var(--font-size-base);
+            font-weight: var(--font-weight-regular);
+            color: var(--text-primary);
+            background-color: var(--bg-primary);
+            position: relative;
+            min-height: 100vh;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(var(--grid-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-size: var(--grid-size) var(--grid-size);
+            pointer-events: none;
+            z-index: var(--z-grid);
+        }
+
+        /* --- Scrollbar --- */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-primary); }
+        ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: var(--radius-full); }
+        ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+        * { scrollbar-width: thin; scrollbar-color: var(--border-color) var(--bg-primary); }
+
+        /* --- Focus --- */
+        :focus-visible {
+            outline: 2px solid var(--accent-blue);
+            outline-offset: 2px;
+            border-radius: var(--radius-sm);
+        }
+
+        /* --- Selection --- */
+        ::selection {
+            background-color: var(--accent-blue);
+            color: var(--text-inverse);
+        }
+
+        /* --- Button Component --- */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            padding: var(--space-3) var(--space-6);
+            font-family: var(--font-heading);
+            font-size: var(--font-size-sm);
+            font-weight: var(--font-weight-semibold);
+            border-radius: var(--radius-md);
+            border: 1px solid transparent;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            text-decoration: none;
+            line-height: 1;
+        }
+
+        .btn svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-blue);
+            color: var(--text-inverse);
+            border-color: var(--accent-blue);
+        }
+
+        .btn-primary:hover {
+            background-color: #4a96e8;
+            box-shadow: var(--shadow-glow-blue);
+            transform: translateY(-1px);
+        }
+
         /* === 404 Page Specific === */
         .error-404 {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            min-height: calc(100vh - 80px);
+            min-height: 100vh;
             text-align: center;
             padding: var(--space-8) var(--space-4);
         }
@@ -90,29 +231,12 @@
             color: var(--text-secondary);
         }
 
-        .error-404__code-block .comment {
-            color: var(--text-muted);
-        }
-
-        .error-404__code-block .kw {
-            color: var(--code-keyword, #ff7b72);
-        }
-
-        .error-404__code-block .str {
-            color: var(--code-string, #a5d6ff);
-        }
-
-        .error-404__code-block .fn {
-            color: var(--code-function, #d2a8ff);
-        }
-
-        .error-404__code-block .prop {
-            color: var(--code-property, #79c0ff);
-        }
-
-        .error-404__code-block .err {
-            color: var(--accent-red);
-        }
+        .error-404__code-block .comment { color: var(--text-muted); }
+        .error-404__code-block .kw { color: var(--code-keyword); }
+        .error-404__code-block .str { color: var(--code-string); }
+        .error-404__code-block .fn { color: var(--code-function); }
+        .error-404__code-block .prop { color: var(--code-property); }
+        .error-404__code-block .err { color: var(--accent-red); }
 
         .error-404__cursor {
             display: inline-block;
@@ -172,64 +296,60 @@
         }
     </style>
 </head>
-<body class="landing-page">
+<body>
 
-    <div class="page-wrapper landing-page">
+    <div class="error-404">
+        <div class="error-404__code">404</div>
 
-        <div class="error-404">
-            <div class="error-404__code">404</div>
+        <h1 class="error-404__message">P&aacute;gina no encontrada</h1>
+        <p class="error-404__desc">
+            La ruta que busc&aacute;s no existe o fue movida.
+            Prob&aacute; con alguno de estos enlaces o volv&eacute; al inicio.
+        </p>
 
-            <h1 class="error-404__message">P&aacute;gina no encontrada</h1>
-            <p class="error-404__desc">
-                La ruta que busc&aacute;s no existe o fue movida.
-                Prob&aacute; con alguno de estos enlaces o volv&eacute; al inicio.
-            </p>
-
-            <div class="error-404__code-block">
-                <span class="comment">// Algo sali&oacute; mal...</span><br>
-                <span class="kw">const</span> <span class="prop">pagina</span> = <span class="fn">buscar</span>(<span class="prop">ruta</span>);<br>
-                <br>
-                <span class="kw">if</span> (!<span class="prop">pagina</span>) {<br>
-                &nbsp;&nbsp;<span class="fn">console</span>.<span class="fn">error</span>(<span class="str"><span class="err">"404: No encontramos esta p&aacute;gina"</span></str>);<br>
-                &nbsp;&nbsp;<span class="fn">redirigir</span>(<span class="str">"/"</span>);<br>
-                }<span class="error-404__cursor"></span>
-            </div>
-
-            <div class="error-404__links">
-                <a href="/index.html" class="error-404__link">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-                    Inicio
-                </a>
-                <a href="/sections/html-basico.html" class="error-404__link">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-                    HTML
-                </a>
-                <a href="/sections/css-basico.html" class="error-404__link">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg>
-                    CSS
-                </a>
-                <a href="/sections/js-basico.html" class="error-404__link">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-                    JavaScript
-                </a>
-                <a href="/cheatsheets/html-cheatsheet.html" class="error-404__link">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
-                    Cheatsheets
-                </a>
-                <a href="https://github.com/MozzVader/WebForge" target="_blank" rel="noopener noreferrer" class="error-404__link">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
-                    GitHub
-                </a>
-            </div>
-
-            <div class="error-404__home">
-                <a href="/index.html" class="btn btn-primary">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
-                    Volver al inicio
-                </a>
-            </div>
+        <div class="error-404__code-block">
+            <span class="comment">// Algo sali&oacute; mal...</span><br>
+            <span class="kw">const</span> <span class="prop">pagina</span> = <span class="fn">buscar</span>(<span class="prop">ruta</span>);<br>
+            <br>
+            <span class="kw">if</span> (!<span class="prop">pagina</span>) {<br>
+            &nbsp;&nbsp;<span class="fn">console</span>.<span class="fn">error</span>(<span class="str"><span class="err">"404: No encontramos esta p&aacute;gina"</span></str>);<br>
+            &nbsp;&nbsp;<span class="fn">redirigir</span>(<span class="str">"/"</span>);<br>
+            }<span class="error-404__cursor"></span>
         </div>
 
+        <div class="error-404__links">
+            <a href="/WebForge/" class="error-404__link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                Inicio
+            </a>
+            <a href="/WebForge/sections/html-basico.html" class="error-404__link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                HTML
+            </a>
+            <a href="/WebForge/sections/css-basico.html" class="error-404__link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg>
+                CSS
+            </a>
+            <a href="/WebForge/sections/js-basico.html" class="error-404__link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                JavaScript
+            </a>
+            <a href="/WebForge/cheatsheets/html-cheatsheet.html" class="error-404__link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
+                Cheatsheets
+            </a>
+            <a href="https://github.com/MozzVader/WebForge" target="_blank" rel="noopener noreferrer" class="error-404__link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+                GitHub
+            </a>
+        </div>
+
+        <div class="error-404__home">
+            <a href="/WebForge/" class="btn btn-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+                Volver al inicio
+            </a>
+        </div>
     </div>
 
 </body>
