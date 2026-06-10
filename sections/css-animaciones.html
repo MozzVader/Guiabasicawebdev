@@ -1,0 +1,1472 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animaciones y Transiciones — WebForge</title>
+    <meta name="description" content="Domina las animaciones y transiciones CSS: propiedades de transici&oacute;n (transition-property, duration, timing-function, delay), @keyframes (from/to, porcentajes), animation (name, duration, iteration-count, direction, fill-mode), transform (translate, rotate, scale, skew), performance (will-change, compositing, layout thrashing), easing functions (ease, linear, cubic-bezier) y View Transitions API.">
+    <meta name="theme-color" content="#0d1117">
+    <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Highlight.js (CDN) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/code-blocks.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+
+    <div class="page-wrapper">
+        <!-- Header -->
+        <header class="site-header" id="site-header"></header>
+
+        <!-- Sidebar -->
+        <aside class="site-sidebar" id="site-sidebar"></aside>
+        <div class="sidebar-overlay"></div>
+
+        <!-- Main Content -->
+        <main class="main-content" role="main">
+
+            <!-- Breadcrumb -->
+            <div class="section-breadcrumb">
+                <a href="../index.html">Inicio</a>
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                <span>CSS</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                <span>Animaciones y Transiciones</span>
+            </div>
+
+            <!-- Section Header -->
+            <div class="section-header animate-on-scroll">
+                <h1>Animaciones y Transiciones</h1>
+                <p>Las animaciones y transiciones CSS permiten agregar movimiento y vida a una interfaz web sin JavaScript. Una <strong>transici&oacute;n</strong> anima el cambio suave de un valor CSS a otro (por ejemplo, un color que cambia al hacer hover) usando la propiedad <code>transition</code>. Una <strong>animaci&oacute;n</strong> es m&aacute;s compleja: define fotogramas clave con <code>@keyframes</code> que describen c&oacute;mo un elemento cambia a lo largo del tiempo, incluyendo m&uacute;ltiples etapas, repeticiones, direcciones alternadas y control sobre qu&eacute; pasa antes y despu&eacute;s de la animaci&oacute;n. Ambas combinadas con <code>transform</code> (trasladar, rotar, escalar, sesgar) son la base de la UI moderna: micro-interacciones, feedback visual, transiciones de p&aacute;gina y estados din&aacute;micos.</p>
+            </div>
+
+            <p>
+                La diferencia fundamental entre transiciones y animaciones es el <em>trigger</em>. Una transici&oacute;n se activa cuando una propiedad cambia (hover, clase agregada, state change) y se anima autom&aacute;ticamente desde el valor viejo al nuevo. Una animaci&oacute;n se ejecuta de forma aut&oacute;noma o cuando la aplic&aacute;s con la propiedad <code>animation</code>, sin necesidad de un cambio de estado. Las transiciones son ideales para micro-interacciones sutiles (hover effects, toggle states), mientras que las animaciones son mejores para efectos complejos (entradas de elementos, loaders, ciclos continuos). La regla general: si puede ser una transici&oacute;n, us&aacute; una transici&oacute;n&mdash;es m&aacute;s simple y m&aacute;s predecible.
+            </p>
+
+            <!-- Sub-section: Transiciones -->
+            <section class="sub-section animate-on-scroll" id="transiciones">
+                <h2>
+                    Transiciones CSS
+                    <a href="#transiciones" class="heading-anchor" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                    </a>
+                </h2>
+
+                <p>
+                    Las transiciones CSS permiten animar el cambio de una propiedad entre dos valores. Cuando una propiedad CSS cambia (por un hover, un cambio de clase via JS, un pseudo-elemento, etc.), la transici&oacute;n interpola los valores intermedios durante la duraci&oacute;n especificada en lugar de cambiar instant&aacute;neamente. La propiedad <code>transition</code> es un shorthand que combina hasta cuatro sub-propiedades: <code>transition-property</code> (qu&eacute; propiedades animar), <code>transition-duration</code> (cu&aacute;nto dura), <code>transition-timing-function</code> (c&oacute;mo se acelera/desacelera) y <code>transition-delay</code> (cu&aacute;nto esperar antes de empezar).
+                </p>
+
+                <div class="code-block">
+                    <div class="code-block-header">
+                        <span class="code-block-lang">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+                            CSS
+                        </span>
+                        <button class="code-block-copy" aria-label="Copiar codigo">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                            Copiar
+                        </button>
+                    </div>
+                    <pre><code class="language-css">/* ============================================
+   TRANSICIONES CSS: sintaxis completa
+   ============================================ */
+
+/* Sintaxis shorthand (la m&aacute;s usada) */
+.btn {
+    /* transition: property duration timing-function delay */
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* Sintaxis expandida (m&aacute;s legible cuando hay muchas) */
+.btn {
+    transition-property: background-color, transform, box-shadow;
+    transition-duration: 0.3s, 0.2s, 0.3s;
+    transition-timing-function: ease;
+    transition-delay: 0s;
+}
+
+/* ============================================
+   TRANSICION COM&Uacute;N: hover effects
+   ============================================ */
+
+.btn {
+    background-color: #3b82f6;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #2563eb;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+}
+
+.btn:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 4px rgba(59, 130, 246, 0.2);
+}
+
+/* ============================================
+   TRANSICIONES con cambio de clase (JS)
+   ============================================ */
+
+/* Elemento con estado "abierto" / "cerrado" */
+.panel {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease, padding 0.3s ease;
+    padding: 0 1rem;
+}
+
+.panel.open {
+    max-height: 500px;    /* Valor suficiente para el contenido */
+    padding: 1rem;
+}
+
+/* ============================================
+   TRANSICIONES: m&uacute;ltiples propiedades
+   con distintas duraciones
+   ============================================ */
+
+.card {
+    background: var(--surface);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    /* Cada propiedad tiene su propia duracion */
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.3s ease,
+        background-color 0.5s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+    background-color: var(--surface-hover);
+}
+
+/* ============================================
+   TRANSICIONES: shorthand con valores mixtos
+   ============================================ */
+
+.link {
+    color: var(--accent-blue);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    /* Transicion simple de una propiedad */
+    transition: color 0.2s ease;
+}
+
+.link:hover {
+    color: var(--accent-cyan);
+}</code></pre>
+                </div>
+
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>Sub-propiedad</th>
+                            <th>Valores</th>
+                            <th>Default</th>
+                            <th>Descripci&oacute;n</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>transition-property</code></td>
+                            <td>Nombre de propiedad CSS, <code>all</code>, <code>none</code></td>
+                            <td><code>all</code></td>
+                            <td>Qu&eacute; propiedades animar. <code>all</code> transiciona todo (cuidado: puede ser costoso).</td>
+                        </tr>
+                        <tr>
+                            <td><code>transition-duration</code></td>
+                            <td>Tiempo: <code>0.3s</code>, <code>300ms</code>, <code>0s</code></td>
+                            <td><code>0s</code></td>
+                            <td>Duraci&oacute;n de la animaci&oacute;n. Sin duraci&oacute;n, no hay transici&oacute;n (cambio instant&aacute;neo).</td>
+                        </tr>
+                        <tr>
+                            <td><code>transition-timing-function</code></td>
+                            <td><code>ease</code>, <code>linear</code>, <code>ease-in</code>, <code>ease-out</code>, <code>ease-in-out</code>, <code>cubic-bezier()</code></td>
+                            <td><code>ease</code></td>
+                            <td>Curva de aceleraci&oacute;n. Define c&oacute;mo se distribuye la velocidad durante la transici&oacute;n.</td>
+                        </tr>
+                        <tr>
+                            <td><code>transition-delay</code></td>
+                            <td>Tiempo: <code>0.1s</code>, <code>200ms</code></td>
+                            <td><code>0s</code></td>
+                            <td>Tiempo de espera antes de iniciar. Se aplica tanto al entrar como al salir.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="callout callout-danger">
+                    <svg class="callout-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
+                    <div class="callout-content">
+                        <p class="callout-title">No toda propiedad es animable</p>
+                        <p>Solo se pueden transicionar propiedades que tienen valores num&eacute;ricos o de color: <code>color</code>, <code>background-color</code>, <code>width</code>, <code>height</code>, <code>padding</code>, <code>margin</code>, <code>opacity</code>, <code>transform</code>, <code>box-shadow</code>, <code>border-radius</code>, <code>border-color</code>, <code>font-size</code>, <code>line-height</code>. Propiedades como <code>display</code> (block/none), <code>height: auto</code>, <code>visibility: hidden</code> y <code>z-index</code> NO se transicionan directamente. Para ocultar/mostrar con transici&oacute;n, us&aacute; <code>opacity</code> + <code>pointer-events</code> o <code>max-height</code> como workaround.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sub-section: @keyframes -->
+            <section class="sub-section animate-on-scroll" id="keyframes">
+                <h2>
+                    Animaciones con @keyframes
+                    <a href="#keyframes" class="heading-anchor" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                    </a>
+                </h2>
+
+                <p>
+                    Las animaciones con <code>@keyframes</code> son m&aacute;s potentes que las transiciones porque definen m&uacute;ltiples puntos de control (fotogramas clave) en los que el elemento cambia de estado. Mientras una transici&oacute;n solo puede ir del punto A al punto B, una animaci&oacute;n puede ir de A a B a C a D, con diferentes estados intermedios. Se definen con <code>@keyframes nombre { ... }</code> y se aplican con la propiedad <code>animation</code>. Los keyframes pueden usar <code>from</code>/<code>to</code> (equivalente a <code>0%</code>/<code>100%</code>) o porcentajes arbitrarios para definir estados intermedios.
+                </p>
+
+                <div class="code-block">
+                    <div class="code-block-header">
+                        <span class="code-block-lang">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+                            CSS
+                        </span>
+                        <button class="code-block-copy" aria-label="Copiar codigo">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                            Copiar
+                        </button>
+                    </div>
+                    <pre><code class="language-css">/* ============================================
+   @KEYFRAMES: sintaxis b&aacute;sica
+   ============================================ */
+
+/* Con from/to (solo inicio y fin) */
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Con porcentajes (m&uacute;ltiples puntos de control) */
+@keyframes slide-up {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    50% {
+        opacity: 0.7;
+        transform: translateY(5px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ============================================
+   APLICAR la animaci&oacute;n con la propiedad animation
+   ============================================ */
+
+.elemento {
+    /* animation: name duration timing-function delay
+                  iteration-count direction fill-mode play-state; */
+    animation: fade-in 0.6s ease-out forwards;
+}
+
+/* Sintaxis expandida (m&aacute;s legible) */
+.elemento {
+    animation-name: slide-up;
+    animation-duration: 0.6s;
+    animation-timing-function: ease-out;
+    animation-delay: 0.2s;
+    animation-iteration-count: 1;
+    animation-direction: normal;
+    animation-fill-mode: forwards;
+    animation-play-state: running;
+}
+
+/* ============================================
+   EJEMPLOS PRACTICOS de @keyframes
+   ============================================ */
+
+/* --- Fade in + slide up (muy usado para on-scroll) --- */
+@keyframes fade-slide-in {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card {
+    opacity: 0;              /* Estado inicial invisible */
+    animation: fade-slide-in 0.6s ease-out forwards;
+}
+
+/* --- Stagger: cards que entran una detr&aacute;s de otra --- */
+.card:nth-child(1) { animation-delay: 0s; }
+.card:nth-child(2) { animation-delay: 0.1s; }
+.card:nth-child(3) { animation-delay: 0.2s; }
+.card:nth-child(4) { animation-delay: 0.3s; }
+
+/* --- Pulse (feedback visual para notificaciones) --- */
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 0 0 8px rgba(59, 130, 246, 0);
+    }
+}
+
+.notification {
+    animation: pulse 2s infinite;
+}
+
+/* --- Spin (loader) --- */
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid var(--border-color);
+    border-top-color: var(--accent-blue);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+/* --- Bounce --- */
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+        animation-timing-function: ease-out;
+    }
+    50% {
+        transform: translateY(-20px);
+        animation-timing-function: ease-in;
+    }
+}
+
+.bounce-icon {
+    animation: bounce 1s infinite;
+}
+
+/* --- Typing effect para el cursor --- */
+@keyframes blink-cursor {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+.cursor::after {
+    content: '|';
+    animation: blink-cursor 1s step-end infinite;
+}
+
+/* --- Shake (error de formulario) --- */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+    20%, 40%, 60%, 80% { transform: translateX(4px); }
+}
+
+.input-error {
+    animation: shake 0.5s ease-in-out;
+    border-color: var(--accent-red);
+}</code></pre>
+                </div>
+
+                <h3>Propiedades de animation</h3>
+
+                <p>
+                    La propiedad <code>animation</code> controla c&oacute;mo se ejecuta una animaci&oacute;n definida con <code>@keyframes</code>. Tiene ocho sub-propiedades que determinan el nombre, la duraci&oacute;n, la curva de velocidad, el retraso, las repeticiones, la direcci&oacute;n, el fill mode (qu&eacute; pasa antes y despu&eacute;s) y el play state (pausada o reproduci&eacute;ndose). Combinar estas propiedades da control total sobre el comportamiento de la animaci&oacute;n.
+                </p>
+
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>Sub-propiedad</th>
+                            <th>Valores comunes</th>
+                            <th>Default</th>
+                            <th>Descripci&oacute;n</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>animation-name</code></td>
+                            <td>Nombre del <code>@keyframes</code></td>
+                            <td><code>none</code></td>
+                            <td>Qu&eacute; animaci&oacute;n ejecutar.</td>
+                        </tr>
+                        <tr>
+                            <td><code>animation-duration</code></td>
+                            <td><code>0.5s</code>, <code>1s</code>, <code>500ms</code></td>
+                            <td><code>0s</code></td>
+                            <td>Cu&aacute;nto dura una iteraci&oacute;n.</td>
+                        </tr>
+                        <tr>
+                            <td><code>animation-timing-function</code></td>
+                            <td><code>ease</code>, <code>linear</code>, <code>cubic-bezier()</code></td>
+                            <td><code>ease</code></td>
+                            <td>Curva de aceleraci&oacute;n (igual que en transiciones).</td>
+                        </tr>
+                        <tr>
+                            <td><code>animation-delay</code></td>
+                            <td><code>0.2s</code>, <code>200ms</code></td>
+                            <td><code>0s</code></td>
+                            <td>Tiempo de espera antes de iniciar.</td>
+                        </tr>
+                        <tr>
+                            <td><code>animation-iteration-count</code></td>
+                            <td>N&uacute;mero, <code>infinite</code></td>
+                            <td><code>1</code></td>
+                            <td>Cu&aacute;ntas veces se repite. <code>infinite</code> para loops.</td>
+                        </tr>
+                        <tr>
+                            <td><code>animation-direction</code></td>
+                            <td><code>normal</code>, <code>reverse</code>, <code>alternate</code>, <code>alternate-reverse</code></td>
+                            <td><code>normal</code></td>
+                            <td><code>alternate</code> va ida y vuelta (ideal para loops suaves).</td>
+                        </tr>
+                        <tr>
+                            <td><code>animation-fill-mode</code></td>
+                            <td><code>none</code>, <code>forwards</code>, <code>backwards</code>, <code>both</code></td>
+                            <td><code>none</code></td>
+                            <td><code>forwards</code>: mantiene el estado final. <code>backwards</code>: aplica el estado inicial antes de iniciar. <code>both</code>: ambos.</td>
+                        </tr>
+                        <tr>
+                            <td><code>animation-play-state</code></td>
+                            <td><code>running</code>, <code>paused</code></td>
+                            <td><code>running</code></td>
+                            <td>Para/reanuda la animaci&oacute;n. &uacute;til para pausar en hover.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="code-block">
+                    <div class="code-block-header">
+                        <span class="code-block-lang">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/></svg>
+                            CSS
+                        </span>
+                        <button class="code-block-copy" aria-label="Copiar codigo">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                            Copiar
+                        </button>
+                    </div>
+                    <pre><code class="language-css">/* ============================================
+   ANIMATION-FILL-MODE: qu&eacute; pasa antes/despu&eacute;s
+   ============================================ */
+
+/* forwards: mantiene el ESTADO FINAL de la animaci&oacute;n */
+.fade-element {
+    opacity: 0;
+    animation: fade-in 1s ease forwards;
+    /* Despu&eacute;s de la animaci&oacute;n, opacity queda en 1
+       (no vuelve al valor original de 0) */
+}
+
+/* backwards: aplica el ESTADO INICIAL antes del delay */
+.fade-element-delay {
+    opacity: 0;
+    animation: fade-in 1s ease 0.5s backwards;
+    /* Durante los 0.5s de delay, el elemento tiene
+       los estilos del 0% del keyframe (opacity: 0)
+       en lugar de su valor por defecto */
+}
+
+/* both: combina forwards + backwards */
+.fade-element-both {
+    opacity: 0;
+    animation: fade-in 1s ease 0.5s both;
+}
+
+/* ============================================
+   ANIMATION-DIRECTION: alternate para loops
+   ============================================ */
+
+@keyframes float {
+    0%   { transform: translateY(0); }
+    100% { transform: translateY(-10px); }
+}
+
+.floating-icon {
+    animation: float 3s ease-in-out infinite alternate;
+    /* Va de arriba a abajo y viceversa suavemente.
+       alternate + infinite = ida y vuelta infinito */
+}
+
+/* ============================================
+   ANIMATION-PLAY-STATE: pausar en hover
+   ============================================ */
+
+.marquee {
+    animation: scroll-left 10s linear infinite;
+}
+
+.marquee:hover {
+    animation-play-state: paused;
+}
+
+/* ============================================
+   M&Uacute;LTIPLES ANIMACIONES en un solo elemento
+   ============================================ */
+
+.card-enter {
+    animation:
+        fade-in 0.5s ease forwards,
+        slide-up 0.5s ease forwards;
+}
+
+/* Con delays diferentes para stagger */
+.card-enter:nth-child(1) { animation-delay: 0s; }
+.card-enter:nth-child(2) { animation-delay: 0.1s, 0.1s; }
+.card-enter:nth-child(3) { animation-delay: 0.2s, 0.2s; }
+
+/* ============================================
+   ANIMACIONES EN cascade con custom properties
+   ============================================ */
+
+/* Cada card calcula su delay autom&aacute;ticamente */
+.card {
+    --index: 0;
+    animation: fade-slide-in 0.5s ease both;
+    animation-delay: calc(var(--index) * 0.1s);
+}
+
+.card:nth-child(1) { --index: 0; }
+.card:nth-child(2) { --index: 1; }
+.card:nth-child(3) { --index: 2; }
+.card:nth-child(4) { --index: 3; }</code></pre>
+                </div>
+            </section>
+
+            <!-- Sub-section: Transform -->
+            <section class="sub-section animate-on-scroll" id="transform">
+                <h2>
+                    Transform: translate, rotate, scale, skew
+                    <a href="#transform" class="heading-anchor" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                    </a>
+                </h2>
+
+                <p>
+                    <code>transform</code> aplica transformaciones geom&eacute;tricas a un elemento: traslaci&oacute;n (mover), rotaci&oacute;n (girar), escala (agrandar/achicar) y sesgado (deformar). La clave de <code>transform</code> es que <strong>no afecta el layout</strong>&mdash;el elemento se mueve visualmente pero no altera el flujo del documento ni el tama&iacute;o que ocupa. Esto es lo que lo hace tan eficiente para animaciones: el navegador puede procesar transformaciones sin recalcular el layout (reflow), solo necesita repintar (repaint) la posici&oacute;n del elemento. Es la diferencia entre 60fps suave y animaciones que tartea el navegador.
+                </p>
+
+                <h3>Funciones de transformaci&oacute;n</h3>
+
+                <div class="code-block">
+                    <div class="code-block-header">
+                        <span class="code-block-lang">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/></svg>
+                            CSS
+                        </span>
+                        <button class="code-block-copy" aria-label="Copiar codigo">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                            Copiar
+                        </button>
+                    </div>
+                    <pre><code class="language-css">/* ============================================
+   TRANSFORM: funciones principales
+   ============================================ */
+
+/* --- TRANSLATE: mover el elemento --- */
+.move-right  { transform: translateX(50px); }    /* 50px a la derecha */
+.move-up     { transform: translateY(-20px); }   /* 20px hacia arriba */
+.move-both   { transform: translate(50px, -20px); } /* X e Y */
+.move-center { transform: translate(-50%, -50%); } /* Centrar con position: absolute */
+
+/* translate() vs top/left:
+   translate NO causa reflow (m&aacute;s r&aacute;pido)
+   top/left S&Iacute; causa reflow (m&aacute;s lento)
+   SIEMPRE prefer&iacute; translate para animaciones */
+
+/* --- ROTATE: girar el elemento --- */
+.rotate-45  { transform: rotate(45deg); }
+.rotate-90  { transform: rotate(0.5turn); }  /* Media vuelta */
+.rotate-neg { transform: rotate(-15deg); }  /* 15 grados antihorario */
+.rotate-x   { transform: rotateX(45deg); }  /* Rotar en eje X (3D) */
+.rotate-y   { transform: rotateY(180deg); } /* Flip horizontal (3D) */
+
+/* --- SCALE: escalar el elemento --- */
+.scale-up   { transform: scale(1.2); }   /* 20% m&aacute;s grande */
+.scale-down { transform: scale(0.8); }   /* 20% m&aacute;s chico */
+.scale-x    { transform: scaleX(2); }    /* Solo ancho */
+.scale-y    { transform: scaleY(0.5); }  /* Solo alto */
+
+/* --- SKEW: sesgar el elemento --- */
+.skew-x     { transform: skewX(15deg); }
+.skew-y     { transform: skewY(-10deg); }
+.skew-both  { transform: skew(15deg, -10deg); }
+
+/* ============================================
+   TRANSFORM: combinar funciones
+   ============================================ */
+
+/* El orden importa! Se aplican de derecha a izquierda */
+.card:hover {
+    transform: translateY(-4px) scale(1.02);
+    /* Primero escala, luego mueve */
+}
+
+.btn:active {
+    transform: scale(0.95);
+    /* Efecto de "apretar" el bot&oacute;n */
+}
+
+/* 3D perspective flip */
+.card-3d {
+    perspective: 1000px; /* Se aplica al PADRE */
+}
+
+.card-3d-inner {
+    transition: transform 0.6s;
+    transform-style: preserve-3d; /* Los hijos mantienen 3D */
+}
+
+.card-3d:hover .card-3d-inner {
+    transform: rotateY(180deg);
+}
+
+/* ============================================
+   TRANSFORM-ORIGIN: punto de origen
+   ============================================ */
+
+/* Por defecto, el origen es el centro del elemento (50% 50%) */
+.rotate-corner {
+    transform-origin: top left; /* Rota desde la esquina superior izquierda */
+    transform: rotate(45deg);
+}
+
+.scale-bottom {
+    transform-origin: bottom center; /* Escala desde abajo */
+    transform: scaleX(0);
+}
+
+/* ============================================
+   TRANSFORM: patrones comunes animados
+   ============================================ */
+
+/* --- Hover lift (el m&aacute;s usado en la web) --- */
+.hover-lift {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hover-lift:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* --- Expand on click --- */
+.accordion-content {
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.3s ease;
+}
+
+.accordion-content.open {
+    transform: scaleY(1);
+}
+
+/* --- Icon rotation on hover --- */
+.icon-spin:hover {
+    transform: rotate(90deg);
+    transition: transform 0.3s ease;
+}
+
+/* --- Tilt effect (3D en hover) --- */
+.tilt-card {
+    transition: transform 0.3s ease;
+}
+
+.tilt-card:hover {
+    transform: perspective(600px) rotateY(-5deg) rotateX(5deg);
+}</code></pre>
+                </div>
+
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>Funci&oacute;n</th>
+                            <th>Qu&eacute; hace</th>
+                            <th>Ejemplo</th>
+                            <th>Uso t&iacute;pico</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>translate(tx, ty)</code></td>
+                            <td>Mueve el elemento en X e Y</td>
+                            <td><code>translate(10px, -20px)</code></td>
+                            <td>Hover lift, slide-in, tooltips, centering</td>
+                        </tr>
+                        <tr>
+                            <td><code>rotate(angulo)</code></td>
+                            <td>Gira el elemento</td>
+                            <td><code>rotate(45deg)</code></td>
+                            <td>Iconos, loaders, flip cards</td>
+                        </tr>
+                        <tr>
+                            <td><code>scale(sx, sy)</code></td>
+                            <td>Escala el ancho y alto</td>
+                            <td><code>scale(1.1)</code></td>
+                            <td>Bot&oacute;n active, zoom, focus ring</td>
+                        </tr>
+                        <tr>
+                            <td><code>skew(ax, ay)</code></td>
+                            <td>Sesga (deforma) el elemento</td>
+                            <td><code>skew(-10deg)</code></td>
+                            <td>Efectos decorativos, distorsi&oacute;n</td>
+                        </tr>
+                        <tr>
+                            <td><code>matrix(a,b,c,d,tx,ty)</code></td>
+                            <td>Transformaci&oacute;n completa en una matriz</td>
+                            <td>Complejo, rara vez se usa directamente</td>
+                            <td>Transformaciones calculadas con JS</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="callout callout-tip">
+                    <svg class="callout-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>
+                    <div class="callout-content">
+                        <p class="callout-title">translate vs top/left para animaciones</p>
+                        <p><code>translate</code> se procesa en la etapa de <strong>composite</strong> (la m&aacute;s r&aacute;pida del pipeline de renderizado), mientras que <code>top</code>/<code>left</code> dispara un <strong>reflow</strong> (rec&aacute;lculo del layout completo). Para animaciones, SIEMPRE us&aacute; <code>transform: translate()</code> en lugar de <code>top</code>/<code>left</code>. La diferencia de rendimiento puede ser de 60fps a 15fps en p&aacute;ginas complejas.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sub-section: Easing Functions -->
+            <section class="sub-section animate-on-scroll" id="easing">
+                <h2>
+                    Easing Functions: la curva de movimiento
+                    <a href="#easing" class="heading-anchor" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                    </a>
+                </h2>
+
+                <p>
+                    La easing function (o curva de tiempo) define c&oacute;mo se distribuye la velocidad durante una animaci&oacute;n o transici&oacute;n. Una curva <code>linear</code> tiene velocidad constante (robotica, poco natural). Una curva <code>ease</code> arranca lento, acelera en el medio y desacelera al final (suave, natural). La elecci&oacute;n de la curva tiene un impacto enorme en c&oacute;mo se <em>siente</em> una animaci&oacute;n&mdash;la misma duraci&oacute;n con distintas curvas produce sensaciones completamente diferentes. Las curvas m&aacute;s usadas son <code>ease</code>, <code>ease-out</code>, <code>ease-in-out</code> y <code>cubic-bezier()</code> para curvas totalmente custom.
+                </p>
+
+                <div class="code-block">
+                    <div class="code-block-header">
+                        <span class="code-block-lang">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/></svg>
+                            CSS
+                        </span>
+                        <button class="code-block-copy" aria-label="Copiar codigo">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                            Copiar
+                        </button>
+                    </div>
+                    <pre><code class="language-css">/* ============================================
+   EASING FUNCTIONS: curvas de movimiento
+   ============================================ */
+
+/* --- Keywords predefinidos --- */
+
+/* linear: velocidad constante (sin aceleracion/desaceleracion)
+   Usar para: spinners, barras de progreso, marquee */
+animation: spin 1s linear infinite;
+
+/* ease: arranca lento, acelera, desacelera al final
+   Es el default para animation y transition.
+   Usar para: animaciones generales */
+transition: opacity 0.3s ease;
+
+/* ease-in: arranca lento, termina r&aacute;pido
+   Usar para: elementos que salen (fade-out, slide-out) */
+transition: opacity 0.3s ease-in;
+
+/* ease-out: arranca r&aacute;pido, termina lento
+   Usar para: elementos que entran (fade-in, slide-in, hover)
+   RECOMENDADO para la mayor&iacute;a de interacciones */
+transition: transform 0.2s ease-out;
+
+/* ease-in-out: lento al inicio y al final, r&aacute;pido en el medio
+   Usar para: toggle states, elementos que van y vienen */
+transition: max-height 0.5s ease-in-out;
+
+/* ============================================
+   CUBIC-BEZIER: curvas totalmente custom
+   ============================================ */
+/* cubic-bezier(x1, y1, x2, y2)
+   - x1, x2: puntos de control en el eje X (tiempo, 0 a 1)
+   - y1, y2: puntos de control en el eje Y (progreso, puede ser negativo)
+   Los valores x DEBEN estar entre 0 y 1 */
+
+/* Material Design standard (muy popular) */
+transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+/* Material Design decelerate (para elementos que entran) */
+transition: transform 0.3s cubic-bezier(0, 0, 0.2, 1);
+
+/* Material Design accelerate (para elementos que salen) */
+transition: transform 0.3s cubic-bezier(0.4, 0, 1, 1);
+
+/* Bounce-like (rebote suave sin @keyframes) */
+transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+/* Snap (empieza lento, da un "salto" al final) */
+transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+/* Smooth ease-out extra suave */
+transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+
+/* ============================================
+   STEPS(): pasos discretos (no interpolacion)
+   ============================================ */
+/* steps(numero, jump-start | jump-end | jump-none | jump-both)
+   Divide la animaci&oacute;n en N pasos discretos,
+   sin interpolaci&oacute;n entre ellos */
+
+/* Blinking cursor: 2 pasos, en cada paso cambia de estado */
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+.cursor {
+    animation: blink 1s step-end infinite;
+    /* step-end = jump-end: aplica cada paso AL FINAL de cada intervalo */
+}
+
+/* Sprite sheet animation: 8 frames */
+@keyframes sprite-walk {
+    from { background-position: 0; }
+    to   { background-position: -800px; } /* 8 frames * 100px */
+}
+
+.character {
+    width: 100px;
+    height: 100px;
+    background: url('sprite-sheet.png');
+    animation: sprite-walk 0.8s steps(8) infinite;
+    /* Cada frame dura 0.1s (0.8s / 8 steps) */
+}
+
+/* ============================================
+   EASING recomendaciones pr&aacute;cticas
+   ============================================ */
+
+/* Hover effects: ease-out (entrada r&aacute;pida, salida suave) */
+.btn {
+    transition: background-color 0.2s ease-out,
+                transform 0.15s ease-out;
+}
+
+/* Modals / Overlays: cubic-bezier suave */
+.modal-overlay {
+    transition: opacity 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Layout changes: ease-in-out (sym&eacute;trico) */
+.sidebar {
+    transition: width 0.3s ease-in-out;
+}
+
+/* Loading / spinners: linear (velocidad constante) */
+.loader {
+    animation: spin 1s linear infinite;
+}</code></pre>
+                </div>
+
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>Easing</th>
+                            <th>Sensaci&oacute;n</th>
+                            <th>Mejor para</th>
+                            <th>Cubic-bezier equivalente</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>linear</code></td>
+                            <td>Constante, mec&aacute;nico</td>
+                            <td>Spinners, progress bars</td>
+                            <td><code>cubic-bezier(0, 0, 1, 1)</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>ease</code></td>
+                            <td>Suave general</td>
+                            <td>Default, animaciones gen&eacute;ricas</td>
+                            <td><code>cubic-bezier(0.25, 0.1, 0.25, 1)</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>ease-in</code></td>
+                            <td>Arranca lento, termina r&aacute;pido</td>
+                            <td>Elementos que salen (fade-out)</td>
+                            <td><code>cubic-bezier(0.42, 0, 1, 1)</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>ease-out</code></td>
+                            <td>Arranca r&aacute;pido, termina lento</td>
+                            <td>Elementos que entran, hovers, focus</td>
+                            <td><code>cubic-bezier(0, 0, 0.58, 1)</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>ease-in-out</code></td>
+                            <td>Suave en ambos extremos</td>
+                            <td>Toggle states, loops, layout changes</td>
+                            <td><code>cubic-bezier(0.42, 0, 0.58, 1)</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>steps(n)</code></td>
+                            <td>Discreto, sin interpolaci&oacute;n</td>
+                            <td>Sprites, cursor blink, typewriter</td>
+                            <td>No aplica (funci&oacute;n diferente)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Sub-section: Performance -->
+            <section class="sub-section animate-on-scroll" id="performance">
+                <h2>
+                    Performance: 60fps sin tirones
+                    <a href="#performance" class="heading-anchor" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                    </a>
+                </h2>
+
+                <p>
+                    La performance de las animaciones CSS depende de entender el <strong>pixel pipeline</strong> del navegador. Cuando anim&aacute;s una propiedad, el navegador pasa por hasta cinco etapas: <strong>JavaScript</strong> (trigger), <strong>Style</strong> (calcular estilos), <strong>Layout</strong> (calcular posici&oacute;n y tama&ntilde;o), <strong>Paint</strong> (rellenar p&iacute;xeles) y <strong>Composite</strong> (combinar capas en pantalla). Cuantas menos etapas atraviese tu animaci&oacute;n, m&aacute;s r&aacute;pida ser&aacute;. Las animaciones de <code>transform</code> y <code>opacity</code> solo pasan por Composite&mdash;son las m&aacute;s r&aacute;pidas. Las animaciones de <code>width</code>, <code>height</code>, <code>top</code>, <code>left</code> o <code>margin</code> atraviesan Layout + Paint + Composite&mdash;son las m&aacute;s lentas y pueden causar tirones (jank) en dispositivos m&oacute;viles.
+                </p>
+
+                <div class="code-block">
+                    <div class="code-block-header">
+                        <span class="code-block-lang">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="M4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/></svg>
+                            CSS
+                        </span>
+                        <button class="code-block-copy" aria-label="Copiar codigo">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                            Copiar
+                        </button>
+                    </div>
+                    <pre><code class="language-css">/* ============================================
+   PIXEL PIPELINE: del trigger al frame
+   ============================================ */
+/*
+   JS  &rarr;  Style  &rarr;  Layout  &rarr;  Paint  &rarr;  Composite
+                          (reflow)  (repaint) (compositing)
+
+   Las propiedades m&aacute;s r&aacute;pidas para animar son:
+   1. transform  (solo Composite)     &lt;&lt;&lt; MEJOR
+   2. opacity    (solo Composite)     &lt;&lt;&lt; MEJOR
+
+   Propiedades que causan Layout (EVITAR animar):
+   - width, height
+   - top, right, bottom, left
+   - margin, padding
+   - font-size, line-height
+
+   Propiedades que causan Paint (aceptable si no hay Layout):
+   - color, background-color
+   - box-shadow
+   - border-radius, border-color
+*/
+
+/* ============================================
+   MAL vs BIEN: propiedades de animaci&oacute;n
+   ============================================ */
+
+/* MAL: animar width/height (causa Layout en cada frame) */
+.expand-bad {
+    width: 100px;
+    transition: width 0.3s ease;
+}
+.expand-bad:hover {
+    width: 300px; /* Layout thrashing! */
+}
+
+/* BIEN: animar transform (solo Composite) */
+.expand-good {
+    transform: scaleX(0.33); /* 100/300 = 0.33 */
+    transform-origin: left;
+    transition: transform 0.3s ease;
+}
+.expand-good:hover {
+    transform: scaleX(1);
+}
+
+/* MAL: animar top/left para mover elementos */
+.move-bad {
+    position: relative;
+    top: 0;
+    transition: top 0.3s ease;
+}
+.move-bad:hover {
+    top: -20px; /* Layout en cada frame! */
+}
+
+/* BIEN: usar transform: translate */
+.move-good {
+    transition: transform 0.3s ease;
+}
+.move-good:hover {
+    transform: translateY(-20px); /* Solo Composite! */
+}
+
+/* ============================================
+   WILL-CHANGE: hint para el navegador
+   ============================================ */
+
+/* Le dice al navegador que esta propiedad va a cambiar,
+   para que haga optimizaciones anticipadas (crear capa GPU).
+   USAR CON MODERACION: no lo pongas en todo. */
+
+/* Buen uso: en un elemento que s&iacute; va a animarse */
+.animated-card {
+    will-change: transform, opacity;
+}
+
+/* Bad: no lo pongas en todo por defecto */
+/* * { will-change: transform; }  -- MAL!
+   Crea una capa GPU por cada elemento,
+   consume memoria y puede EMPEORAR la performance */
+
+/* ============================================
+   CONTAINMENT: aislar repaints
+   ============================================ */
+
+/* contain: a&iacute;sla los efectos de renderizado de un elemento
+   Si un hijo cambia, no fuerza repaint de elementos fuera
+   del contenedor */
+
+.card-container {
+    contain: layout style paint;
+    /* layout: el layout del container no afecta afuera
+       style: los estilos no se filtran hacia afuera
+       paint: los cambios visuales se limitan al container */
+}
+
+/* ============================================
+   LAYER PROMOTION para animaciones complejas
+   ============================================ */
+
+/* Forzar una capa GPU con translateZ o will-change */
+.gpu-layer {
+    /* Opcion 1: will-change (recomendado) */
+    will-change: transform;
+
+    /* Opcion 2: translateZ hack (legacy) */
+    /* transform: translateZ(0); */
+
+    /* Opcion 3: translate3d hack (legacy) */
+    /* transform: translate3d(0, 0, 0); */
+}
+
+/* ============================================
+   PROMESAS DE PERFORMANCE para animaciones
+   ============================================ */
+
+/* 1. Solo anima transform y opacity */
+.card {
+    transition: transform 0.2s ease, opacity 0.3s ease;
+}
+
+/* 2. Usa will-change solo en lo que va a animarse */
+.hero-image {
+    will-change: transform;
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* 3. Respeta prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* 4. Remueve will-change despu&eacute;s de la animacion */
+/* En JS:
+   element.style.willChange = 'transform';
+   element.addEventListener('transitionend', () =&gt; {
+       element.style.willChange = 'auto';
+   });
+*/</code></pre>
+                </div>
+
+                <div class="callout callout-danger">
+                    <svg class="callout-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
+                    <div class="callout-content">
+                        <p class="callout-title">will-change: &uacute;salo con moderaci&oacute;n</p>
+                        <p><code>will-change</code> no es una soluci&oacute;n m&aacute;gica para malas animaciones. Si lo aplic&aacute;s a muchos elementos, el navegador crear&aacute; una capa GPU por cada uno, consumiendo RAM de video y potencialmente empeorando la performance. Solo us&aacute;lo en los elementos que realmente van a animarse (como un hero image que se mueve con parallax), y remu&eacute;velo despu&eacute;s de la animaci&oacute;n con JavaScript. No lo apliques en <code>*</code>, no lo pongas en CSS base, no lo uses como "seguro".</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sub-section: View Transitions API -->
+            <section class="sub-section animate-on-scroll" id="view-transitions">
+                <h2>
+                    View Transitions API: transiciones entre p&aacute;ginas
+                    <a href="#view-transitions" class="heading-anchor" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                    </a>
+                </h2>
+
+                <p>
+                    La <strong>View Transitions API</strong> es una API relativamente nueva (Chrome 111+, Edge 111+, Opera 97+) que permite crear transiciones animadas entre navegaciones de p&aacute;ginas (MPA) o entre vistas dentro de una SPA. Antes de esta API, las transiciones entre p&aacute;ginas solo eran posibles en Single Page Applications (React/Vue) donde control&aacute;s el DOM. Con View Transitions, incluso un sitio multi-p&aacute;gina tradicional (como WebForge) puede tener transiciones suaves al cambiar de p&aacute;gina: un fade, un slide, o un morphing del contenido viejo al nuevo. La API captura autom&aacute;ticamente un snapshot del estado viejo, espera el DOM nuevo, captura un snapshot del estado nuevo, y anima la transici&oacute;n entre ambos.
+                </p>
+
+                <div class="code-block">
+                    <div class="code-block-header">
+                        <span class="code-block-lang">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/></svg>
+                            JS
+                        </span>
+                        <button class="code-block-copy" aria-label="Copiar codigo">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                            Copiar
+                        </button>
+                    </div>
+                    <pre><code class="language-js">// ============================================
+// View Transitions API: transiciones entre paginas
+// ============================================
+
+// --- MPA (Multi-Page App): la forma m&aacute;s simple ---
+// En cada p&aacute;gina donde quer&eacute;s transici&oacute;n al navegar:
+
+// Detectar un link click y hacer la transici&oacute;n
+document.querySelectorAll('a').forEach(link =&gt; {
+    link.addEventListener('click', async (e) =&gt; {
+        e.preventDefault();
+        const href = link.href;
+
+        // Si el navegador soporta View Transitions
+        if (document.startViewTransition) {
+            document.startViewTransition(() =&gt; {
+                // Actualizar el DOM (navegar)
+                document.location.href = href;
+            });
+        } else {
+            // Fallback: navegaci&oacute;n normal
+            document.location.href = href;
+        }
+    });
+});
+
+// --- CSS: animar la transici&oacute;n ---
+// El navegador crea pseudo-elementos autom&aacute;ticamente:
+// ::view-transition-old(root) = snapshot VIEJO
+// ::view-transition-new(root) = snapshot NUEVO
+
+/*
+::view-transition-old(root) {
+    animation: fade-out 0.3s ease-out;
+}
+
+::view-transition-new(root) {
+    animation: fade-in 0.3s ease-out;
+}
+
+@keyframes fade-out {
+    to { opacity: 0; }
+}
+
+@keyframes fade-in {
+    from { opacity: 0; }
+}
+*/
+
+// --- Transici&oacute;n de slide (p&aacute;gina vieja sale, nueva entra) ---
+/*
+::view-transition-old(root) {
+    animation: slide-out 0.3s ease-in;
+}
+
+::view-transition-new(root) {
+    animation: slide-in 0.3s ease-out;
+}
+
+@keyframes slide-out {
+    to { transform: translateX(-100%); opacity: 0; }
+}
+
+@keyframes slide-in {
+    from { transform: translateX(100%); opacity: 0; }
+}
+*/
+
+// --- Transici&oacute;n NAMED: animar elementos espec&iacute;ficos ---
+// HTML viejo:
+// &lt;img src="foto.jpg" view-transition-name="hero-img"&gt;
+// HTML nuevo:
+// &lt;img src="foto-otra.jpg" view-transition-name="hero-img"&gt;
+
+// CSS: el navegador detecta que ambos tienen el mismo
+// view-transition-name y hace un morphing entre ellos
+/*
+::view-transition-old(hero-img) {
+    animation: scale-down 0.3s ease;
+}
+
+::view-transition-new(hero-img) {
+    animation: scale-up 0.3s ease;
+}
+*/</code></pre>
+                </div>
+
+                <h3>Soporte de navegadores</h3>
+
+                <p>
+                    La View Transitions API tiene soporte en Chrome/Edge 111+, Opera 97+, y Safari 18+. Firefox a&uacute;n no la soporta nativamente (en behind a flag). Para producci&oacute;n, es esencial usar feature detection con <code>if (document.startViewTransition)</code> y proporcionar un fallback sin animaci&oacute;n (navegaci&oacute;n normal). A medida que los navegadores van adoptando la API, la experiencia mejora progresivamente. Es una feature relativamente nueva pero con un futuro prometedor: elimina la necesidad de frameworks SPA solo para tener transiciones entre p&aacute;ginas.
+                </p>
+
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>Navegador</th>
+                            <th>Soporte</th>
+                            <th>Notas</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Chrome / Edge</td>
+                            <td>111+ (marzo 2023)</td>
+                            <td>Soporte completo con named transitions.</td>
+                        </tr>
+                        <tr>
+                            <td>Firefox</td>
+                            <td>Behind flag</td>
+                            <td>En desarrollo activo. No disponible por defecto.</td>
+                        </tr>
+                        <tr>
+                            <td>Safari</td>
+                            <td>18+ (2024)</td>
+                            <td>Soporte completo, incluido iOS Safari 18+.</td>
+                        </tr>
+                        <tr>
+                            <td>Feature Detection</td>
+                            <td><code>document.startViewTransition</code></td>
+                            <td>Si es <code>undefined</code>, el navegador no lo soporta. Fallback a navegaci&oacute;n normal.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="callout callout-tip">
+                    <svg class="callout-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>
+                    <div class="callout-content">
+                        <p class="callout-title">Progressive Enhancement</p>
+                        <p>La View Transitions API es un ejemplo perfecto de progressive enhancement: en navegadores que la soportan, el usuario ve una transici&oacute;n suave. En los que no, la navegaci&oacute;n funciona normalmente sin animaci&oacute;n. No hay breakage, no hay error&mdash;solo una experiencia ligeramente diferente. Este es el enfoque correcto para features modernas en la web.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sub-section: Buenas pr&aacute;cticas -->
+            <section class="sub-section animate-on-scroll" id="buenas-practicas">
+                <h2>
+                    Buenas pr&aacute;cticas
+                    <a href="#buenas-practicas" class="heading-anchor" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                    </a>
+                </h2>
+
+                <p>
+                    Las animaciones pueden hacer o deshacer una interfaz. Bien usadas, mejoran la usabilidad: dan feedback inmediato, gu&iacute;an la atenci&oacute;n, comunican relaciones espaciales y hacen que la interfaz se sienta responsiva. Mal usadas, distraen, frustan, causan mareos (motion sickness) y empeoran la accesibilidad. Las siguientes reglas te ayudan a encontrar el balance correcto entre "vivo" y "funcional".
+                </p>
+
+                <div class="code-block">
+                    <div class="code-block-header">
+                        <span class="code-block-lang">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+                            CSS
+                        </span>
+                        <button class="code-block-copy" aria-label="Copiar codigo">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                            Copiar
+                        </button>
+                    </div>
+                    <pre><code class="language-css">/* ============================================
+   BUENAS PRACTICAS PARA ANIMACIONES
+   ============================================ */
+
+/* --- 1. RESPETA prefers-reduced-motion --- */
+/* OBLIGATORIO. Si el usuario prefiere menos movimiento,
+   desactiv&aacute; todas las animaciones. */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* Tambi&eacute;n pod&eacute;s definir una custom property
+   y usarla en tus animaciones */
+:root {
+    --animation-duration: 0.6s;
+    --transition-duration: 0.3s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    :root {
+        --animation-duration: 0.01ms;
+        --transition-duration: 0.01ms;
+    }
+}
+
+.card {
+    animation: fade-in var(--animation-duration) ease forwards;
+}
+
+/* --- 2. Duraciones cortas y consistentes --- */
+/* Las micro-interacciones: 150-300ms
+   Las transiciones de contenido: 300-500ms
+   Las animaciones de entrada: 500-800ms
+   Nada deber&iacute;a durar m&aacute;s de 1s */
+
+/* Duraciones recomendadas (en Custom Properties) */
+:root {
+    --duration-instant: 100ms;   /* Click feedback */
+    --duration-fast:    150ms;   /* Hover, focus */
+    --duration-normal:  300ms;   /* Transiciones generales */
+    --duration-slow:    500ms;   /* Modales, page transitions */
+    --duration-slower:  800ms;   /* Animaciones de entrada */
+}
+
+/* --- 3. Usa ease-out para entradas, ease-in para salidas --- */
+.element-enter {
+    animation: fade-in 0.3s ease-out;
+}
+
+.element-exit {
+    animation: fade-out 0.3s ease-in;
+}
+
+/* --- 4. Evita animar propiedades que causan reflow --- */
+/* BIEN: transform + opacity */
+.btn {
+    transition: transform 0.15s ease-out, opacity 0.2s ease;
+}
+.btn:hover {
+    transform: translateY(-1px);
+}
+
+/* MAL: width, height, margin, padding, top, left */
+/* Estas fuerzan Layout en cada frame del navegador */
+
+/* --- 5. No hagas animaciones redundantes --- */
+/* Si el usuario hizo click en algo, NO necesitas
+   una animaci&oacute;n de 3 segundos. El feedback debe
+   ser inmediato y corto (100-300ms) */
+
+/* --- 6. Evita loops infinitos visibles --- */
+/* Los loops infinitos son aceptables SOLO para:
+   - Spinners / loaders (mientras carga algo)
+   - Indicadores sutiles (cursor blink)
+   - Elementos perif&eacute;ricos (no el contenido principal)
+
+   MAL: un hero text con typewriter loop infinito
+   BIEN: un spinner mientras carga un formulario */
+
+/* --- 7. Usa animation-fill-mode: forwards --- */
+/* Para animaciones de entrada que deber&iacute;an
+   mantener su estado final */
+.fade-in {
+    opacity: 0;
+    animation: fade-in 0.5s ease forwards;
+    /* forwards: mantiene opacity: 1 al finalizar */
+}</code></pre>
+                </div>
+
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>Regla</th>
+                            <th>Por qu&eacute;</th>
+                            <th>Ejemplo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Respeta <code>prefers-reduced-motion</code></strong></td>
+                            <td>Algunos usuarios tienen vestibulares o mareos. Es obligatorio por WCAG.</td>
+                            <td>Desactivar todas las animaciones cuando el usuario lo prefiere.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Duraciones cortas</strong></td>
+                            <td>Animaciones largas frustan al usuario. 150-500ms cubre el 99% de los casos.</td>
+                            <td>Hover: 150ms, transiciones: 300ms, entrada: 500ms.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Solo anima <code>transform</code> y <code>opacity</code></strong></td>
+                            <td>Son las &uacute;nicas propiedades que no causan reflow. 60fps garantizado.</td>
+                            <td>Usa <code>translate</code> en lugar de <code>top</code>, <code>scale</code> en lugar de <code>width</code>.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Easing natural</strong></td>
+                            <td>La curva define la "personalidad" de la animaci&oacute;n. <code>ease-out</code> es la m&aacute;s natural.</td>
+                            <td>Entradas: <code>ease-out</code>, salidas: <code>ease-in</code>, toggle: <code>ease-in-out</code>.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Prop&oacute;sito funcional</strong></td>
+                            <td>Toda animaci&oacute;n debe comunicar algo, no solo decorar.</td>
+                            <td>Hover lift = interactivo, fade-in = aparece contenido, shake = error.</td>
+                        </tr>
+                        <tr>
+                            <td><strong><code>will-change</code> moderado</strong></td>
+                            <td>Solo en elementos que realmente se animan. Remover despu&eacute;s.</td>
+                            <td>Aplicar en hover, remover al final de la transici&oacute;n.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Section Nav -->
+            <nav class="section-nav mt-8" style="display: flex; justify-content: space-between; padding-top: var(--space-6); border-top: 1px solid var(--border-color);">
+                <a href="css-frameworks.html" class="btn btn-secondary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                    Frameworks CSS
+                </a>
+                <a href="css-maquetacion.html" class="btn btn-secondary">
+                    Maquetaci&oacute;n Web
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                </a>
+            </nav>
+
+        </main>
+
+        <!-- Footer -->
+        <footer class="site-footer" id="site-footer"></footer>
+    </div>
+
+    <!-- JS -->
+    <script src="../js/common-loader.js"></script>
+    <script src="../js/sidebar.js"></script>
+    <script src="../js/theme-toggle.js"></script>
+    <script src="../js/code-blocks.js"></script>
+    <script src="../js/scroll-animations.js"></script>
+</body>
+</html>
