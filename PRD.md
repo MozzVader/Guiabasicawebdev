@@ -669,7 +669,7 @@ Las cheatsheets son secciones dedicadas con formato de **referencia rápida**. T
 ### Fase 8: Contenido — SEO & Extras
 - [x] Escribir `sections/herramientas-workflow.html`
 - [x] Escribir `sections/seo-performance.html`
-- [ ] Escribir `cheatsheets/seo-cheatsheet.html`
+- [x] Escribir `cheatsheets/seo-cheatsheet.html`
 - [ ] Escribir `sections/recursos.html` (links, tutoriales, videos)
 - [x] Reorganizar men&uacute;: SEO como categor&iacute;a propia, Extras con Herramientas + Recursos
 
