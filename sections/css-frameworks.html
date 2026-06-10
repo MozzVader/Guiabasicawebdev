@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frameworks CSS — WebForge</title>
+    <meta name="description" content="Frameworks CSS: qu&eacute; son, cu&aacute;ndo usarlos y cu&aacute;ndo CSS puro es mejor. Tailwind CSS (filosof&iacute;a utility-first, configuraci&oacute;n, responsive, dark mode), Bootstrap 5 (componentes, grid system), comparativa Tailwind vs Bootstrap, y CSS puro vs frameworks: ventajas y desventajas de cada enfoque.">
+    <meta name="theme-color" content="#0d1117">
+    <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Highlight.js (CDN) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/code-blocks.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+
+    <div class="page-wrapper">
+        <!-- Header -->
+        <header class="site-header" id="site-header"></header>
+
+        <!-- Sidebar -->
+        <aside class="site-sidebar" id="site-sidebar"></aside>
+        <div class="sidebar-overlay"></div>
+
+        <!-- Main Content -->
+        <main class="main-content" role="main">
+
+            <!-- Breadcrumb -->
+            <div class="section-breadcrumb">
+                <a href="../index.html">Inicio</a>
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                <span>CSS</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                <span>Frameworks CSS</span>
+            </div>
+
+            <!-- Section Header -->
+            <div class="section-header animate-on-scroll">
+                <h1>Frameworks CSS</h1>
+                <p>Un framework CSS es una colecci&oacute;n preconstruida de estilos, componentes y utilidades que acelera el desarrollo web al proveer una base s&oacute;lida de dise&ntilde;o y layout. En lugar de escribir cada regla CSS desde cero, us&aacute;s las clases y componentes del framework como bloques de construcci&oacute;n. Los dos m&aacute;s populares hoy son <strong>Tailwind CSS</strong> (enfoque <em>utility-first</em> donde aplic&aacute;s clases directamente en el HTML) y <strong>Bootstrap 5</strong> (enfoque <em>component-based</em> donde us&aacute;s componentes predefinidos con HTML sem&aacute;ntico). La elecci&oacute;n entre uno u otro&mdash;o CSS puro&mdash;depende del proyecto, el equipo y las prioridades.</p>
+            </div>
+
+            <p>
+                Los frameworks CSS nacieron para resolver problemas reales: inconsistencia entre navegadores, dise&ntilde;o responsivo complejo, accesibilidad b&aacute;sica y la necesidad de iterar r&aacute;pidamente en prototipos. Sin embargo, usan un framework implica adoptar sus convenciones, su tama&ntilde;o (aunque sea tree-shakeable), y su curva de aprendizaje. No es una decisi&oacute;n neutral&mdash;un framework moldea c&oacute;mo escrib&iacute;s HTML y c&oacute;mo piensas el layout. Por eso es crucial entender qu&eacute; ofrece cada uno, cu&aacute;ndo vale la pena y cu&aacute;ndo CSS puro es la mejor opci&oacute;n.
+            </p>
+
+            <!-- Sub-section: Qu&eacute; son y cu&aacute;ndo usarlos -->
+            <section class="sub-section animate-on-scroll" id="que-son">
+                <h2>
+                    Qu&eacute; son y cu&aacute;ndo usarlos
+                    <a href="#que-son" class="heading-anchor" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                    </a>
+                </h2>
+
+                <p>
+                    Un framework CSS es una librer&iacute;a que provee un sistema de dise&ntilde;o predefinido: tipograf&iacute;a, colores, espaciado, componentes (botones, cards, modales, navbars), layouts (grids, containers, flex utilities) y a menudo funcionalidad JavaScript. La diferencia clave con una simple librer&iacute;a de CSS es que un framework impone una <strong>arquitectura</strong> y una <strong>filosof&iacute;a</strong>: no solo te da herramientas, te dice c&oacute;mo usarlas. Bootstrap te dice "us&aacute; un <code>&lt;div class="card"&gt;</code> con esta estructura HTML", mientras que Tailwind te dice "us&aacute; estas clases utility directamente en tus elementos".
+                </p>
+
+                <h3>Cu&aacute;ndo tiene sentido usar un framework</h3>
+
+                <div class="code-block">
+                    <div class="code-block-header">
+                        <span class="code-block-lang">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+                            Conceptos
+                        </span>
+                        <button class="code-block-copy" aria-label="Copiar codigo">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                            Copiar
+                        </button>
+                    </div>
+                    <pre><code class="language-plaintext">/* ============================================
+   CUANDO USAR UN FRAMEWORK
+   ============================================ */
+
+/* SI: Prototipado r&aacute;pido */
+/* Necesit&aacute;s un MVP o un dashboard admin en d&iacute;as, no semanas.
+   Los frameworks te dan componentes listos (tablas, formularios,
+   modales, notificaciones) que te ahorran semanas de trabajo. */
+
+/* SI: Equipos grandes o freelancers */
+/* Un equipo de 5+ devs necesita consistencia visual.
+   Un framework est&aacute;ndariza colores, tipograf&iacute;a y componentes
+   sin depender de un solo dise&ntilde;ador. */
+
+/* SI: Aplicaciones web internas */
+/* Dashboards, paneles de admin, CRMs, ERPs.
+   No necesit&aacute;s un dise&ntilde;o &uacute;nico&mdash;necesit&aacute;s funcionalidad
+   r&aacute;pida y consistencia. Bootstrap o Tailwind brillan aqu&iacute;. */
+
+/* SI: Poca experiencia en dise&ntilde;o CSS */
+/* Si reci&eacute;n empez&aacute;s, un framework te da un punto de partida
+   con decisiones de dise&ntilde;o ya tomadas (colores, spacing, fonts). */
+
+/* ============================================
+   CUANDO NO USAR UN FRAMEWORK (CSS PURO)
+   ============================================ */
+
+/* NO: Sitios con identidad visual &uacute;nica */
+/* Si el brief dice "dise&ntilde;o custom, nada gen&eacute;rico", un framework
+   te va a luchar. Vas a sobreescribir la mayor&iacute;a de estilos
+   y terminar&aacute;s con CSS puro + overhead del framework. */
+
+/* NO: Sitios est&aacute;ticos peque&ntilde;os */
+/* Un landing page de 5 secciones no necesita Bootstrap.
+   CSS puro es m&aacute;s ligero, m&aacute;s r&aacute;pido de cargar,
+   y te da control total sin dependencias. */
+
+/* NO: Cuando el rendimiento es cr&iacute;tico */
+/* Incluso con tree-shaking, un framework a&ntilde;ade peso.
+   Para sitios donde cada kilobyte cuenta (mobile en 3G,
+   PWAs, Core Web Vitals agresivos), CSS puro gana. */
+
+/* NO: Quieres aprender CSS de verdad */
+/* Los frameworks abstraen CSS. Si no entend&eacute;s box model,
+   specificity y flexbox/grid, el framework es una muleta,
+   no una soluci&oacute;n. */</code></pre>
+                </div>
+
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>Criterio</th>
+                            <th>Framework CSS</th>
+                            <th>CSS Puro</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Velocidad de desarrollo</strong></td>
+                            <td>R&aacute;pido (componentes prehechos)</td>
+                            <td>M&aacute;s lento (escrib&iacute;s todo)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Tama&ntilde;o del CSS</strong></td>
+                            <td>Variable (PurgeCSS/Tailwind JIT: solo lo usado)</td>
+                            <td>M&iacute;nimo (solo lo que necesit&aacute;s)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Personalizaci&oacute;n</strong></td>
+                            <td>Limitada a la API del framework</td>
+                            <td>Total y sin restricciones</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Consistencia</strong></td>
+                            <td>Alta (el framework la impone)</td>
+                            <td>Depende de tu disciplina</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Curva de aprendizaje</strong></td>
+                            <td>Media (aprender las clases/API)</td>
+                            <td>Baja (CSS es el est&aacute;ndar)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Dependencia</strong></td>
+                            <td>Alta (versiones, breaking changes)</td>
+                            <td>Ninguna (CSS no tiene versiones)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Look gen&eacute;rico</strong></td>
+                            <td>Alto riesgo ("se nota que es Bootstrap")</td>
+                            <td>Bajo riesgo (dise&ntilde;o &uacute;nico)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Sub-section: Tailwind CSS -->
+            <section class="sub-section animate-on-scroll" id="tailwind">
+                <h2>
+                    Tailwind CSS: filosof&iacute;a utility-first
+                    <a href="#tailwind" class="heading-anchor" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                    </a>
+                </h2>
+
+                <p>
+                    Tailwind CSS es el framework CSS m&aacute;s popular del mundo en la actualidad seg&uacute;n m&uacute;ltiples encuestas (State of CSS, State of JS). Su enfoque <strong>utility-first</strong> es radicalmente diferente a los frameworks tradicionales: en lugar de darte componentes prehechos (<code>.card</code>, <code>.btn</code>, <code>.navbar</code>), te da clases at&oacute;micas de una sola propiedad: <code>flex</code>, <code>p-4</code>, <code>text-blue-500</code>, <code>rounded-lg</code>, <code>hover:bg-gray-100</code>. El HTML termina con muchas clases, pero el resultado es un CSS extremadamente eficiente porque solo se genera lo que us&aacute;s (gracias al compilador JIT, Just-In-Time).
+                </p>
+
+                <h3>Concepto utility-first</h3>
+
+                <p>
+                    En el modelo utility-first, cada clase CSS hace <em>una sola cosa</em>. No hay un <code>.card</code> con padding, fondo, borde y sombra todo junto&mdash;en su lugar, aplic&aacute;s las clases individuales que necesit&aacute;s. Esto suena tedioso al principio, pero tiene ventajas enormes: no te pele&aacute;s con nombres de clases ("&iquest;ser&aacute; <code>.card-title</code> o <code>.card__title</code>?"), no hay specificity wars (todas las clases tienen la misma especificidad), y el dise&ntilde;o vive en el HTML donde lo pod&eacute;s ver completo, en lugar de estar repartido entre HTML y CSS. Tailwind v4 (2024) introdujo un motor basado en Rust a&uacute;n m&aacute;s r&aacute;pido y una sintaxis simplificada con CSS-first configuration.
+                </p>
+
+                <div class="code-block">
+                    <div class="code-block-header">
+                        <span class="code-block-lang">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="M17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+                            HTML
+                        </span>
+                        <button class="code-block-copy" aria-label="Copiar codigo">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                            Copiar
+                        </button>
+                    </div>
+                    <pre><code class="language-html">&lt;!-- ============================================
+     TAILWIND: utility-first en acci&oacute;n
+     Cada clase = una propiedad CSS
+     ============================================ --&gt;
+
+&lt;!-- Card con Tailwind --&gt;
+&lt;div class="max-w-sm rounded-2xl border border-gray-200 bg-white
+            p-6 shadow-lg hover:shadow-xl transition-shadow"&gt;
+    &lt;img src="foto.jpg"
+         alt="Foto de perfil"
+         class="h-48 w-full rounded-xl object-cover mb-4"&gt;
+    &lt;h3 class="text-xl font-semibold text-gray-900 mb-2"&gt;
+        Mar&iacute;a Gonz&aacute;lez
+    &lt;/h3&gt;
+    &lt;p class="text-gray-600 text-sm leading-relaxed mb-4"&gt;
+        Desarrolladora frontend en Buenos Aires.
+        Apasionada por CSS y la accesibilidad web.
+    &lt;/p&gt;
+    &lt;div class="flex gap-2"&gt;
+        &lt;button class="rounded-lg bg-blue-600 px-4 py-2 text-sm
+                       font-medium text-white hover:bg-blue-700
+                       transition-colors"&gt;
+            Seguir
+        &lt;/button&gt;
+        &lt;button class="rounded-lg border border-gray-300 px-4 py-2
+                       text-sm font-medium text-gray-700
+                       hover:bg-gray-50 transition-colors"&gt;
+            Mensaje
+        &lt;/button&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Equivalente en CSS puro (lo que se generar&iacute;a) --&gt;
+&lt;!--
+.max-w-sm { max-width: 24rem; }
+.rounded-2xl { border-radius: 1rem; }
+.border { border-width: 1px; }
+.border-gray-200 { border-color: #e5e7eb; }
+.bg-white { background-color: #ffffff; }
+.p-6 { padding: 1.5rem; }
+.shadow-lg { box-shadow: 0 10px 15px rgba(0,0,0,0.1); }
+.hover\:shadow-xl:hover { box-shadow: 0 20px 25px rgba(0,0,0,0.1); }
+.transition-shadow { transition: box-shadow 150ms; }
+--&gt;</code></pre>
+                </div>
+
+                <h3>Configuraci&oacute;n</h3>
+
+                <p>
+                    Tailwind se configura con un archivo <code>tailwind.config.js</code> donde defin&iacute;s tu tema: colores custom, fuentes, breakpoints, espaciado, border-radius y m&aacute;s. A partir de v4, la configuraci&oacute;n puede vivir directamente en CSS con <code>@theme</code>. El compilador JIT genera solo las clases que encontr&aacute; en tu HTML/JS/templating, as&iacute; que el CSS final pesa apenas unos kilobytes sin importar cu&aacute;ntas clases tiene el framework. Esto resuelve la cr&iacute;tica hist&oacute;rica de "Tailwind genera CSS gigante".
+                </p>
+
+                <div class="code-block">
+                    <div class="code-block-header">
+                        <span class="code-block-lang">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/></svg>
+                            JS
+                        </span>
+                        <button class="code-block-copy" aria-label="Copiar codigo">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                            Copiar
+                        </button>
+                    </div>
+                    <pre><code class="language-js">// tailwind.config.js (Tailwind v3)
+
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+    content: [
+        './index.html',
+        './src/**/*.{html,js,jsx,ts,tsx,vue,svelte}',
+        // Solo escanea estos archivos para generar CSS
+    ],
+    theme: {
+        // Extender el tema por defecto (no lo sobreescribe)
+        extend: {
+            colors: {
+                brand: {
+                    50:  '#eff6ff',
+                    100: '#dbeafe',
+                    500: '#3b82f6',
+                    600: '#2563eb',
+                    700: '#1d4ed8',
+                    900: '#1e3a5f',
+                },
+            },
+            fontFamily: {
+                sans: ['Inter', 'system-ui', 'sans-serif'],
+                mono: ['JetBrains Mono', 'monospace'],
+                display: ['Space Grotesk', 'sans-serif'],
+            },
+            spacing: {
+                '18': '4.5rem',
+                '88': '22rem',
+                '128': '32rem',
+            },
+            maxWidth: {
+                '8xl': '88rem',
+            },
+            borderRadius: {
+                '4xl': '2rem',
+            },
+            // Keyframes custom
+            keyframes: {
+                'fade-in': {
+                    from: { opacity: '0', transform: 'translateY(10px)' },
+                    to:   { opacity: '1', transform: 'translateY(0)' },
+                },
+            },
+            animation: {
+                'fade-in': 'fade-in 0.5s ease-out',
+            },
+        },
+    },
+    plugins: [
+        require('@tailwindcss/forms'),    // Estilos para formularios
+        require('@tailwindcss/typography'), // Prose para contenido
+        require('@tailwindcss/container-queries'), // Container queries
+    ],
+}</code></pre>
+                </div>
+
+                <h3>Responsive con Tailwind</h3>
+
+                <p>
+                    El sistema responsive de Tailwind es mobile-first y funciona con prefijos de breakpoint en las clases: <code>sm:</code> (640px+), <code>md:</code> (768px+), <code>lg:</code> (1024px+), <code>xl:</code> (1280px+), <code>2xl:</code> (1536px+). Cada clase sin prefijo aplica en todos los tama&ntilde;os, y con prefijo aplica solo desde ese breakpoint en adelante. Esto permite definir el layout completo de un elemento en una sola l&iacute;nea de HTML, sin necesidad de media queries separadas. Es una de las features m&aacute;s productivas de Tailwind.
+                </p>
+
+                <div class="code-block">
+                    <div class="code-block-header">
+                        <span class="code-block-lang">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+                            HTML
+                        </span>
+                        <button class="code-block-copy" aria-label="Copiar codigo">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                            Copiar
+                        </button>
+                    </div>
+                    <pre><code class="language-html">&lt;!-- ============================================
+     TAILWIND: responsive con prefijos
+     Mobile-first: sin prefijo = base (mobile)
+     ============================================ --&gt;
+
+&lt;!-- Grid responsivo --&gt;
+&lt;div class="grid grid-cols-1          /* 1 columna en mobile */
+            md:grid-cols-2             /* 2 columnas desde 768px */
+            lg:grid-cols-3             /* 3 columnas desde 1024px */
+            xl:grid-cols-4             /* 4 columnas desde 1280px */
+            gap-4 md:gap-6 lg:gap-8"&gt;
+
+    &lt;div class="p-4 md:p-6 lg:p-8"&gt;Card 1&lt;/div&gt;
+    &lt;div class="p-4 md:p-6 lg:p-8"&gt;Card 2&lt;/div&gt;
+    &lt;div class="p-4 md:p-6 lg:p-8"&gt;Card 3&lt;/div&gt;
+    &lt;div class="p-4 md:p-6 lg:p-8"&gt;Card 4&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Tipograf&iacute;a responsive --&gt;
+&lt;h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl
+          font-bold text-gray-900 tracking-tight"&gt;
+    T&iacute;tulo responsivo
+&lt;/h1&gt;
+
+&lt;!-- Navbar responsiva --&gt;
+&lt;nav class="flex flex-col md:flex-row items-center
+            justify-between p-4 md:p-6 max-w-7xl mx-auto"&gt;
+    &lt;div class="logo text-xl font-bold"&gt;Brand&lt;/div&gt;
+    &lt;div class="hidden md:flex gap-6"&gt;  /* Oculto en mobile */
+        &lt;a href="#" class="hover:text-blue-600"&gt;Inicio&lt;/a&gt;
+        &lt;a href="#" class="hover:text-blue-600"&gt;Productos&lt;/a&gt;
+        &lt;a href="#" class="hover:text-blue-600"&gt;Contacto&lt;/a&gt;
+    &lt;/div&gt;
+    &lt;!-- Hamburguesa solo en mobile --&gt;
+    &lt;button class="md:hidden"&gt;Menu&lt;/button&gt;
+&lt;/nav&gt;
+
+&lt;!-- ============================================
+     ARBITRARY VALUES: valores custom inline
+     ============================================ --&gt;
+
+&lt;!-- Cuando necesitas un valor que no existe en la escala --&gt;
+&lt;div class="w-[320px]         /* width: 320px */
+            mt-[1.75rem]       /* margin-top: 1.75rem */
+            text-[13px]        /* font-size: 13px */
+            bg-[#1a1a2e]"&gt;    /* background: #1a1a2e */
+    Valores arbitrarios con corchetes
+&lt;/div&gt;</code></pre>
+                </div>
+
+                <h3>Dark Mode y estado</h3>
+
+                <p>
+                    Tailwind soporta dark mode de dos formas: <code>media</code> (basado en la preferencia del sistema operativo, usando <code>prefers-color-scheme</code>) o <code>class</code> (basado en una clase en el <code>&lt;html&gt;</code>, generalmente <code>dark</code>, que permite un toggle manual). El enfoque <code>class</code> es el m&aacute;s usado porque permite que el usuario elija su tema independientemente del sistema. Las variaciones de estado (hover, focus, active, disabled, visited) se aplican con el prefijo del estado: <code>hover:</code>, <code>focus:</code>, <code>disabled:</code>, etc. Se pueden combinar con breakpoints: <code>md:hover:bg-blue-700</code>.
+                </p>
+
+                <div class="code-block">
+                    <div class="code-block-header">
+                        <span class="code-block-lang">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/></svg>
+                            HTML
+                        </span>
+                        <button class="code-block-copy" aria-label="Copiar codigo">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                            Copiar
+                        </button>
+                    </div>
+                    <pre><code class="language-html">&lt;!-- ============================================
+     DARK MODE (estrategia 'class')
+     ============================================ --&gt;
+
+&lt;!-- tailwind.config.js --&gt;
+&lt;!-- darkMode: 'class', --&gt;
+
+&lt;!-- El toggle agrega/quita la clase 'dark' en &lt;html&gt; --&gt;
+&lt;!-- &lt;html class="dark"&gt;  o  &lt;html&gt; --&gt;
+
+&lt;!-- Elementos con variante dark: --&gt;
+&lt;div class="bg-white text-gray-900
+            dark:bg-gray-900 dark:text-gray-100
+            p-6 rounded-xl"&gt;
+    &lt;p class="text-gray-600 dark:text-gray-400"&gt;
+        Este texto cambia de color en dark mode.
+    &lt;/p&gt;
+&lt;/div&gt;
+
+&lt;!-- Card con dark mode completo --&gt;
+&lt;div class="bg-white border border-gray-200 rounded-2xl p-6
+            shadow-sm
+            dark:bg-gray-800 dark:border-gray-700
+            dark:shadow-none"&gt;
+    &lt;h3 class="text-lg font-semibold text-gray-900
+               dark:text-white"&gt;
+        T&iacute;tulo de la card
+    &lt;/h3&gt;
+    &lt;p class="mt-2 text-gray-500 dark:text-gray-400"&gt;
+        Descripci&oacute;n que se adapta al tema.
+    &lt;/p&gt;
+&lt;/div&gt;
+
+&lt;!-- ============================================
+     ESTADOS: hover, focus, active, disabled
+     ============================================ --&gt;
+
+&lt;!-- Bot&oacute;n con estados --&gt;
+&lt;button class="rounded-lg bg-blue-600 px-4 py-2
+               text-sm font-medium text-white
+               hover:bg-blue-700
+               active:bg-blue-800
+               focus:outline-none focus:ring-2
+               focus:ring-blue-500 focus:ring-offset-2
+               disabled:opacity-50 disabled:cursor-not-allowed
+               transition-colors"&gt;
+    Guardar cambios
+&lt;/button&gt;
+
+&lt;!-- Input con estados --&gt;
+&lt;input type="email"
+       class="w-full rounded-lg border border-gray-300
+              px-4 py-2 text-sm
+              placeholder-gray-400
+              focus:border-blue-500 focus:ring-2
+              focus:ring-blue-500/20
+              invalid:border-red-500
+              dark:bg-gray-800 dark:border-gray-600
+              dark:text-white"&gt;
+
+&lt;!-- Estados + responsive combinados --&gt;
+&lt;!-- Este bot&oacute;n tiene diferente padding en mobile vs desktop --&gt;
+&lt;button class="px-4 py-2 md:px-6 md:py-3
+               hover:bg-gray-100 md:hover:bg-gray-200
+               transition-colors"&gt;
+    Bot&oacute;n adaptativo
+&lt;/button&gt;</code></pre>
+                </div>
+
+                <h3>Componentes reutilizables</h3>
+
+                <p>
+                    Aunque Tailwind es utility-first, no significa que debas repetir clases en cada elemento. Cuando un patr&oacute;n se repite, lo extraes como componente usando las herramientas de tu framework JS (React components, Vue SFCs, Svelte components) o simplemente con clases CSS propias que agrupan las utilities. Tambi&eacute;n puedes usar la directiva <code>@apply</code> en CSS, aunque el equipo de Tailwind recomienda usar componentes JS en su lugar.
+                </p>
+
+                <div class="code-block">
+                    <div class="code-block-header">
+                        <span class="code-block-lang">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="M17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+                            CSS
+                        </span>
+                        <button class="code-block-copy" aria-label="Copiar codigo">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                            Copiar
+                        </button>
+                    </div>
+                    <pre><code class="language-css">/* ============================================
+   TAILWIND: @apply para componentes CSS
+   (use con moderacion, preferi componentes JS)
+   ============================================ */
+
+/* Con @apply: agrupas utilities en una clase CSS */
+.btn-primary {
+    @apply rounded-lg bg-blue-600 px-4 py-2
+           text-sm font-medium text-white
+           hover:bg-blue-700 active:bg-blue-800
+           focus:outline-none focus:ring-2
+           focus:ring-blue-500 focus:ring-offset-2
+           transition-colors disabled:opacity-50;
+}
+
+.btn-secondary {
+    @apply rounded-lg border border-gray-300
+           bg-white px-4 py-2 text-sm
+           font-medium text-gray-700
+           hover:bg-gray-50 active:bg-gray-100
+           transition-colors;
+}
+
+.card {
+    @apply rounded-2xl border border-gray-200
+           bg-white p-6 shadow-sm
+           dark:border-gray-700 dark:bg-gray-800;
+}
+
+/* ============================================
+   MEJOR OPCION: Componentes en tu framework JS
+   ============================================ */
+
+/* Ejemplo conceptual (no es framework real) */
+/*
+&lt;!-- ButtonComponent --&gt;
+&lt;button class="btn-primary"&gt;Texto&lt;/button&gt;
+
+&lt;!-- CardComponent --&gt;
+&lt;div class="card"&gt;
+    &lt;slot /&gt;
+&lt;/div&gt;
+*/</code></pre>
+                </div>
+
+                <div class="callout callout-tip">
+                    <svg class="callout-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>
+                    <div class="callout-content">
+                        <p class="callout-title">Tailwind sin build tool (CDN Play)</p>
+                        <p>Tailwind tiene un <strong>Play CDN</strong> para prototipos y experiments r&aacute;pidos: agreg&aacute;s un <code>&lt;script src="https://cdn.tailwindcss.com"&gt;</code> y ten&eacute;s Tailwind completo sin instalaci&oacute;n ni build. Genera las classes en tiempo real en el navegador. Es perfecto para pruebas r&aacute;pidas, CodePen, y aprendizaje. No lo us&eacute;s en producci&oacute;n porque es m&aacute;s lento que el compilador JIT nativo.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sub-section: Bootstrap 5 -->
+            <section class="sub-section animate-on-scroll" id="bootstrap">
+                <h2>
+                    Bootstrap 5: componentes y grid system
+                    <a href="#bootstrap" class="heading-anchor" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                    </a>
+                </h2>
+
+                <p>
+                    Bootstrap es el framework CSS m&aacute;s conocido y usado hist&oacute;ricamente. Creado por el equipo de Twitter en 2011, revolucion&oacute; el desarrollo web al estandarizar un grid system, componentes UI consistentes y un ecosistema de plugins. La versi&oacute;n 5 (2021) elimin&oacute; la dependencia de jQuery, migr&oacute; a CSS nativo (custom properties), reescribi&oacute; los componentes con CSS puro y mejor&oacute; el soporte de dark mode. Aunque perdi&oacute; terreno frente a Tailwind en los &uacute;ltimos a&ntilde;os, sigue siendo la opci&oacute;n m&aacute;s popular para prototipado r&aacute;pido, aplicaciones empresariales y proyectos donde la consistencia visual importa m&aacute;s que la personalizaci&oacute;n extrema.
+                </p>
+
+                <h3>Grid System</h3>
+
+                <p>
+                    El grid system de Bootstrap es una de sus features m&aacute;s ic&oacute;nicas: un grid de 12 columnas que funciona con clases <code>.container</code>, <code>.row</code> y <code>.col-*</code>. El container centra el contenido con un max-width responsivo, la row crea un flex container, y las columnas se distribuyen dentro del grid de 12. Los breakpoints son: <code>sm</code> (576px), <code>md</code> (768px), <code>lg</code> (992px), <code>xl</code> (1200px), <code>xxl</code> (1400px). Se pueden combinar para layouts complejos, y las columnas que no especifican ancho se distribuyen equitativamente.
+                </p>
+
+                <div class="code-block">
+                    <div class="code-block-header">
+                        <span class="code-block-lang">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+                            HTML
+                        </span>
+                        <button class="code-block-copy" aria-label="Copiar codigo">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                            Copiar
+                        </button>
+                    </div>
+                    <pre><code class="language-html">&lt;!-- ============================================
+     BOOTSTRAP 5: Grid System
+     Grid de 12 columnas, mobile-first
+     ============================================ --&gt;
+
+&lt;!-- Layout b&aacute;sico: container > row > col --&gt;
+&lt;div class="container"&gt;
+    &lt;div class="row"&gt;
+        &lt;div class="col"&gt;Col 1 (igual ancho)&lt;/div&gt;
+        &lt;div class="col"&gt;Col 2 (igual ancho)&lt;/div&gt;
+        &lt;div class="col"&gt;Col 3 (igual ancho)&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Columnas con ancho espec&iacute;fico (de 12) --&gt;
+&lt;div class="container"&gt;
+    &lt;div class="row"&gt;
+        &lt;div class="col-4"&gt;1/3 del ancho&lt;/div&gt;
+        &lt;div class="col-8"&gt;2/3 del ancho&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Responsive: diferente layout por breakpoint --&gt;
+&lt;div class="container"&gt;
+    &lt;div class="row"&gt;
+        &lt;!-- Mobile: 12 (full), Tablet: 6 (1/2), Desktop: 3 (1/4) --&gt;
+        &lt;div class="col-12 col-md-6 col-lg-3"&gt;Card 1&lt;/div&gt;
+        &lt;div class="col-12 col-md-6 col-lg-3"&gt;Card 2&lt;/div&gt;
+        &lt;div class="col-12 col-md-6 col-lg-3"&gt;Card 3&lt;/div&gt;
+        &lt;div class="col-12 col-md-6 col-lg-3"&gt;Card 4&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Sidebar layout --&gt;
+&lt;div class="container"&gt;
+    &lt;div class="row"&gt;
+        &lt;!-- Sidebar: 3 columnas, Main: 9 columnas --&gt;
+        &lt;aside class="col-12 col-lg-3"&gt;Sidebar&lt;/aside&gt;
+        &lt;main class="col-12 col-lg-9"&gt;Contenido&lt;/main&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Offset y orden --&gt;
+&lt;div class="container"&gt;
+    &lt;div class="row"&gt;
+        &lt;!-- Empieza en la columna 3 (offset-2) --&gt;
+        &lt;div class="col-6 offset-md-3"&gt;Centrado&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="row"&gt;
+        &lt;!-- Invierte el orden visual en desktop --&gt;
+        &lt;div class="col-md-6 order-md-2"&gt;Primero visualmente&lt;/div&gt;
+        &lt;div class="col-md-6 order-md-1"&gt;Segundo visualmente&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+
+                <h3>Componentes</h3>
+
+                <p>
+                    Bootstrap 5 incluye docenas de componentes listos para usar: <strong>navbar</strong> (navegaci&oacute;n responsiva con colapso), <strong>cards</strong> (con header, body, footer), <strong>modals</strong> (di&aacute;logos con backdrop), <strong>accordion</strong>, <strong>tabs</strong>, <strong>carousel/slider</strong>, <strong>offcanvas</strong> (paneles laterales), <strong>toasts</strong> (notificaciones), <strong>dropdowns</strong>, <strong>collapse</strong>, <strong>alerts</strong>, <strong>badges</strong>, <strong>progress bars</strong>, <strong>spinners</strong>, <strong>tooltips</strong> y <strong>popovers</strong>. La mayor&iacute;a tienen JavaScript incluido (ya no jQuery) y soporte de data attributes para activarlos sin escribir JS. Estos componentes son la principal raz&oacute;n por la que Bootstrap sigue siendo relevante: son consistentes, accesibles y funcionan out-of-the-box.
+                </p>
+
+                <div class="code-block">
+                    <div class="code-block-header">
+                        <span class="code-block-lang">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+                            HTML
+                        </span>
+                        <button class="code-block-copy" aria-label="Copiar codigo">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                            Copiar
+                        </button>
+                    </div>
+                    <pre><code class="language-html">&lt;!-- ============================================
+     BOOTSTRAP 5: Componentes esenciales
+     ============================================ --&gt;
+
+&lt;!-- Navbar responsiva (colapsa en mobile) --&gt;
+&lt;nav class="navbar navbar-expand-lg navbar-dark bg-dark"&gt;
+    &lt;div class="container"&gt;
+        &lt;a class="navbar-brand" href="#"&gt;MiSitio&lt;/a&gt;
+        &lt;button class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navContent"&gt;
+            &lt;span class="navbar-toggler-icon"&gt;&lt;/span&gt;
+        &lt;/button&gt;
+        &lt;div class="collapse navbar-collapse" id="navContent"&gt;
+            &lt;ul class="navbar-nav ms-auto"&gt;
+                &lt;li class="nav-item"&gt;
+                    &lt;a class="nav-link active" href="#"&gt;Inicio&lt;/a&gt;
+                &lt;/li&gt;
+                &lt;li class="nav-item"&gt;
+                    &lt;a class="nav-link" href="#"&gt;Productos&lt;/a&gt;
+                &lt;/li&gt;
+                &lt;li class="nav-item"&gt;
+                    &lt;a class="nav-link" href="#"&gt;Contacto&lt;/a&gt;
+                &lt;/li&gt;
+            &lt;/ul&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/nav&gt;
+
+&lt;!-- Card --&gt;
+&lt;div class="card" style="width: 18rem;"&gt;
+    &lt;img src="imagen.jpg" class="card-img-top" alt="Foto"&gt;
+    &lt;div class="card-body"&gt;
+        &lt;h5 class="card-title"&gt;T&iacute;tulo de la card&lt;/h5&gt;
+        &lt;p class="card-text"&gt;Descripci&oacute;n breve del contenido.&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class="card-body"&gt;
+        &lt;a href="#" class="btn btn-primary"&gt;Ver m&aacute;s&lt;/a&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Modal (sin escribir JS, solo data attributes) --&gt;
+&lt;!-- Bot&oacute;n que abre el modal --&gt;
+&lt;button type="button" class="btn btn-primary"
+        data-bs-toggle="modal"
+        data-bs-target="#miModal"&gt;
+    Abrir modal
+&lt;/button&gt;
+
+&lt;!-- El modal --&gt;
+&lt;div class="modal fade" id="miModal" tabindex="-1"&gt;
+    &lt;div class="modal-dialog"&gt;
+        &lt;div class="modal-content"&gt;
+            &lt;div class="modal-header"&gt;
+                &lt;h5 class="modal-title"&gt;T&iacute;tulo&lt;/h5&gt;
+                &lt;button type="button" class="btn-close"
+                        data-bs-dismiss="modal"&gt;&lt;/button&gt;
+            &lt;/div&gt;
+            &lt;div class="modal-body"&gt;
+                &lt;p&gt;Contenido del modal.&lt;/p&gt;
+            &lt;/div&gt;
+            &lt;div class="modal-footer"&gt;
+                &lt;button class="btn btn-secondary"
+                        data-bs-dismiss="modal"&gt;Cerrar&lt;/button&gt;
+                &lt;button class="btn btn-primary"&gt;Guardar&lt;/button&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Alerts --&gt;
+&lt;div class="alert alert-success" role="alert"&gt;
+    Operaci&oacute;n exitosa.
+&lt;/div&gt;
+&lt;div class="alert alert-danger" role="alert"&gt;
+    Error: campos incompletos.
+&lt;/div&gt;</code></pre>
+                </div>
+
+                <h3>Dark Mode en Bootstrap 5</h3>
+
+                <p>
+                    Bootstrap 5.3+ soporta dark mode nativo con la estrategia <code>data-bs-theme="dark"</code> en el <code>&lt;html&gt;</code> o en cualquier contenedor. Las custom properties de Bootstrap cambian autom&aacute;ticamente seg&uacute;n el tema, igual que en nuestro proyecto WebForge. A diferencia de Tailwind donde necesit&aacute;s duplicar clases (<code>bg-white dark:bg-gray-900</code>), Bootstrap aplica el cambio globalmente a trav&eacute;s de variables CSS, lo que es m&aacute;s elegante pero menos granular (no pod&eacute;s tener un componente en light y otro en dark en la misma p&aacute;gina sin JavaScript extra).
+                </p>
+
+                <div class="code-block">
+                    <div class="code-block-header">
+                        <span class="code-block-lang">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+                            HTML
+                        </span>
+                        <button class="code-block-copy" aria-label="Copiar codigo">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                            Copiar
+                        </button>
+                    </div>
+                    <pre><code class="language-html">&lt;!-- ============================================
+     BOOTSTRAP 5: Dark Mode
+     ============================================ --&gt;
+
+&lt;!-- Light mode (por defecto) --&gt;
+&lt;html data-bs-theme="light"&gt;
+
+&lt;!-- Dark mode global --&gt;
+&lt;html data-bs-theme="dark"&gt;
+
+&lt;!-- Toggle autom&aacute;tico (respeta preferencia del SO) --&gt;
+&lt;html data-bs-theme="auto"&gt;
+
+&lt;!-- Dark mode en un solo componente (no todo el page) --&gt;
+&lt;div data-bs-theme="dark"&gt;
+    &lt;!-- Este div y todo lo dentro est&aacute; en dark mode --&gt;
+    &lt;nav class="navbar navbar-dark bg-dark"&gt;...&lt;/nav&gt;
+&lt;/div&gt;
+
+&lt;!-- ============================================
+     Toggle JS para Bootstrap dark mode
+     ============================================ --&gt;
+&lt;!--
+&lt;script&gt;
+    const toggle = document.getElementById('themeToggle');
+    const html = document.documentElement;
+
+    toggle.addEventListener('click', () =&gt; {
+        const current = html.getAttribute('data-bs-theme');
+        const next = current === 'dark' ? 'light' : 'dark';
+        html.setAttribute('data-bs-theme', next);
+        localStorage.setItem('theme', next);
+    });
+
+    // Restaurar tema guardado
+    const saved = localStorage.getItem('theme');
+    if (saved) html.setAttribute('data-bs-theme', saved);
+&lt;/script&gt;
+--&gt;</code></pre>
+                </div>
+
+                <div class="callout callout-tip">
+                    <svg class="callout-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>
+                    <div class="callout-content">
+                        <p class="callout-title">Bootstrap Icons</p>
+                        <p>Bootstrap tiene su propia librer&iacute;a de iconos (<code>bootstrap-icons</code>) con m&aacute;s de 1800 iconos SVG. Son consistentes con el estilo de Bootstrap y se usan como clases CSS: <code>&lt;i class="bi bi-house"&gt;&lt;/i&gt;</code>. Son una alternativa a Lucide Icons o FontAwesome si ya us&aacute;s Bootstrap en tu proyecto.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sub-section: Tailwind vs Bootstrap -->
+            <section class="sub-section animate-on-scroll" id="tailwind-vs-bootstrap">
+                <h2>
+                    Comparativa: Tailwind vs Bootstrap
+                    <a href="#tailwind-vs-bootstrap" class="heading-anchor" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                    </a>
+                </h2>
+
+                <p>
+                    La elecci&oacute;n entre Tailwind y Bootstrap es una de las decisiones m&aacute;s debatidas en el desarrollo frontend. No hay un ganador absoluto&mdash;cada uno brilla en contextos diferentes. La clave es entender sus filosof&iacute;as opuestas: Tailwind te da herramientas at&oacute;micas para construir dise&ntilde;os custom, mientras Bootstrap te da componentes prehechos para prototipar r&aacute;pidamente. La siguiente tabla resume las diferencias m&aacute;s importantes para ayudarte a elegir seg&uacute;n tu proyecto.
+                </p>
+
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>Aspecto</th>
+                            <th>Tailwind CSS</th>
+                            <th>Bootstrap 5</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Filosof&iacute;a</strong></td>
+                            <td>Utility-first: clases at&oacute;micas, dise&ntilde;o en HTML</td>
+                            <td>Component-based: componentes prehechos con HTML sem&aacute;ntico</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Apariencia</strong></td>
+                            <td>Indeterminada (lo hac&eacute;s custom)</td>
+                            <td>Determinada (look "Bootstrap" reconocible)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Curva de aprendizaje</strong></td>
+                            <td>Media (memorizar clases, pensar en utilities)</td>
+                            <td>Baja (copiar/pegar componentes, HTML sem&aacute;ntico)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Personalizaci&oacute;n</strong></td>
+                            <td>M&aacute;xima (cada pixel es controlable)</td>
+                            <td>Media (customizar Sass variables, overrides)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Tama&ntilde;o en producci&oacute;n</strong></td>
+                            <td>Peque&ntilde;o (JIT genera solo lo usado: ~5-15KB gzipped)</td>
+                            <td>Medio (~22KB CSS min + ~7KB JS gzipped)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Build tool</strong></td>
+                            <td>Requerido (PostCSS plugin o CLI)</td>
+                            <td>Opcional (CDN funciona, pero Sass para customizar)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Componentes JS</strong></td>
+                            <td>No tiene (necesit&aacute;s un framework JS: React, Vue, etc.)</td>
+                            <td>Incluidos (modals, dropdowns, carousel via data attributes)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Dark mode</strong></td>
+                            <td>Clase por clase (<code>dark:bg-...</code>) - granular</td>
+                            <td>Global (<code>data-bs-theme</code>) - autom&aacute;tico</td>
+                        </tr>
+                        <tr>
+                            <td><strong>HTML generado</strong></td>
+                            <td>Verboso (muchas clases por elemento)</td>
+                            <td>Limpio (componentes sem&aacute;nticos)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Consistencia en equipo</strong></td>
+                            <td>Alta (las utilities limitan las opciones)</td>
+                            <td>Muy alta (los componentes est&aacute;ndarizan todo)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Comunidad / ecosistema</strong></td>
+                            <td>Enorme (Tailwind UI, Headless UI, shadcn/ui)</td>
+                            <td>Enorme (Bootswatch, THEMES, AdminLTE)</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Elige Tailwind si...</h3>
+
+                <div class="code-block">
+                    <div class="code-block-header">
+                        <span class="code-block-lang">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+                            Decision
+                        </span>
+                        <button class="code-block-copy" aria-label="Copiar codigo">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                            Copiar
+                        </button>
+                    </div>
+                    <pre><code class="language-plaintext">/* ============================================
+   ELIGE TAILWIND SI:
+   ============================================ */
+
+/* Necesit&aacute;s un dise&ntilde;o visual &uacute;nico y custom.
+   No quer&eacute;s que tu sitio parezca "otro Bootstrap m&aacute;s".
+   Tailwind te da control total sobre cada detalle visual. */
+
+/* Ya us&aacute;s un framework JS (React, Vue, Svelte, Next.js).
+   Tailwind se integra naturalmente con componentes JS.
+   Los componentes de Bootstrap son innecesarios si ten&eacute;s React. */
+
+/* Te importa el tama&ntilde;o del bundle.
+   JIT genera solo las clases que us&aacute;s (~5-15KB gzipped).
+   Es pr&aacute;cticamente impossible superar ese tama&ntilde;o con CSS puro. */
+
+/* Tu equipo prefiere "todo en un lugar".
+   El dise&ntilde;o vive en el HTML, no repartido entre HTML y CSS.
+   Es f&aacute;cil ver qu&eacute; hace cada elemento mirando sus clases. */
+
+/* Quer&eacute;s iterate r&aacute;pido en el diseño.
+   Cambiar colores, espaciado y layouts es cuestion de
+   modificar clases, no de buscar reglas CSS en archivos. */</code></pre>
+                </div>
+
+                <h3>Elige Bootstrap si...</h3>
+
+                <div class="code-block">
+                    <div class="code-block-header">
+                        <span class="code-block-lang">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+                            Decision
+                        </span>
+                        <button class="code-block-copy" aria-label="Copiar codigo">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                            Copiar
+                        </button>
+                    </div>
+                    <pre><code class="language-plaintext">/* ============================================
+   ELIGE BOOTSTRAP SI:
+   ============================================ */
+
+/* Necesit&aacute;s prototipar r&aacute;pidamente.
+   Copiar/pegar un navbar, modal, o card y tenerlo
+   funcionando en 30 segundos es invalorable. */
+
+/* No us&aacute;s un framework JS.
+   Bootstrap trae sus propios componentes interactivos
+   (modals, dropdowns, tabs) que funcionan con Vanilla JS.
+   Sin React, sin Vue, sin build tool. */
+
+/* Es un proyecto interno / admin panel / dashboard.
+   La consistencia visual importa m&aacute;s que el branding custom.
+   Bootstrap tiene themes admin (AdminLTE, Tabler) listos. */
+
+/* Tu equipo tiene poca experiencia CSS.
+   Bootstrap impone buenas pr&aacute;cticas y estructura.
+   Es m&aacute;s f&aacute;cil aprender que "un card va adentro de
+   un col-6 que va adentro de un row" que entender flexbox/grid. */
+
+/* Quer&eacute;s usar CDN sin build tool.
+   Bootstrap funciona perfectamente con un solo link tag.
+   Ideal para sitios peque&ntilde;os, demos, o aprendizaje. */</code></pre>
+                </div>
+            </section>
+
+            <!-- Sub-section: CSS puro vs Frameworks -->
+            <section class="sub-section animate-on-scroll" id="css-puro-vs-frameworks">
+                <h2>
+                    CSS Puro vs Frameworks: resumen final
+                    <a href="#css-puro-vs-frameworks" class="heading-anchor" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                    </a>
+                </h2>
+
+                <p>
+                    La decisi&oacute;n entre CSS puro y un framework no es binaria&mdash;muchos proyectos exitosos usan un enfoque h&iacute;brido: un framework para prototipar y una base de CSS custom para la identidad visual. Sin embargo, es importante entender las trade-offs. CSS puro te da m&aacute;ximo control, cero dependencias y la mejor comprensi&oacute;n de lo que est&aacute; pasando, pero es m&aacute;s lento para proyectos grandes. Un framework te da velocidad y consistencia, pero te ata a sus convenciones y puede generar un look gen&eacute;rico si no lo personaliz&aacute;s bien. La elecci&oacute;n depende del contexto, no de la preferencia personal.
+                </p>
+
+                <h3>Escenarios por tipo de proyecto</h3>
+
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>Tipo de proyecto</th>
+                            <th>Recomendaci&oacute;n</th>
+                            <th>Por qu&eacute;</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Portfolio / Landing personal</strong></td>
+                            <td>CSS puro</td>
+                            <td>Identity visual &uacute;nica, poco contenido, m&aacute;ximo control.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Blog / Sitio de contenido</strong></td>
+                            <td>CSS puro o Tailwind</td>
+                            <td>Tipograf&iacute;a y layout son lo principal, pocos componentes.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>E-commerce</strong></td>
+                            <td>Tailwind</td>
+                            <td>Componentes custom, equipo grande, rendimiento cr&iacute;tico.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Dashboard / Admin panel</strong></td>
+                            <td>Bootstrap o Tailwind</td>
+                            <td>Muchas tablas, formularios y cards. Consistencia = prioridad.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Prototipo / MVP</strong></td>
+                            <td>Bootstrap (CDN)</td>
+                            <td>Velocidad m&aacute;xima, componentes listos, sin build.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>SaaS / App compleja</strong></td>
+                            <td>Tailwind + componentes</td>
+                            <td>Dise&ntilde;o custom, many components, equipo con framework JS.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Proyecto educativo / aprendizaje</strong></td>
+                            <td>CSS puro</td>
+                            <td>Aprender CSS de verdad sin abstracciones. Este manual lo demuestra.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Proyecto legacy / mantenimiento</strong></td>
+                            <td>Lo que ya tenga</td>
+                            <td>No migres solo por gusto. La migraci&oacute;n tiene costo.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Alternativas menores</h3>
+
+                <p>
+                    M&aacute;s all&aacute; de Tailwind y Bootstrap, existen otros frameworks y librer&iacute;as CSS que vale la pena mencionar, aunque con menor market share. <strong>Bulma</strong> es un framework CSS-only (sin JS) con una sintaxis basada en Flexbox y un diseño moderno. <strong>Pico CSS</strong> es minimalista: estiliza elementos HTML sem&aacute;nticos sin clases, ideal para contenido. <strong>Open Props</strong> de Adam Argyle es un set de custom properties CSS (no un framework) que te da variables de color, espaciado y tipograf&iacute;a listas para usar con CSS puro. <strong>UnoCSS</strong> es un engine utility-first similar a Tailwind pero m&aacute;s r&aacute;pido y extensible. <strong>Windi CSS</strong> (ahora en mantenimiento) fue una alternativa a Tailwind con un runtime m&aacute;s r&aacute;pido. Cada uno tiene su nicho, pero para la inmensa mayor&iacute;a de proyectos la elecci&oacute;n real es: CSS puro, Tailwind o Bootstrap.
+                </p>
+
+                <div class="callout callout-warning">
+                    <svg class="callout-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+                    <div class="callout-content">
+                        <p class="callout-title">No olvides: un framework no reemplaza aprender CSS</p>
+                        <p>Saber usar Tailwind o Bootstrap no es lo mismo que entender CSS. Si no conoc&eacute;s box model, specificity, cascada, flexbox, grid, positioning y las unidades relativas, vas a tropezar constantemente con problemas que no sabr&aacute;s resolver. Los frameworks son herramientas de productividad, no sustitutos de conocimiento. Aprender CSS puro primero (como en este manual) te hace m&aacute;s efectivo con cualquier framework despu&eacute;s.</p>
+                    </div>
+                </div>
+
+                <div class="callout callout-tip">
+                    <svg class="callout-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>
+                    <div class="callout-content">
+                        <p class="callout-title">WebForge usa CSS puro</p>
+                        <p>Este proyecto es una demostraci&oacute;n viviente de que CSS puro es suficiente para un sitio complejo y con buen dise&ntilde;o. Sin frameworks, sin preprocesadores, sin build tools&mdash;solo HTML5 sem&aacute;ntico, CSS3 con custom properties, y Vanilla JS. Si entend&eacute;s todo lo que hay en este manual, ten&eacute;s las herramientas para construir cualquier layout que un framework pueda dar, con ventaja de control total y cero dependencias.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section Nav -->
+            <nav class="section-nav mt-8" style="display: flex; justify-content: space-between; padding-top: var(--space-6); border-top: 1px solid var(--border-color);">
+                <a href="css-preprocesadores.html" class="btn btn-secondary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                    Preprocesadores
+                </a>
+                <a href="css-animaciones.html" class="btn btn-secondary">
+                    Animaciones
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                </a>
+            </nav>
+
+        </main>
+
+        <!-- Footer -->
+        <footer class="site-footer" id="site-footer"></footer>
+    </div>
+
+    <!-- JS -->
+    <script src="../js/common-loader.js"></script>
+    <script src="../js/sidebar.js"></script>
+    <script src="../js/theme-toggle.js"></script>
+    <script src="../js/code-blocks.js"></script>
+    <script src="../js/scroll-animations.js"></script>
+</body>
+</html>
