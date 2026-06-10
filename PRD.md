@@ -1,8 +1,8 @@
 # PRD — WebForge
 
 > **Documento de Requisitos del Producto (PRD)**
-> Última actualización: 2026-06-10
-> Estado: En desarrollo — Fase 5 (HTML)
+> Última actualización: 2026-06-11
+> Estado: En desarrollo — Fase 8 (SEO & Extras)
 > Repo: [GitHub](https://github.com/MozzVader/WebForge)
 
 ---
@@ -93,7 +93,8 @@ Un recurso web gratuito, open-source y bilingüe (español/inglés) que funciona
 │   ├── js-asincronia.html              # Asincronía (Promises, async/await, fetch)
 │   ├── js-almacenamiento.html         # Almacenamiento (localStorage, cookies)
 │   ├── herramientas-workflow.html      # Herramientas & Workflow
-│   └── seo-performance.html           # SEO Básico & Performance
+│   ├── seo-performance.html           # SEO & Performance
+│   └── recursos.html                  # Recursos externos (links, tutoriales, videos)
 │
 ├── cheatsheets/                        # Cheatsheets (páginas dedicadas)
 │   ├── html-cheatsheet.html
@@ -101,6 +102,9 @@ Un recurso web gratuito, open-source y bilingüe (español/inglés) que funciona
 │   ├── js-cheatsheet.html
 │   ├── git-cheatsheet.html
 │   └── seo-cheatsheet.html
+│
+├── sitemap.xml                         # Sitemap para buscadores
+├── robots.txt                          # Directivas para crawlers
 │
 ├── css/
 │   ├── variables.css                   # Custom properties: colores, fuentes, spacing, breakpoints
@@ -156,8 +160,8 @@ Dado que el contenido superará las 5000 líneas, usamos HTMLs separados por sec
 │  - HTML  │    - Explicaciones                     │
 │  - CSS   │    - Bloques de código interactivos    │
 │  - JS    │    - Ejemplos visuales                │
-│  - Seo   │    - Tips & buenas prácticas         │
-│  - etc.  │                                       │
+│  - SEO   │    - Tips & buenas prácticas         │
+│  - Extras│                                       │
 │          │                                       │
 │  [active │                                       │
 │   state  │                                       │
@@ -483,7 +487,20 @@ Todas las animaciones respetan `prefers-reduced-motion`.
 - IndexedDB: introducción (conceptual)
 - Cuándo usar cada uno
 
-### 6.6 Herramientas & Workflow (`sections/herramientas-workflow.html`)
+### 6.6 SEO & Performance (`sections/seo-performance.html`)
+- Meta tags esenciales: title, description, viewport, charset, robots, canonical
+- Open Graph & Twitter Cards: og:title, og:description, og:image, twitter:card
+- HTML Semántico y su impacto en SEO
+- Structured data: JSON-LD (BlogPosting, FAQPage, BreadcrumbList)
+- Core Web Vitals: LCP, INP (reemplazó FID), CLS
+- Lazy loading: `loading="lazy"`, Intersection Observer
+- Optimización de imágenes: formatos (WebP, AVIF), srcset, sizes, fetchpriority
+- Lighthouse: cómo usarlo, métricas
+- Sitemap.xml: estructura, loc, lastmod, changefreq, priority, sitemap index
+- robots.txt: User-agent, Allow/Disallow, Sitemap directive
+- Checklist SEO rápido
+
+### 6.7 Herramientas & Workflow (`sections/herramientas-workflow.html`)
 - VS Code: extensiones esenciales, settings recomendados
 - Live Server: preview local
 - DevTools: Console, Elements, Network, Sources, Lighthouse
@@ -493,15 +510,13 @@ Todas las animaciones respetan `prefers-reduced-motion`.
 - Browser compatibility: Can I Use, MDN
 - Deploy: GitHub Pages, Netlify, Vercel
 
-### 6.7 SEO & Performance (`sections/seo-performance.html`)
-- Meta tags esenciales: title, description, viewport, charset, robots
-- Open Graph: og:title, og:description, og:image (para compartir en redes)
-- Semantic HTML y su impacto en SEO
-- Structured data: JSON-LD básico
-- Performance: Core Web Vitals (LCP, FID, CLS)
-- Lazy loading: `loading="lazy"`, Intersection Observer
-- Optimización de imágenes: formatos (WebP, AVIF), srcset, sizes
-- Lighthouse: cómo usarlo, métricas
+### 6.8 Recursos (`sections/recursos.html`) — *Próxima sección*
+- Links a documentación oficial (MDN, W3C, web.dev)
+- Tutoriales y cursos recomendados
+- Canales de YouTube y creadores de contenido
+- Herramientas online (validadores, generadores, playgrounds)
+- Comunidades y foros
+- Libros recomendados
 
 ---
 
@@ -525,7 +540,7 @@ Las cheatsheets son secciones dedicadas con formato de **referencia rápida**. T
 | CSS Cheatsheet | Selectores, propiedades por categoría, unidades, funciones |
 | JS Cheatsheet | Métodos de string/array/object, operadores, sintaxis ES6+ |
 | Git Cheatsheet | Comandos esenciales, workflow, aliases recomendados |
-| SEO Cheatsheet | Meta tags, Open Graph, checklist de optimización |
+| SEO Cheatsheet | Meta tags, Open Graph, Core Web Vitals, sitemap, robots.txt, checklist |
 
 ---
 
@@ -667,17 +682,17 @@ Las cheatsheets son secciones dedicadas con formato de **referencia rápida**. T
 - [x] Escribir `cheatsheets/js-cheatsheet.html`
 
 ### Fase 8: Contenido — SEO & Extras
-- [x] Escribir `sections/herramientas-workflow.html`
 - [x] Escribir `sections/seo-performance.html`
 - [x] Escribir `cheatsheets/seo-cheatsheet.html`
-- [ ] Escribir `sections/recursos.html` (links, tutoriales, videos)
+- [x] Escribir `sections/herramientas-workflow.html`
 - [x] Reorganizar men&uacute;: SEO como categor&iacute;a propia, Extras con Herramientas + Recursos
+- [ ] Escribir `sections/recursos.html` (links, tutoriales, videos, comunidades)
 
 ### Fase 9: Funcionalidades Extra & Polish
 - [ ] Implementar buscador in-page (`search.js`)
 - [ ] Crear og-image.png
 - [x] Crear favicon.svg
-- [ ] Revisión de SEO: meta tags, Open Graph, sitemap
+- [x] Revisión de SEO: meta tags, Open Graph, sitemap
 - [ ] Revisión de accesibilidad: contrastes, aria attributes, keyboard nav
 - [ ] Revisión de performance: Lighthouse audit
 - [ ] Testing cross-browser: Chrome, Firefox, Safari, Edge
@@ -728,4 +743,4 @@ Las cheatsheets son secciones dedicadas con formato de **referencia rápida**. T
 
 ---
 
-> **En progreso**: Fases 1-4 completadas. Próximo → Fase 5 (HTML).
+> **En progreso**: Fases 1-7 completadas. Fase 8 en curso (SEO & Extras). Próximo → Sección Recursos, luego Fase 9 (Polish).

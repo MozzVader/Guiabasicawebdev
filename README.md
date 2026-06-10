@@ -12,7 +12,8 @@ WebForge es un recurso web open source que funciona simultáneamente como **guí
 - **HTML** — Estructura, semántica, formularios, multimedia, accesibilidad
 - **CSS** — Básico, Flexbox, Grid, responsive, animaciones, frameworks
 - **JavaScript** — Básico, ES6+, DOM, eventos, asincronía, almacenamiento
-- **SEO & Performance** — Meta tags, Open Graph, Core Web Vitals
+- **SEO** — Meta tags, Open Graph, Core Web Vitals, sitemap, structured data
+- **Extras** — Herramientas & Workflow, Recursos (próximamente)
 
 ## Tecnologías
 
@@ -28,11 +29,14 @@ WebForge es un recurso web open source que funciona simultáneamente como **guí
 ├── index.html              # Landing page
 ├── sections/               # Páginas de contenido por tema
 ├── cheatsheets/            # Cheatsheets de referencia rápida
+├── components/             # Componentes HTML compartidos (header, sidebar, footer)
 ├── css/                    # Estilos CSS modulares
 ├── js/                     # JavaScript modular
-├── components/              # Componentes HTML compartidos
 ├── assets/                 # Imágenes, fuentes
-└── PRD.md                  # Documento de Requisitos
+├── sitemap.xml             # Sitemap para buscadores
+├── robots.txt              # Directivas para crawlers
+├── PRD.md                  # Documento de Requisitos
+└── README.md               # Este archivo
 ```
 
 ## Development
