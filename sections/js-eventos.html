@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eventos &amp; Event Handling — WebForge</title>
+    <meta name="description" content="Aprende a manejar eventos en JavaScript: addEventListener, event object, bubbling, capturing, event delegation, custom events, keyboard events y optimizacion con throttle y debounce.">
+    <meta name="theme-color" content="#0d1117">
+    <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Highlight.js (CDN) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/code-blocks.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+
+    <div class="page-wrapper">
+        <!-- Header -->
+        <header class="site-header" id="site-header"></header>
+
+        <!-- Sidebar -->
+        <aside class="site-sidebar" id="site-sidebar"></aside>
+        <div class="sidebar-overlay"></div>
+
+        <!-- Main Content -->
+        <main class="main-content" role="main">
+
+            <!-- Breadcrumb -->
+            <div class="section-breadcrumb">
+                <a href="../index.html">Inicio</a>
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                <span>JavaScript</span>
+            </div>
+
+            <!-- Section Header -->
+            <div class="section-header animate-on-scroll">
+                <h1>Eventos &amp; Event Handling</h1>
+                <p>Los eventos son el coraz&oacute;n de la interactividad en la web. Cada vez que un usuario hace click, escribe en un teclado, mueve el mouse, hace scroll o env&iacute;a un formulario, el navegador dispara un evento. JavaScript te permite "escuchar" esos eventos y ejecutar c&oacute;digo en respuesta. Entender c&oacute;mo funcionan los eventos, su flujo de propagaci&oacute;n y las t&eacute;cnicas para manejarlos eficientemente es lo que separa un sitio est&aacute;tico de uno verdaderamente interactivo.</p>
+            </div>
+
+            <!-- ===================== ADDEVENTLISTENER ===================== -->
+            <section class="sub-section animate-on-scroll" id="addEventListener">
+                <h2>
+                    addEventListener y removeEventListener
+                    <a href="#addEventListener" class="heading-anchor" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                    </a>
+                </h2>
+
+                <p>
+                    <code>addEventListener</code> es el m&eacute;todo est&aacute;ndar y moderno para registrar event handlers. A diferencia de las propiedades <code>onclick</code>, <code>onmouseover</code>, etc., permite agregar <strong>m&uacute;ltiples listeners</strong> al mismo evento en el mismo elemento sin que se sobreescriban entre s&iacute;. Adem&aacute;s, ofrece control sobre la fase de captura y la posibilidad de remover el listener m&aacute;s adelante. Es la forma correcta y recomendada de manejar eventos en JavaScript moderno.
+                </p>
+
+                <div class="code-block">
+                    <div class="code-block-header">
+                        <span class="code-block-lang">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                            JavaScript
+                        </span>
+                        <button class="code-block-copy" aria-label="Copiar codigo">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                            Copiar
+                        </button>
+                    </div>
+                    <pre><code class="language-javascript">// === Sintaxis basica ===
+elemento.addEventListener(evento, handler, opciones);
+
+// === Ejemplo simple ===
+const boton = document.querySelector("#mi-boton");
+
+boton.addEventListener("click", () => {
+    console.log("Boton clickeado!");
+});
+
+// Con funcion nombrada (mejor para remover despues)
+function handleClick(e) {
+    console.log("Click en:", e.target);
+}
+
+boton.addEventListener("click", handleClick);
+
+// Multiples listeners en el mismo elemento y evento
+boton.addEventListener("click", () => console.log("Listener 1"));
+boton.addEventListener("click", () => console.log("Listener 2"));
+// Ambos se ejecutan al hacer click
+
+// === Opciones (tercer parametro) ===
+boton.addEventListener("click", handleClick, {
+    capture: false,    // escuchar en fase de captura (default: false)
+    once: true,        // ejecutar solo una vez y auto-remover
+    passive: true      // no va a llamar a preventDefault (mejor performance)
+});
+
+// === NO uses propiedades on* (limitan a un solo handler) ===
+// MAL:
+// boton.onclick = () => console.log("uno");
+// boton.onclick = () => console.log("dos"); // sobreescribe el anterior
+
+// BIEN:
+// boton.addEventListener("click", () => console.log("uno"));
+// boton.addEventListener("click", () => console.log("dos")); // ambos funcionan
+
+// === removeEventListener ===
+// Para remover, necesitas la MISMA referencia de funcion
+boton.removeEventListener("click", handleClick);
+
+// Arrow functions NO se pueden remover asi:
+const handler = () => console.log("no removable");
+boton.addEventListener("click", handler);
+boton.removeEventListener("click", handler); // funciona con la referencia
+
+// Pero esto NO funciona:
+boton.addEventListener("click", () => console.log("anonima"));
+// No hay forma de remover una arrow function anonima</code></pre>
+                </div>
+
+                <p>
+                    El tercer par&aacute;metro de <code>addEventListener</code> acepta tanto un booleano (que equivale a <code>capture</code>) como un objeto de opciones. La opci&oacute;n <code>once: true</code> es muy &uacute;til para eventos que solo necesit&aacute;s manejar una vez, como la carga inicial de la p&aacute;gina o un mensaje de bienvenida. La opci&oacute;n <code>passive: true</code> le dice al navegador que tu handler no va a llamar a <code>preventDefault()</code>, lo que permite optimizar el scroll y otros eventos de alta frecuencia (de hecho, los eventos <code>touchstart</code> y <code>wheel</code> son <code>passive</code> por defecto en navegadores modernos).
+                </p>
+
+                <div class="callout callout-tip">
+                    <svg class="callout-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>
+                    <div class="callout-content">
+                        <p class="callout-title">Funciones nombradas vs an&oacute;nimas</p>
+                        <p>Us&aacute; funciones nombradas (o variables que apunten a funciones) cuando necesites remover el listener despu&eacute;s. Las arrow functions an&oacute;nimas son pr&aacute;cticas para listeners permanentes, pero imposibles de remover con <code>removeEventListener</code> porque no ten&eacute;s una referencia a ellas. Adem&aacute;s, las funciones nombradas mejoran la legibilidad del c&oacute;digo porque el nombre aparece en el stack trace cuando depur&aacute;s.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===================== TIPOS DE EVENTOS ===================== -->
+            <section class="sub-section animate-on-scroll" id="tipos-eventos">
+                <h2>
+                    Tipos de eventos
+                    <a href="#tipos-eventos" class="heading-anchor" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                    </a>
+                </h2>
+
+                <p>
+                    El navegador dispara cientos de tipos de eventos distintos. Los m&aacute;s comunes se agrupan en categor&iacute;as: eventos de mouse (<code>click</code>, <code>dblclick</code>, <code>mouseenter</code>, <code>mouseleave</code>, <code>mousemove</code>, <code>mousedown</code>, <code>mouseup</code>), eventos de teclado (<code>keydown</code>, <code>keyup</code>, <code>keypress</code>), eventos de formulario (<code>submit</code>, <code>change</code>, <code>input</code>, <code>focus</code>, <code>blur</code>), eventos de ventana (<code>load</code>, <code>resize</code>, <code>scroll</code>, <code>error</code>) y eventos t&aacute;ctiles (<code>touchstart</code>, <code>touchmove</code>, <code>touchend</code>). Elegir el evento correcto es fundamental para que tu interfaz responda de forma natural y precisa.
+                </p>
+
+                <div class="code-block">
+                    <div class="code-block-header">
+                        <span class="code-block-lang">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                            JavaScript
+                        </span>
+                        <button class="code-block-copy" aria-label="Copiar codigo">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                            Copiar
+                        </button>
+                    </div>
+                    <pre><code class="language-javascript">// === Mouse Events ===
+
+// click — click completo (mousedown + mouseup)
+boton.addEventListener("click", (e) => {
+    console.log("Click en:", e.target);
+});
+
+// dblclick — doble click rapido
+boton.addEventListener("dblclick", () => {
+    console.log("Doble click!");
+});
+
+// mouseenter / mouseleave — entran/salen del elemento (NO bubblean)
+card.addEventListener("mouseenter", () => card.classList.add("hover"));
+card.addEventListener("mouseleave", () => card.classList.remove("hover"));
+
+// mouseover / mouseout — entran/salen (SI bubblean, includes children)
+card.addEventListener("mouseover", (e) => {
+    console.log("Mouse sobre:", e.target);
+});
+
+// === Input / Form Events ===
+
+// input — se dispara en CADA cambio (incluyendo pegar, arrastrar)
+inputTexto.addEventListener("input", (e) => {
+    console.log("Valor actual:", e.target.value);
+});
+
+// change — se dispara al perder el foco si el valor cambio
+selectColor.addEventListener("change", (e) => {
+    console.log("Color seleccionado:", e.target.value);
+});
+
+// submit — al enviar un formulario
+formulario.addEventListener("submit", (e) => {
+    e.preventDefault(); // evitar recarga de pagina
+    const datos = new FormData(formulario);
+    console.log("Nombre:", datos.get("nombre"));
+});
+
+// focus / blur — cuando un elemento gana/pierde foco
+inputTexto.addEventListener("focus", () => {
+    inputTexto.parentElement.classList.add("focused");
+});
+inputTexto.addEventListener("blur", () => {
+    inputTexto.parentElement.classList.remove("focused");
+});
+
+// === Window Events ===
+
+// load — cuando la pagina termino de cargar (HTML, CSS, imagenes)
+window.addEventListener("load", () => {
+    console.log("Todo cargado, incluidas imagenes");
+});
+
+// DOMContentLoaded — cuando el DOM esta listo (sin esperar imagenes)
+document.addEventListener("DOMContentLoaded", () => {
+    console.log("DOM listo, se puede manipular");
+});
+
+// resize — cuando se cambia el tamano de la ventana
+window.addEventListener("resize", () => {
+    console.log("Ancho:", window.innerWidth);
+});
+
+// scroll — al hacer scroll
+window.addEventListener("scroll", () => {
+    console.log("Scroll Y:", window.scrollY);
+});
+
+// error — cuando un recurso falla al cargar
+img.addEventListener("error", (e) => {
+    e.target.src = "placeholder.png";
+    console.log("Error cargando imagen");
+});</code></pre>
+                </div>
+
+                <div class="callout callout-info">
+                    <svg class="callout-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+                    <div class="callout-content">
+                        <p class="callout-title">input vs change vs keypress</p>
+                        <p>Us&aacute; <code>input</code> para responder en tiempo real a cada cambio del usuario (b&uacute;squedas en vivo, contadores de caracteres). Us&aacute; <code>change</code> cuando solo te interesa el valor final al perder el foco (selecci&oacute;n de un <code>&lt;select&gt;</code> o checkbox). Y evit&aacute; <code>keypress</code> porque est&aacute; deprecado: us&aacute; <code>keydown</code> o <code>input</code> en su lugar.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===================== EVENT OBJECT ===================== -->
+            <section class="sub-section animate-on-scroll" id="event-object">
+                <h2>
+                    El objeto Event
+                    <a href="#event-object" class="heading-anchor" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                    </a>
+                </h2>
+
+                <p>
+                    Cada vez que se dispara un evento, el navegador crea un <strong>objeto Event</strong> que contiene informaci&oacute;n detallada sobre lo que pas&oacute;. Este objeto se pasa autom&aacute;ticamente como par&aacute;metro a tu handler. Las propiedades m&aacute;s importantes son <code>target</code> (el elemento donde se origin&oacute; el evento), <code>currentTarget</code> (el elemento que est&aacute; escuchando el evento), <code>type</code> (el nombre del evento), y los m&eacute;todos <code>preventDefault()</code> y <code>stopPropagation()</code> que controlan el comportamiento por defecto y la propagaci&oacute;n del evento respectivamente.
+                </p>
+
+                <div class="code-block">
+                    <div class="code-block-header">
+                        <span class="code-block-lang">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                            JavaScript
+                        </span>
+                        <button class="code-block-copy" aria-label="Copiar codigo">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                            Copiar
+                        </button>
+                    </div>
+                    <pre><code class="language-javascript">// === Propiedades principales del Event ===
+
+const lista = document.querySelector("ul");
+
+lista.addEventListener("click", (event) => {
+    // event.type — nombre del evento
+    console.log(event.type);           // "click"
+
+    // event.target — elemento DONDE se origino el click (el li, el span, etc.)
+    console.log(event.target);         // el elemento exacto clickeado
+
+    // event.currentTarget — elemento que tiene el listener (la ul)
+    console.log(event.currentTarget);  // la &lt;ul&gt;
+
+    // event.timeStamp — milisegundos desde que la pagina cargo
+    console.log(event.timeStamp);
+
+    // event.isTrusted — true si el evento fue generado por el usuario (no por JS)
+    console.log(event.isTrusted);      // true para clicks reales
+});
+
+// === preventDefault() — cancelar el comportamiento por defecto ===
+
+// Evitar que un link navegue a otra pagina
+document.querySelector("a.sin-navegacion").addEventListener("click", (e) => {
+    e.preventDefault();
+    console.log("Link clickeado pero no navega");
+});
+
+// Evitar que un formulario recargue la pagina
+document.querySelector("form").addEventListener("submit", (e) => {
+    e.preventDefault();
+    // procesar datos con JS...
+});
+
+// Evitar el menu contextual (click derecho)
+document.addEventListener("contextmenu", (e) => {
+    e.preventDefault();
+});
+
+// === target vs currentTarget (diferencia CLAVE para delegation) ===
+
+// Imagina esta estructura:
+// &lt;ul&gt;
+//   &lt;li&gt;&lt;span&gt;Item 1&lt;/span&gt;&lt;/li&gt;
+//   &lt;li&gt;&lt;span&gt;Item 2&lt;/span&gt;&lt;/li&gt;
+// &lt;/ul&gt;
+
+lista.addEventListener("click", (e) => {
+    // Si haces click en el &lt;span&gt; "Item 1":
+    // e.target = &lt;span&gt;Item 1&lt;/span&gt;  (el elemento que clickeaste)
+    // e.currentTarget = &lt;ul&gt;              (donde esta el listener)
+
+    // Usar closest para encontrar el li
+    const li = e.target.closest("li");
+    if (li) {
+        console.log("Clickeaste en:", li.textContent);
+    }
+});</code></pre>
+                </div>
+
+                <p>
+                    La diferencia entre <code>target</code> y <code>currentTarget</code> es uno de los conceptos m&aacute;s importantes en el manejo de eventos. <code>event.target</code> es siempre el elemento m&aacute;s profundo donde se origin&oacute; la acci&oacute;n (por ejemplo, un <code>&lt;span&gt;</code> dentro de un <code>&lt;button&gt;</code>), mientras que <code>event.currentTarget</code> es siempre el elemento al que le attachaste el listener. Cuando el evento no bubblea (o usas delegaci&oacute;n simple), suelen ser el mismo. Pero cuando hay elementos anidados, <code>target</code> puede ser un hijo y <code>currentTarget</code> el padre.
+                </p>
+
+                <div class="callout callout-danger">
+                    <svg class="callout-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
+                    <div class="callout-content">
+                        <p class="callout-title">preventDefault no detiene la propagaci&oacute;n</p>
+                        <p><code>preventDefault()</code> solo cancela la acci&oacute;n por defecto del navegador (navegar al hacer click en un link, enviar el formulario, etc.) pero <strong>no</strong> detiene la propagaci&oacute;n del evento por el DOM. Para eso necesit&aacute;s <code>stopPropagation()</code>. Son dos cosas distintas que a menudo se confunden.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===================== BUBBLING Y CAPTURING ===================== -->
+            <section class="sub-section animate-on-scroll" id="bubbling-capturing">
+                <h2>
+                    Bubbling y Capturing
+                    <a href="#bubbling-capturing" class="heading-anchor" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                    </a>
+                </h2>
+
+                <p>
+                    Cuando se dispara un evento en un elemento, ese evento no se queda ah&iacute;. Viaja por el DOM en tres fases: primero desciende desde la ra&iacute;z hasta el target (<strong>fase de captura</strong>), luego llega al elemento objetivo (<strong>fase target</strong>), y finalmente asciende de vuelta hacia la ra&iacute;z (<strong>fase de bubbling</strong>). La mayor&iacute;a de los eventos usan bubbling por defecto, lo que significa que un click en un bot&oacute;n tambi&eacute;n dispara los listeners de click en todos sus ancestros. Entender este flujo es esencial para event delegation y para evitar bugs inesperados.
+                </p>
+
+                <div class="code-block">
+                    <div class="code-block-header">
+                        <span class="code-block-lang">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                            HTML
+                        </span>
+                        <button class="code-block-copy" aria-label="Copiar codigo">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                            Copiar
+                        </button>
+                    </div>
+                    <pre><code class="language-html">&lt;!-- Estructura de ejemplo para demostrar el flujo --&gt;
+&lt;div class="abuelo"&gt;
+    &lt;div class="padre"&gt;
+        &lt;button class="hijo"&gt;Click me&lt;/button&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+
+                <div class="code-block">
+                    <div class="code-block-header">
+                        <span class="code-block-lang">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                            JavaScript
+                        </span>
+                        <button class="code-block-copy" aria-label="Copiar codigo">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                            Copiar
+                        </button>
+                    </div>
+                    <pre><code class="language-javascript">// === Las 3 fases del evento ===
+// 1. Capturing: document &rarr; abuelo &rarr; padre &rarr; hijo (desciende)
+// 2. Target: llega al hijo (el elemento clickeado)
+// 3. Bubbling: hijo &rarr; padre &rarr; abuelo &rarr; document (asciende)
+
+// === BUBBLING (default) — el evento sube desde el target ===
+document.querySelector(".abuelo").addEventListener("click", (e) => {
+    console.log("1. Abuelo (bubbling)");
+}, false); // capture: false es el default
+
+document.querySelector(".padre").addEventListener("click", (e) => {
+    console.log("2. Padre (bubbling)");
+}, false);
+
+document.querySelector(".hijo").addEventListener("click", (e) => {
+    console.log("3. Hijo (bubbling)");
+}, false);
+// Al hacer click en .hijo: "3. Hijo" &rarr; "2. Padre" &rarr; "1. Abuelo"
+
+// === CAPTURING — el evento baja desde la raiz ===
+document.querySelector(".abuelo").addEventListener("click", (e) => {
+    console.log("A. Abuelo (capturing)");
+}, true); // capture: true
+
+document.querySelector(".padre").addEventListener("click", (e) => {
+    console.log("B. Padre (capturing)");
+}, true);
+
+document.querySelector(".hijo").addEventListener("click", (e) => {
+    console.log("C. Hijo (capturing)");
+}, true);
+// Al hacer click en .hijo: "A. Abuelo" &rarr; "B. Padre" &rarr; "C. Hijo"
+
+// === Flujo COMPLETO (mezcla de ambos) ===
+// Orden real al hacer click en .hijo:
+// 1. Abuelo capturing
+// 2. Padre capturing
+// 3. Hijo (target phase)
+// 4. Padre bubbling
+// 5. Abuelo bubbling
+
+// === stopPropagation() — detener la propagacion ===
+document.querySelector(".padre").addEventListener("click", (e) => {
+    console.log("Padre");
+    e.stopPropagation(); // el evento no llega al abuelo
+});
+
+// === stopImmediatePropagation() — detener TODO (incluye otros listeners) ===
+document.querySelector(".hijo").addEventListener("click", (e) => {
+    console.log("Listener 1 del hijo");
+    e.stopImmediatePropagation(); // ningun otro listener se ejecuta
+});
+document.querySelector(".hijo").addEventListener("click", (e) => {
+    console.log("Listener 2 del hijo"); // NUNCA se ejecuta
+});</code></pre>
+                </div>
+
+                <p>
+                    En la pr&aacute;ctica, casi siempre trabaj&aacute;s con bubbling (la fase por defecto). La fase de captura se usa en casos muy espec&iacute;ficos, como cuando necesit&aacute;s interceptar un evento antes de que llegue a un elemento hijo. La mayor&iacute;a de los eventos bubblean, pero hay excepciones notables: <code>focus</code>, <code>blur</code>, <code>mouseenter</code>, <code>mouseleave</code> y <code>load</code> NO bubblean. Para esos casos, existe su versi&oacute;n que s&iacute; bubblea: <code>focusin</code>/<code>focusout</code> y <code>mouseover</code>/<code>mouseout</code>.
+                </p>
+
+                <div class="callout callout-warning">
+                    <svg class="callout-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+                    <div class="callout-content">
+                        <p class="callout-title">Evit&aacute; stopPropagation en lo posible</p>
+                        <p>Detener la propagaci&oacute;n con <code>stopPropagation()</code> puede causar efectos secundarios dif&iacute;ciles de rastrear, especialmente en aplicaciones complejas donde otros componentes tambi&eacute;n necesitan escuchar el mismo evento. Es mucho mejor usar <code>event.target</code> y condiciones para filtrar si te interesa o no el evento, en vez de cortar la propagaci&oacute;n completamente.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===================== EVENT DELEGATION ===================== -->
+            <section class="sub-section animate-on-scroll" id="event-delegation">
+                <h2>
+                    Event Delegation
+                    <a href="#event-delegation" class="heading-anchor" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                    </a>
+                </h2>
+
+                <p>
+                    <strong>Event delegation</strong> es una t&eacute;cnica que aprovecha el bubbling para manejar eventos de muchos elementos con un solo listener colocado en un ancestro com&uacute;n. En vez de poner un <code>addEventListener</code> en cada bot&oacute;n de una lista, pon&eacute;s un listener en el <code>&lt;ul&gt;</code> padre y verific&aacute;s con <code>event.target</code> y <code>closest()</code> qu&eacute; elemento fue el que realmente recibi&oacute; el click. Esto es m&aacute;s eficiente en memoria, funciona autom&aacute;ticamente con elementos agregados din&aacute;micamente, y simplifica tu c&oacute;digo significativamente.
+                </p>
+
+                <div class="code-block">
+                    <div class="code-block-header">
+                        <span class="code-block-lang">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                            JavaScript
+                        </span>
+                        <button class="code-block-copy" aria-label="Copiar codigo">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                            Copiar
+                        </button>
+                    </div>
+                    <pre><code class="language-javascript">// === El PROBLEMA: un listener por cada item ===
+
+// MAL — ineficiente, no funciona con elementos nuevos
+const items = document.querySelectorAll(".lista-item");
+items.forEach(item => {
+    item.addEventListener("click", () => {
+        item.classList.toggle("selected");
+    });
+});
+
+// Si agregas un item nuevo al DOM, no tiene listener!
+const nuevo = document.createElement("li");
+nuevo.textContent = "Nuevo item";
+nuevo.className = "lista-item";
+document.querySelector("ul").appendChild(nuevo);
+// click en nuevo = nada pasa
+
+// === La SOLUCION: event delegation ===
+
+// BIEN — un solo listener en el padre
+document.querySelector("ul").addEventListener("click", (e) => {
+    // Encontrar el item mas cercano al click
+    const item = e.target.closest(".lista-item");
+    if (!item) return; // si no se clickeo un item, ignorar
+
+    item.classList.toggle("selected");
+    console.log("Clickeaste:", item.textContent);
+});
+
+// Ahora los items nuevos TAMBIEN funcionan automaticamente!
+// Porque el listener esta en la ul, no en cada li.
+
+// === Ejemplo practico: tabla con botones de eliminar ===
+
+document.querySelector("table").addEventListener("click", (e) => {
+    const btn = e.target.closest(".btn-delete");
+    if (!btn) return;
+
+    const fila = btn.closest("tr");
+    const nombre = fila?.querySelector("td").textContent;
+
+    if (confirm(`Eliminar a ${nombre}?`)) {
+        fila?.remove();
+    }
+});
+
+// === Ejemplo: navegacion con links ===
+
+document.querySelector("nav").addEventListener("click", (e) => {
+    const link = e.target.closest("a");
+    if (!link) return;
+
+    // Cerrar menu mobile si esta abierto
+    document.querySelector(".sidebar")?.classList.remove("open");
+
+    // Si es link interno, prevenir navegacion
+    if (link.getAttribute("href").startsWith("#")) {
+        e.preventDefault();
+        const seccion = document.querySelector(link.getAttribute("href"));
+        seccion?.scrollIntoView({ behavior: "smooth" });
+    }
+});
+
+// === Ejemplo: multiple buttons con data attributes ===
+
+document.querySelector(".toolbar").addEventListener("click", (e) => {
+    const btn = e.target.closest("button");
+    if (!btn) return;
+
+    const accion = btn.dataset.action;
+    switch (accion) {
+        case "bold":
+            document.execCommand("bold");
+            break;
+        case "italic":
+            document.execCommand("italic");
+            break;
+        case "underline":
+            document.execCommand("underline");
+            break;
+        case "save":
+            guardarContenido();
+            break;
+    }
+});</code></pre>
+                </div>
+
+                <div class="callout callout-tip">
+                    <svg class="callout-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>
+                    <div class="callout-content">
+                        <p class="callout-title">Siempre us&aacute; closest() con delegation</p>
+                        <p>El patr&oacute;n gold standard de event delegation es: <code>const el = e.target.closest('.mi-clase'); if (!el) return;</code>. Esto maneja correctamente los casos donde el usuario clickea un hijo del elemento que te interesa (como un icono dentro de un bot&oacute;n), y tambi&eacute;n ignora clicks en &aacute;reas vac&iacute;as del contenedor. Es robusto, simple y funciona con elementos din&aacute;micos.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===================== CUSTOM EVENTS ===================== -->
+            <section class="sub-section animate-on-scroll" id="custom-events">
+                <h2>
+                    Custom Events
+                    <a href="#custom-events" class="heading-anchor" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                    </a>
+                </h2>
+
+                <p>
+                    Adem&aacute;s de los eventos nativos del navegador, JavaScript te permite crear tus propios eventos personalizados con <code>new CustomEvent()</code>. Esto es &uacute;til para crear sistemas de comunicaci&oacute;n entre m&oacute;dulos de tu aplicaci&oacute;n que no necesitan conocerse directamente. Por ejemplo, un m&oacute;dulo de carrito de compras puede disparar un evento <code>"cart-updated"</code> cuando se agrega un producto, y un m&oacute;dulo de notificaciones puede escuchar ese evento para mostrar un badge actualizado, sin que ninguno de los dos se referencie directamente.
+                </p>
+
+                <div class="code-block">
+                    <div class="code-block-header">
+                        <span class="code-block-lang">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                            JavaScript
+                        </span>
+                        <button class="code-block-copy" aria-label="Copiar codigo">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                            Copiar
+                        </button>
+                    </div>
+                    <pre><code class="language-javascript">// === Crear y disparar un custom event ===
+
+// Crear el evento con datos personalizados
+const eventoLogin = new CustomEvent("usuario:login", {
+    detail: {
+        userId: 42,
+        nombre: "Carlos",
+        rol: "admin",
+        timestamp: Date.now()
+    },
+    bubbles: true,    // permite que el evento bubble
+    cancelable: true  // permite preventDefault()
+});
+
+// Disparar el evento en un elemento
+document.dispatchEvent(eventoLogin);
+
+// === Escuchar el custom event ===
+document.addEventListener("usuario:login", (e) => {
+    console.log("Usuario logueado:", e.detail.nombre);
+    console.log("Rol:", e.detail.rol);
+    console.log("ID:", e.detail.userId);
+});
+
+// === Patron practico: comunicacion entre modulos ===
+
+// Modulo de carrito — dispara eventos
+const Carrito = {
+    items: [],
+
+    agregar(producto) {
+        this.items.push(producto);
+
+        // Disparar evento para que otros modulos reaccionen
+        const evento = new CustomEvent("carrito:actualizado", {
+            detail: {
+                items: this.items,
+                total: this.items.reduce((sum, p) => sum + p.precio, 0),
+                cantidad: this.items.length
+            }
+        });
+        document.dispatchEvent(evento);
+    }
+};
+
+// Modulo de UI — reacciona al evento
+document.addEventListener("carrito:actualizado", (e) => {
+    const { cantidad, total } = e.detail;
+    const badge = document.querySelector(".cart-badge");
+    badge.textContent = cantidad;
+    badge.classList.toggle("hidden", cantidad === 0);
+});
+
+// Modulo de analytics — tambien reacciona
+document.addEventListener("carrito:actualizado", (e) => {
+    analytics.track("carrito_update", {
+        cantidad: e.detail.cantidad,
+        total: e.detail.total
+    });
+});
+
+// === Usar el patron de naming con prefijo ===
+// "modulo:accion" para evitar colisiones con eventos nativos
+// Ejemplos: "usuario:logout", "toast:show", "modal:open"
+
+// === Tambien podes usar Event (sin datos) para eventos simples ===
+const eventoSimple = new Event("datos:limpiados");
+document.dispatchEvent(eventoSimple);</code></pre>
+                </div>
+
+                <p>
+                    La convenci&oacute;n de nombrar custom events con el patr&oacute;n <code>"modulo:accion"</code> (por ejemplo <code>"carrito:actualizado"</code>, <code>"usuario:login"</code>, <code>"modal:cerrar"</code>) es una buena pr&aacute;ctica que evita colisiones con eventos nativos del navegador y hace f&aacute;cil identificar el origen y prop&oacute;sito del evento. Los datos siempre van en la propiedad <code>detail</code> del objeto event, y cualquier listener puede accederlos via <code>e.detail</code>. Este patr&oacute;n es la base de arquitecturas desacopladas en JavaScript vanilla.
+                </p>
+            </section>
+
+            <!-- ===================== KEYBOARD EVENTS ===================== -->
+            <section class="sub-section animate-on-scroll" id="keyboard-events">
+                <h2>
+                    Keyboard Events
+                    <a href="#keyboard-events" class="heading-anchor" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                    </a>
+                </h2>
+
+                <p>
+                    Los eventos de teclado son esenciales para accesibilidad, atajos de teclado, validaci&oacute;n en tiempo real y juegos. Los tres eventos principales son <code>keydown</code> (se presiona una tecla), <code>keyup</code> (se suelta una tecla) y <code>keypress</code> (deprecado, no usar). El objeto event de teclado tiene propiedades espec&iacute;ficas: <code>key</code> (el caracter o nombre de la tecla), <code>code</code> (el c&oacute;digo f&iacute;sico de la tecla en el teclado), y <code>event.ctrlKey</code>, <code>event.shiftKey</code>, <code>event.altKey</code>, <code>event.metaKey</code> para las teclas modificadoras.
+                </p>
+
+                <div class="code-block">
+                    <div class="code-block-header">
+                        <span class="code-block-lang">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                            JavaScript
+                        </span>
+                        <button class="code-block-copy" aria-label="Copiar codigo">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                            Copiar
+                        </button>
+                    </div>
+                    <pre><code class="language-javascript">// === key vs code ===
+
+document.addEventListener("keydown", (e) => {
+    // key — el caracter resultante (depende del layout del teclado)
+    console.log(e.key);    // "a", "A", "Enter", "Escape", "1", "!", etc.
+
+    // code — la tecla fisica (NO depende del layout)
+    console.log(e.code);   // "KeyA", "Enter", "Escape", "Digit1", etc.
+});
+
+// Diferencia clave:
+// Si tenes teclado QWERTY y presionas la tecla 'q':
+//   e.key = "q"     (el caracter)
+//   e.code = "KeyQ" (la tecla fisica, siempre la misma)
+
+// Si cambi&aacute;s a teclado AZERTY y presionas la misma tecla fisica:
+//   e.key = "a"     (porque en AZERTY esa tecla produce 'a')
+//   e.code = "KeyQ" (la tecla fisica no cambia)
+
+// Regla: us&aacute; e.key para texto, e.code para atajos de teclado
+
+// === Modifiers (teclas especiales) ===
+
+document.addEventListener("keydown", (e) => {
+    if (e.ctrlKey && e.key === "s") {
+        e.preventDefault(); // evitar guardar la pagina
+        console.log("Guardar archivo (Ctrl+S)");
+    }
+
+    if (e.ctrlKey && e.shiftKey && e.key === "I") {
+        e.preventDefault();
+        console.log("Abrir inspector (Ctrl+Shift+I)");
+    }
+
+    if (e.key === "Escape") {
+        cerrarModal();
+    }
+});
+
+// === Ejemplo: atajos de teclado para una app ===
+
+document.addEventListener("keydown", (e) => {
+    // Ctrl+K o Cmd+K — abrir buscador
+    if ((e.ctrlKey || e.metaKey) && e.key === "k") {
+        e.preventDefault();
+        abrirBuscador();
+    }
+
+    // Ctrl+/ — toggle comments (en un editor)
+    if ((e.ctrlKey || e.metaKey) && e.key === "/") {
+        e.preventDefault();
+        toggleComments();
+    }
+
+    // Solo teclas numericas para un input de telefono
+});
+
+telefonoInput.addEventListener("keydown", (e) => {
+    // Permitir: numeros, backspace, delete, tab, escape, enter, flechas
+    const permitidas = ["Backspace", "Delete", "Tab", "Escape", "Enter",
+                        "ArrowLeft", "ArrowRight", "Home", "End"];
+    if (permitidas.includes(e.key)) return;
+
+    // Permitir Ctrl+C, Ctrl+V, Ctrl+A, etc.
+    if (e.ctrlKey || e.metaKey) return;
+
+    // Solo permitir numeros y signos de telefono
+    if (!/^[0-9+\-() ]$/.test(e.key)) {
+        e.preventDefault();
+    }
+});
+
+// === Ejemplo: campo de busqueda con Escape para cerrar ===
+
+const buscador = document.querySelector("#search");
+const resultados = document.querySelector("#search-results");
+
+buscador.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+        buscador.value = "";
+        resultados.classList.add("hidden");
+        buscador.blur();
+    }
+    if (e.key === "ArrowDown") {
+        e.preventDefault();
+        // Mover foco al primer resultado
+        resultados.querySelector("a")?.focus();
+    }
+});</code></pre>
+                </div>
+
+                <div class="callout callout-info">
+                    <svg class="callout-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+                    <div class="callout-content">
+                        <p class="callout-title">key para texto, code para atajos</p>
+                        <p>Us&aacute; <code>e.key</code> cuando te interesa el valor que el usuario escribi&oacute; (como validar que un campo solo contenga letras). Us&aacute; <code>e.code</code> cuando implement&aacute;s atajos de teclado f&iacute;sicos que deben funcionar sin importar el layout del teclado del usuario (por ejemplo, <code>"KeyW"</code> siempre es la tecla W f&iacute;sica, mientras que <code>e.key</code> ser&iacute;a "w" en QWERTY o "z" en AZERTY).</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===================== THROTTLE Y DEBOUNCE ===================== -->
+            <section class="sub-section animate-on-scroll" id="throttle-debounce">
+                <h2>
+                    Throttle y Debounce
+                    <a href="#throttle-debounce" class="heading-anchor" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                    </a>
+                </h2>
+
+                <p>
+                    Algunos eventos se disparan cientos de veces por segundo: <code>scroll</code>, <code>resize</code>, <code>mousemove</code> y <code>input</code> son los culpables m&aacute;s comunes. Si ejecut&aacute;s l&oacute;gica pesada (c&aacute;lculos, manipulaciones del DOM, peticiones de red) en cada uno de esos disparos, vas a tener una aplicaci&oacute;n lenta y con mala performance. <strong>Throttle</strong> y <strong>debounce</strong> son dos t&eacute;cnicas que limitan la frecuencia de ejecuci&oacute;n de una funci&oacute;n para mantener la fluidez de la interfaz.
+                </p>
+
+                <p>
+                    <strong>Debounce</strong> espera un per&iacute;odo de inactividad antes de ejecutar la funci&oacute;n. Si el evento se sigue disparando, reinicia el timer. Es ideal para b&uacute;squedas en vivo: no quer&eacute;s hacer una petici&oacute;n por cada tecla, sino esperar a que el usuario deje de escribir. <strong>Throttle</strong> ejecuta la funci&oacute;n a intervalos regulares, como m&aacute;ximo una vez cada X milisegundos. Es ideal para scroll y resize: quer&eacute;s actualizar la UI durante el evento, pero no en cada frame.
+                </p>
+
+                <div class="code-block">
+                    <div class="code-block-header">
+                        <span class="code-block-lang">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                            JavaScript
+                        </span>
+                        <button class="code-block-copy" aria-label="Copiar codigo">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                            Copiar
+                        </button>
+                    </div>
+                    <pre><code class="language-javascript">// === DEBOUNCE ===
+// Espera Nms de inactividad antes de ejecutar
+// Si el evento se repite antes, reinicia el timer
+
+function debounce(fn, delay = 300) {
+    let timer = null;
+    return function (...args) {
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+            fn.apply(this, args);
+        }, delay);
+    };
+}
+
+// Uso: busqueda en vivo
+const inputBusqueda = document.querySelector("#search-input");
+
+inputBusqueda.addEventListener("input", debounce((e) => {
+    const query = e.target.value;
+    if (query.length < 3) return;
+
+    // Hacer la busqueda (API call, filtrar lista, etc.)
+    buscarResultados(query);
+}, 300));
+// Solo se ejecuta 300ms DESPUES de que el usuario deje de escribir
+
+// === THROTTLE ===
+// Ejecuta como maximo una vez cada Nms
+// Garantiza ejecucion periodica durante el evento
+
+function throttle(fn, limit = 100) {
+    let inThrottle = false;
+    return function (...args) {
+        if (!inThrottle) {
+            fn.apply(this, args);
+            inThrottle = true;
+            setTimeout(() => {
+                inThrottle = false;
+            }, limit);
+        }
+    };
+}
+
+// Uso: actualizar indicador de scroll
+const indicador = document.querySelector("#scroll-progress");
+
+window.addEventListener("scroll", throttle(() => {
+    const scrollTop = document.documentElement.scrollTop;
+    const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = (scrollTop / scrollHeight) * 100;
+    indicador.style.width = `${progress}%`;
+}, 16)); // ~60fps (1000ms / 60fps = ~16ms)
+
+// Uso: resize handler
+window.addEventListener("resize", throttle(() => {
+    console.log("Ancho:", window.innerWidth);
+    recalcularLayout();
+}, 250));
+
+// === Debounce con opci&oacute;n leading ===
+// Ejecuta inmediatamente en la primera llamada, despues debouncea
+
+function debounceLeading(fn, delay = 300) {
+    let timer = null;
+    return function (...args) {
+        if (!timer) {
+            fn.apply(this, args); // ejecutar inmediatamente
+        }
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+            timer = null; // permitir la proxima ejecucion inmediata
+        }, delay);
+    };
+}
+
+// Uso: boton de "guardar" que solo permite un click por segundo
+document.querySelector("#btn-guardar").addEventListener("click",
+    debounceLeading(() => {
+        guardarDatos();
+    }, 1000)
+);
+
+// === Combinacion real: buscador con debounce + loading state ===
+
+const searchInput = document.querySelector("#busqueda");
+const resultsContainer = document.querySelector("#resultados");
+const loadingIndicator = document.querySelector("#loading");
+
+searchInput.addEventListener("input", debounce(async (e) => {
+    const query = e.target.value.trim();
+    if (!query) {
+        resultsContainer.innerHTML = "";
+        return;
+    }
+
+    loadingIndicator.classList.remove("hidden");
+    try {
+        const resultados = await fetch(`/api/search?q=${query}`);
+        const data = await resultados.json();
+        renderResultados(data);
+    } catch (error) {
+        resultsContainer.innerHTML = "&lt;p&gt;Error de b&amp;uacute;squeda&lt;/p&gt;";
+    } finally {
+        loadingIndicator.classList.add("hidden");
+    }
+}, 400));</code></pre>
+                </div>
+
+                <div class="callout callout-warning">
+                    <svg class="callout-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+                    <div class="callout-content">
+                        <p class="callout-title">Lodash vs implementaci&oacute;n propia</p>
+                        <p>Las implementaciones de debounce y throttle que mostramos ac&aacute; cubren el 90% de los casos de uso. Si necesit&aacute;s opciones avanzadas (como <code>leading</code> + <code>trailing</code> combinados, <code>cancel</code>, <code>flush</code>), Lodash tiene implementaciones robustas con <code>_.debounce()</code> y <code>_.throttle()</code>. Para proyectos simples, las versiones caseras son perfectas y evit&aacute;s una dependencia extra.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Navigation between sections -->
+            <nav class="section-nav mt-8" style="display: flex; justify-content: space-between; padding-top: var(--space-6); border-top: 1px solid var(--border-color);">
+                <a href="../sections/js-dom.html" class="btn btn-secondary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                    DOM Manipulation
+                </a>
+                <a href="../sections/js-asincronia.html" class="btn btn-secondary">
+                    Asincron&iacute;a
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                </a>
+            </nav>
+
+        </main>
+
+        <!-- Footer -->
+        <footer class="site-footer" id="site-footer"></footer>
+    </div>
+
+    <!-- Highlight.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+    <!-- App JS -->
+    <script type="module" src="../js/app.js"></script>
+</body>
+</html>
