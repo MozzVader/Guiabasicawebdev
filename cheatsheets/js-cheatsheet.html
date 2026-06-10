@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Cheatsheet — WebForge</title>
+    <meta name="description" content="Cheatsheet de referencia rapida de JavaScript: variables, tipos de datos, operadores, metodos de string, array, objeto, ES6+, DOM, eventos, async, almacenamiento y mas.">
+    <meta name="theme-color" content="#0d1117">
+    <link rel="icon" type="image/svg+xml" href="../assets/images/favicon.svg">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Highlight.js (CDN) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/code-blocks.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    <link rel="stylesheet" href="../css/cheatsheet.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+</head>
+<body>
+
+    <div class="page-wrapper">
+        <!-- Header -->
+        <header class="site-header" id="site-header"></header>
+
+        <!-- Sidebar -->
+        <aside class="site-sidebar" id="site-sidebar"></aside>
+        <div class="sidebar-overlay"></div>
+
+        <!-- Main Content -->
+        <main class="main-content" role="main">
+
+            <!-- Breadcrumb -->
+            <div class="section-breadcrumb">
+                <a href="../index.html">Inicio</a>
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                <span>JavaScript</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                <span>Cheatsheet</span>
+            </div>
+
+            <!-- Cheatsheet Header -->
+            <div class="cheatsheet-header animate-on-scroll">
+                <h1>JavaScript Cheatsheet</h1>
+                <p>Referencia rapida de JavaScript: variables, operadores, metodos de string, array y objeto, sintaxis ES6+, DOM, eventos, asincronia, almacenamiento y mas. Imprimi esta pagina y tenela a mano.</p>
+            </div>
+
+            <!-- Boton imprimir -->
+            <div class="cheatsheet-print-btn">
+                <button class="btn btn-primary" onclick="window.print()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect width="12" height="8" x="6" y="14"/></svg>
+                    Imprimir
+                </button>
+            </div>
+
+            <!-- ===================== VARIABLES Y TIPOS ===================== -->
+            <section class="cheatsheet-section animate-on-scroll" id="variables">
+                <h2 class="cheatsheet-section-title">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                    Variables y Tipos de Datos
+                </h2>
+                <div class="cheatsheet-table-wrapper">
+                    <table class="cheatsheet-table">
+                        <thead>
+                            <tr>
+                                <th>Concepto</th>
+                                <th>Descripcion</th>
+                                <th>Ejemplo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="code-cell">const</span></td>
+                                <td>Constante (no se puede reasignar). Usar por defecto</td>
+                                <td><span class="code-cell">const PI = 3.14;</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">let</span></td>
+                                <td>Variable con alcance de bloque. Usar solo si muta</td>
+                                <td><span class="code-cell">let contador = 0;</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">var</span></td>
+                                <td>Variable con alcance de funcion. EVITAR en codigo nuevo</td>
+                                <td><span class="code-cell">var viejo = "no usar";</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">String</span></td>
+                                <td>Cadena de texto. Se crea con comillas simples, dobles o backticks</td>
+                                <td><span class="code-cell">const s = "hola";</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">Number</span></td>
+                                <td>Numeros enteros y decimales (IEEE 754). Solo un tipo numerico</td>
+                                <td><span class="code-cell">42, 3.14, NaN, Infinity</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">BigInt</span></td>
+                                <td>Enteros arbitrariamente grandes. Se crea con n sufijo</td>
+                                <td><span class="code-cell">9007199254740991n</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">Boolean</span></td>
+                                <td>Valor logico: true o false</td>
+                                <td><span class="code-cell">const activo = true;</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">null</span></td>
+                                <td>Valor vacio intencional (asignado manualmente)</td>
+                                <td><span class="code-cell">let dato = null;</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">undefined</span></td>
+                                <td>Variable declarada sin valor (valor por defecto)</td>
+                                <td><span class="code-cell">let x; // x es undefined</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">Symbol</span></td>
+                                <td>Valor unico e inmutable (identificadores)</td>
+                                <td><span class="code-cell">const id = Symbol("desc");</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">Object</span></td>
+                                <td>Coleccion de pares clave-valor. Base de todo en JS</td>
+                                <td><span class="code-cell">{ nombre: "Ana" }</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">Array</span></td>
+                                <td>Lista ordenada (es un tipo especial de Object)</td>
+                                <td><span class="code-cell">[1, 2, 3]</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">typeof</span></td>
+                                <td>Operador para consultar el tipo de un valor</td>
+                                <td><span class="code-cell">typeof 42 // "number"</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">Array.isArray()</span></td>
+                                <td>Forma correcta de verificar si es un array</td>
+                                <td><span class="code-cell">Array.isArray([1]) // true</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">instanceof</span></td>
+                                <td>Verifica si un objeto es instancia de una clase</td>
+                                <td><span class="code-cell">[] instanceof Array // true</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- ===================== OPERADORES ===================== -->
+            <section class="cheatsheet-section animate-on-scroll" id="operadores">
+                <h2 class="cheatsheet-section-title">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/><path d="M12 8v8"/></svg>
+                    Operadores
+                </h2>
+                <div class="cheatsheet-table-wrapper">
+                    <table class="cheatsheet-table">
+                        <thead>
+                            <tr>
+                                <th>Operador</th>
+                                <th>Descripcion</th>
+                                <th>Ejemplo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="code-cell">+ - * / % **</span></td>
+                                <td>Aritmeticos: suma, resta, mult, div, modulo, potencia</td>
+                                <td><span class="code-cell">2 ** 3 // 8</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">= += -= *= /=</span></td>
+                                <td>Asignacion y asignacion compuesta</td>
+                                <td><span class="code-cell">x += 5; // x = x + 5</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">++ --</span></td>
+                                <td>Incremento / decremento (prefijo o sufijo)</td>
+                                <td><span class="code-cell">i++; ++i;</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">=== !==</span></td>
+                                <td>Igualdad estricta (tipo + valor). SIEMPRE usar estos</td>
+                                <td><span class="code-cell">1 === "1" // false</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">== !=</span></td>
+                                <td>Igualdad debil (convierte tipos). EVITAR</td>
+                                <td><span class="code-cell">1 == "1" // true</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">&lt; &gt; &lt;= &gt;=</span></td>
+                                <td>Comparacion (devuelven boolean)</td>
+                                <td><span class="code-cell">5 > 3 // true</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">&amp;&amp; || !</span></td>
+                                <td>Logicos: AND, OR, NOT</td>
+                                <td><span class="code-cell">!true // false</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">??</span></td>
+                                <td>Nullish coalescing: devuelve el derecho si el izquierdo es null/undefined</td>
+                                <td><span class="code-cell">null ?? "default" // "default"</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">||</span></td>
+                                <td>OR logico: devuelve el primero truthy</td>
+                                <td><span class="code-cell">"" || "hola" // "hola"</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">?.</span></td>
+                                <td>Optional chaining: accede seguro sin error si es null/undefined</td>
+                                <td><span class="code-cell">user?.address?.city</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">?: (ternario)</span></td>
+                                <td>Operador condicional (if/else en una linea)</td>
+                                <td><span class="code-cell">edad >= 18 ? "mayor" : "menor"</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">typeof</span></td>
+                                <td>Devuelve el tipo del valor como string</td>
+                                <td><span class="code-cell">typeof null // "object" (bug historico)</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- ===================== STRING METODS ===================== -->
+            <section class="cheatsheet-section animate-on-scroll" id="strings">
+                <h2 class="cheatsheet-section-title">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" x2="15" y1="20" y2="20"/><line x1="12" x2="12" y1="4" y2="20"/></svg>
+                    Metodos de String
+                </h2>
+                <div class="cheatsheet-table-wrapper">
+                    <table class="cheatsheet-table">
+                        <thead>
+                            <tr>
+                                <th>Metodo</th>
+                                <th>Descripcion</th>
+                                <th>Ejemplo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="code-cell">.length</span></td>
+                                <td>Cantidad de caracteres (propiedad, no metodo)</td>
+                                <td><span class="code-cell">"hola".length // 4</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">.slice(start, end?)</span></td>
+                                <td>Extrae parte del string (end exclusivo, negativos cuentan desde atras)</td>
+                                <td><span class="code-cell">"hola mundo".slice(0, 4) // "hola"</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">.substring(start, end?)</span></td>
+                                <td>Similar a slice pero no acepta negativos</td>
+                                <td><span class="code-cell">"hola".substring(1) // "ola"</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">.replace(search, repl)</span></td>
+                                <td>Reemplaza la primera ocurrencia (usa regex para global)</td>
+                                <td><span class="code-cell">"aab".replace("a", "x") // "xab"</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">.replaceAll(search, repl)</span></td>
+                                <td>Reemplaza todas las ocurrencias</td>
+                                <td><span class="code-cell">"aab".replaceAll("a", "x") // "xxb"</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">.toUpperCase()</span></td>
+                                <td>Convierte a mayusculas</td>
+                                <td><span class="code-cell">"hola".toUpperCase() // "HOLA"</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">.toLowerCase()</span></td>
+                                <td>Convierte a minusculas</td>
+                                <td><span class="code-cell">"HOLA".toLowerCase() // "hola"</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">.trim()</span></td>
+                                <td>Elimina espacios en blanco al inicio y final</td>
+                                <td><span class="code-cell">"  hola  ".trim() // "hola"</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">.trimStart() / .trimEnd()</span></td>
+                                <td>Elimina espacios solo al inicio / solo al final</td>
+                                <td><span class="code-cell">"  hola  ".trimStart() // "hola  "</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">.includes(str)</span></td>
+                                <td>Verifica si contiene la subcadena (true/false)</td>
+                                <td><span class="code-cell">"hola".includes("ol") // true</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">.startsWith(str)</span></td>
+                                <td>Verifica si empieza con la subcadena</td>
+                                <td><span class="code-cell">"hola".startsWith("ho") // true</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">.endsWith(str)</span></td>
+                                <td>Verifica si termina con la subcadena</td>
+                                <td><span class="code-cell">"hola".endsWith("la") // true</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">.indexOf(str)</span></td>
+                                <td>Posicion de la primera ocurrencia (-1 si no existe)</td>
+                                <td><span class="code-cell">"hola".indexOf("l") // 2</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">.split(sep)</span></td>
+                                <td>Divide el string en un array</td>
+                                <td><span class="code-cell">"a,b,c".split(",") // ["a","b","c"]</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">.repeat(n)</span></td>
+                                <td>Repite el string n veces</td>
+                                <td><span class="code-cell">"ab".repeat(3) // "ababab"</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">.padStart(len, str)</span></td>
+                                <td>Rellena al inicio hasta alcanzar len caracteres</td>
+                                <td><span class="code-cell">"5".padStart(3, "0") // "005"</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">.padEnd(len, str)</span></td>
+                                <td>Rellena al final hasta alcanzar len caracteres</td>
+                                <td><span class="code-cell">"hi".padEnd(5, ".") // "hi..."</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">.charAt(idx)</span></td>
+                                <td>Caracter en la posicion indicada</td>
+                                <td><span class="code-cell">"hola".charAt(1) // "o"</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">.charCodeAt(idx)</span></td>
+                                <td>Codigo Unicode del caracter en la posicion</td>
+                                <td><span class="code-cell">"A".charCodeAt(0) // 65</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">.match(regex)</span></td>
+                                <td>Busca coincidencias con una expresion regular</td>
+                                <td><span class="code-cell">"hola123".match(/\d+/) // ["123"]</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- ===================== ARRAY METHODS ===================== -->
+            <section class="cheatsheet-section animate-on-scroll" id="arrays">
+                <h2 class="cheatsheet-section-title">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg>
+                    Metodos de Array
+                </h2>
+                <div class="cheatsheet-table-wrapper">
+                    <table class="cheatsheet-table">
+                        <thead>
+                            <tr>
+                                <th>Metodo</th>
+                                <th>Descripcion</th>
+                                <th>Ejemplo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="code-cell">.push(...items)</span></td>
+                                <td>Agrega elementos al final. Devuelve la nueva longitud</td>
+                                <td><span class="code-cell">[1].push(2) // [1, 2]</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">.pop()</span></td>
+                                <td>Elimina y devuelve el ultimo elemento</td>
+                                <td><span class="code-cell">[1,2,3].pop() // 3</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">.shift()</span></td>
+                                <td>Elimina y devuelve el primer elemento</td>
+                                <td><span class="code-cell">[1,2,3].shift() // 1</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">.unshift(...items)</span></td>
+                                <td>Agrega elementos al inicio. Devuelve la nueva longitud</td>
+                                <td><span class="code-cell">[2,3].unshift(1) // [1,2,3]</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">.splice(start, del, ...add)</span></td>
+                                <td>Elimina/inserta elementos en una posicion (muta el array original)</td>
+                                <td><span class="code-cell">[1,2,3].splice(1,1,"x") // [1,"x",3]</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">.slice(start, end?)</span></td>
+                                <td>Devuelve una copia de una porcion (no muta)</td>
+                                <td><span class="code-cell">[1,2,3,4].slice(1,3) // [2,3]</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">.concat(...arrays)</span></td>
+                                <td>Une arrays y devuelve uno nuevo (no muta)</td>
+                                <td><span class="code-cell">[1].concat([2],[3]) // [1,2,3]</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">.indexOf(val)</span></td>
+                                <td>Primer indice del valor (-1 si no existe)</td>
+                                <td><span class="code-cell">[1,2,3].indexOf(2) // 1</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">.includes(val)</span></td>
+                                <td>Verifica si el valor existe (true/false)</td>
+                                <td><span class="code-cell">[1,2,3].includes(2) // true</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">.find(fn)</span></td>
+                                <td>Primer elemento que cumple la condicion (el elemento, no el indice)</td>
+                                <td><span class="code-cell">[1,2,3].find(x => x > 1) // 2</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">.findIndex(fn)</span></td>
+                                <td>Primer indice que cumple la condicion</td>
+                                <td><span class="code-cell">[1,2,3].findIndex(x => x > 1) // 1</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">.filter(fn)</span></td>
+                                <td>Nuevo array con los elementos que cumplen la condicion</td>
+                                <td><span class="code-cell">[1,2,3,4].filter(x => x > 2) // [3,4]</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">.map(fn)</span></td>
+                                <td>Nuevo array transformando cada elemento</td>
+                                <td><span class="code-cell">[1,2,3].map(x => x * 2) // [2,4,6]</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">.reduce(fn, init?)</span></td>
+                                <td>Reduce el array a un unico valor (acumulador)</td>
+                                <td><span class="code-cell">[1,2,3].reduce((a,b) => a+b) // 6</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">.some(fn)</span></td>
+                                <td>true si AL MENOS UN elemento cumple la condicion</td>
+                                <td><span class="code-cell">[1,2,3].some(x => x > 5) // false</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">.every(fn)</span></td>
+                                <td>true si TODOS los elementos cumplen la condicion</td>
+                                <td><span class="code-cell">[1,2,3].every(x => x > 0) // true</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">.forEach(fn)</span></td>
+                                <td>Ejecuta fn por cada elemento (no devuelve nada, no se puede break)</td>
+                                <td><span class="code-cell">[1,2].forEach(x => console.log(x))</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">.sort(fn?)</span></td>
+                                <td>Ordena el array IN-PLACE (muta!). Pasar comparador para numeros</td>
+                                <td><span class="code-cell">[3,1,2].sort((a,b) => a-b) // [1,2,3]</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">.reverse()</span></td>
+                                <td>Invierte el array IN-PLACE (muta!)</td>
+                                <td><span class="code-cell">[1,2,3].reverse() // [3,2,1]</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">.flat(depth?)</span></td>
+                                <td>Aplana arrays anidados (1 nivel por defecto)</td>
+                                <td><span class="code-cell">[1,[2,[3]]].flat(2) // [1,2,3]</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">.flatMap(fn)</span></td>
+                                <td>map() + flat() en un solo paso</td>
+                                <td><span class="code-cell">[1,2].flatMap(x => [x, x*2]) // [1,2,2,4]</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">.join(sep?)</span></td>
+                                <td>Une todos los elementos en un string</td>
+                                <td><span class="code-cell">[1,2,3].join("-") // "1-2-3"</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">.fill(val, start?, end?)</span></td>
+                                <td>Llena el array con un valor (muta)</td>
+                                <td><span class="code-cell">[1,2,3].fill(0) // [0,0,0]</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">Array.from(iter, fn?)</span></td>
+                                <td>Crea un array desde un iterable (map opcional en el segundo arg)</td>
+                                <td><span class="code-cell">Array.from("abc") // ["a","b","c"]</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">Array.isArray(val)</span></td>
+                                <td>Verifica si un valor es un array</td>
+                                <td><span class="code-cell">Array.isArray([]) // true</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">.length</span></td>
+                                <td>Cantidad de elementos (propiedad)</td>
+                                <td><span class="code-cell">[1,2,3].length // 3</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">...spread</span></td>
+                                <td>Spread: expande un array en elementos individuales</td>
+                                <td><span class="code-cell">Math.max(...[1,5,3]) // 5</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- ===================== OBJECT METHODS ===================== -->
+            <section class="cheatsheet-section animate-on-scroll" id="objects">
+                <h2 class="cheatsheet-section-title">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+                    Metodos de Object
+                </h2>
+                <div class="cheatsheet-table-wrapper">
+                    <table class="cheatsheet-table">
+                        <thead>
+                            <tr>
+                                <th>Metodo / Sintaxis</th>
+                                <th>Descripcion</th>
+                                <th>Ejemplo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="code-cell">obj.prop / obj["prop"]</span></td>
+                                <td>Acceder a una propiedad (notacion de punto o corchetes)</td>
+                                <td><span class="code-cell">user.name; user["name"]</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">obj.prop = val</span></td>
+                                <td>Asignar o crear una propiedad</td>
+                                <td><span class="code-cell">user.edad = 25;</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">"prop" in obj</span></td>
+                                <td>Verifica si una propiedad existe (incluye heredadas)</td>
+                                <td><span class="code-cell">"name" in user // true</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">obj.hasOwnProperty("p")</span></td>
+                                <td>Verifica si una propiedad es propia (no heredada)</td>
+                                <td><span class="code-cell">user.hasOwnProperty("name") // true</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">delete obj.prop</span></td>
+                                <td>Elimina una propiedad del objeto</td>
+                                <td><span class="code-cell">delete user.edad;</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">Object.keys(obj)</span></td>
+                                <td>Array con todas las claves propias (enumerables)</td>
+                                <td><span class="code-cell">Object.keys({a:1,b:2}) // ["a","b"]</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">Object.values(obj)</span></td>
+                                <td>Array con todos los valores propios</td>
+                                <td><span class="code-cell">Object.values({a:1,b:2}) // [1,2]</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">Object.entries(obj)</span></td>
+                                <td>Array de pares [clave, valor]</td>
+                                <td><span class="code-cell">Object.entries({a:1}) // [["a",1]]</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">Object.assign(target, ...src)</span></td>
+                                <td>Copia propiedades de un objeto a otro (shallow merge)</td>
+                                <td><span class="code-cell">Object.assign({}, {a:1}, {b:2})</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">{ ...obj }</span></td>
+                                <td>Spread: clona o mergea objetos (shallow copy, ES6+)</td>
+                                <td><span class="code-cell">const clone = { ...original }</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">const { a, b } = obj</span></td>
+                                <td>Destructuring: extrae propiedades en variables</td>
+                                <td><span class="code-cell">const { nombre, edad } = user;</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">const { a: alias } = obj</span></td>
+                                <td>Destructuring con renombrado</td>
+                                <td><span class="code-cell">const { nombre: n } = user;</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">const { a = def } = obj</span></td>
+                                <td>Destructuring con valor por defecto</td>
+                                <td><span class="code-cell">const { rol = "user" } = user;</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">Object.freeze(obj)</span></td>
+                                <td>Congela el objeto: no se puede modificar, agregar ni eliminar propiedades</td>
+                                <td><span class="code-cell">Object.freeze(config);</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">Object.is(a, b)</span></td>
+                                <td>Comparacion mas precisa que === (NaN === NaN, -0 !== +0)</td>
+                                <td><span class="code-cell">Object.is(NaN, NaN) // true</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">JSON.stringify(obj)</span></td>
+                                <td>Convierte un objeto a string JSON</td>
+                                <td><span class="code-cell">JSON.stringify({a:1}) // '{"a":1}'</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">JSON.parse(str)</span></td>
+                                <td>Convierte un string JSON a objeto</td>
+                                <td><span class="code-cell">JSON.parse('{"a":1}') // {a:1}</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- ===================== ES6+ SINTAXIS ===================== -->
+            <section class="cheatsheet-section animate-on-scroll" id="es6">
+                <h2 class="cheatsheet-section-title">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m13 2-2.5 18H7L4.5 2z"/><path d="m16.5 2-2.5 18"/></svg>
+                    Sintaxis ES6+ Moderna
+                </h2>
+                <div class="cheatsheet-table-wrapper">
+                    <table class="cheatsheet-table">
+                        <thead>
+                            <tr>
+                                <th>Caracteristica</th>
+                                <th>Descripcion</th>
+                                <th>Ejemplo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="code-cell">Arrow functions</span></td>
+                                <td>Funciones cortas con this heredado del contexto lexico</td>
+                                <td><span class="code-cell">const sumar = (a, b) => a + b;</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">Template literals</span></td>
+                                <td>Strings con interpolacion y multilinea usando backticks</td>
+                                <td><span class="code-cell">`Hola ${nombre}, tenes ${edad}`</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">Destructuring arrays</span></td>
+                                <td>Extrae elementos por posicion</td>
+                                <td><span class="code-cell">const [a, , c] = [1, 2, 3]; // a=1, c=3</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">Destructuring objects</span></td>
+                                <td>Extrae propiedades por nombre</td>
+                                <td><span class="code-cell">const { nombre, email } = user;</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">Spread (...)</span></td>
+                                <td>Expande arrays/objetos en elementos individuales</td>
+                                <td><span class="code-cell">const arr = [...arr1, ...arr2];</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">Rest (...)</span></td>
+                                <td>Agrupa argumentos restantes en un array</td>
+                                <td><span class="code-cell">function fn(a, ...rest) { }</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">Default parameters</span></td>
+                                <td>Valores por defecto en parametros de funcion</td>
+                                <td><span class="code-cell">function fn(x = 10, y = 20) { }</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">Optional chaining ?.</span></td>
+                                <td>Acceso seguro a propiedades anidadas (no lanza error si es null)</td>
+                                <td><span class="code-cell">obj?.a?.b?.c</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">Nullish coalescing ??</span></td>
+                                <td>Valor por defecto solo para null/undefined (no para 0 o "")</td>
+                                <td><span class="code-cell">const x = null ?? "default";</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">import / export</span></td>
+                                <td>Modulos ES: importar y exportar entre archivos</td>
+                                <td><span class="code-cell">export const PI = 3.14; import { PI } from "./math.js";</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">Class</span></td>
+                                <td>Azucar sintactico sobre funciones constructoras y prototipos</td>
+                                <td><span class="code-cell">class Perro { constructor(nombre) { this.nombre = nombre; } }</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">Promise</span></td>
+                                <td>Objeto que representa un valor futuro (resuelve o rechaza)</td>
+                                <td><span class="code-cell">new Promise((resolve, reject) => { })</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">async / await</span></td>
+                                <td>Azucar sintactico para escribir Promises como codigo sincrono</td>
+                                <td><span class="code-cell">const data = await fetch(url);</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">for...of</span></td>
+                                <td>Itera sobre valores de iterables (arrays, strings, Maps, Sets)</td>
+                                <td><span class="code-cell">for (const item of [1,2,3]) { }</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">for...in</span></td>
+                                <td>Itera sobre claves enumerables de un objeto (no usar para arrays)</td>
+                                <td><span class="code-cell">for (const key in obj) { }</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">Map</span></td>
+                                <td>Coleccion de pares clave-valor (cualquier tipo como clave)</td>
+                                <td><span class="code-cell">const m = new Map(); m.set("a", 1);</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">Set</span></td>
+                                <td>Coleccion de valores unicos (sin duplicados)</td>
+                                <td><span class="code-cell">const s = new Set([1,2,2,3]); // Set {1,2,3}</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">Symbol</span></td>
+                                <td>Valor primitivo unico, usado como clave de propiedad</td>
+                                <td><span class="code-cell">const ID = Symbol("id");</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">try / catch / finally</span></td>
+                                <td>Manejo de errores: intenta, captura excepciones, siempre ejecuta finally</td>
+                                <td><span class="code-cell">try { JSON.parse(str); } catch(e) { } finally { }</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">throw new Error()</span></td>
+                                <td>Lanza una excepcion personalizada</td>
+                                <td><span class="code-cell">throw new Error("algo salio mal");</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- ===================== DOM ===================== -->
+            <section class="cheatsheet-section animate-on-scroll" id="dom">
+                <h2 class="cheatsheet-section-title">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                    DOM
+                </h2>
+                <div class="cheatsheet-table-wrapper">
+                    <table class="cheatsheet-table">
+                        <thead>
+                            <tr>
+                                <th>Metodo / Propiedad</th>
+                                <th>Descripcion</th>
+                                <th>Ejemplo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="code-cell">document.querySelector(sel)</span></td>
+                                <td>Primer elemento que matchea el selector CSS</td>
+                                <td><span class="code-cell">document.querySelector(".card h2")</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">document.querySelectorAll(sel)</span></td>
+                                <td>Todos los elementos que matchean (NodeList)</td>
+                                <td><span class="code-cell">document.querySelectorAll("li.item")</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">document.getElementById(id)</span></td>
+                                <td>Elemento por ID (mas rapido que querySelector)</td>
+                                <td><span class="code-cell">document.getElementById("app")</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">.createElement(tag)</span></td>
+                                <td>Crea un nuevo elemento HTML</td>
+                                <td><span class="code-cell">const div = document.createElement("div");</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">.appendChild(node)</span></td>
+                                <td>Agrega un nodo como ultimo hijo</td>
+                                <td><span class="code-cell">parent.appendChild(div);</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">.removeChild(node)</span></td>
+                                <td>Elimina un nodo hijo</td>
+                                <td><span class="code-cell">parent.removeChild(child);</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">.remove()</span></td>
+                                <td>Elimina el elemento directamente (mas simple)</td>
+                                <td><span class="code-cell">element.remove();</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">.textContent</span></td>
+                                <td>Texto del elemento (seguro, sin XSS)</td>
+                                <td><span class="code-cell">el.textContent = "Hola";</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">.innerHTML</span></td>
+                                <td>HTML interno del elemento (PELIGRO: XSS si usas datos del usuario)</td>
+                                <td><span class="code-cell">el.innerHTML = "&lt;b&gt;Hola&lt;/b&gt;";</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">.classList.add/remove/toggle</span></td>
+                                <td>Manipula clases CSS del elemento</td>
+                                <td><span class="code-cell">el.classList.toggle("active");</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">.style.prop</span></td>
+                                <td>Estilos inline del elemento (camelCase)</td>
+                                <td><span class="code-cell">el.style.backgroundColor = "red";</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">.getAttribute / setAttribute</span></td>
+                                <td>Lee / escribe atributos HTML</td>
+                                <td><span class="code-cell">el.setAttribute("data-id", "5");</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">.dataset</span></td>
+                                <td>Acceso a data-* attributes</td>
+                                <td><span class="code-cell">el.dataset.userId; // data-user-id</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">.parentElement</span></td>
+                                <td>Elemento padre</td>
+                                <td><span class="code-cell">el.parentElement</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">.children</span></td>
+                                <td>Elementos hijos (solo elementos, no texto)</td>
+                                <td><span class="code-cell">el.children</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">.closest(sel)</span></td>
+                                <td>Ascendiente mas cercano que matchea el selector</td>
+                                <td><span class="code-cell">btn.closest(".card")</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- ===================== EVENTOS ===================== -->
+            <section class="cheatsheet-section animate-on-scroll" id="eventos">
+                <h2 class="cheatsheet-section-title">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"/></svg>
+                    Eventos
+                </h2>
+                <div class="cheatsheet-table-wrapper">
+                    <table class="cheatsheet-table">
+                        <thead>
+                            <tr>
+                                <th>Metodo / Evento</th>
+                                <th>Descripcion</th>
+                                <th>Ejemplo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="code-cell">.addEventListener(evt, fn)</span></td>
+                                <td>Registra un listener para un evento</td>
+                                <td><span class="code-cell">btn.addEventListener("click", fn);</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">.removeEventListener(evt, fn)</span></td>
+                                <td>Elimina un listener (misma referencia de funcion)</td>
+                                <td><span class="code-cell">btn.removeEventListener("click", fn);</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">event.target</span></td>
+                                <td>Elemento que disparo el evento (donde se origin&oacute;)</td>
+                                <td><span class="code-cell">e.target.classList.add("active");</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">event.currentTarget</span></td>
+                                <td>Elemento que tiene el listener (donde se registr&oacute;)</td>
+                                <td><span class="code-cell">e.currentTarget // el boton</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">event.preventDefault()</span></td>
+                                <td>Evita la accion por defecto del navegador (submit, link)</td>
+                                <td><span class="code-cell">form.addEventListener("submit", e => e.preventDefault());</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">event.stopPropagation()</span></td>
+                                <td>Detiene la propagacion del evento (bubbling)</td>
+                                <td><span class="code-cell">e.stopPropagation();</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">click</span></td>
+                                <td>Click del mouse (o tap en movil)</td>
+                                <td><span class="code-cell">el.addEventListener("click", fn);</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">input / change</span></td>
+                                <td>input se dispara en cada cambio; change al perder foco</td>
+                                <td><span class="code-cell">input.addEventListener("input", fn);</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">submit</span></td>
+                                <td>Formulario enviado</td>
+                                <td><span class="code-cell">form.addEventListener("submit", fn);</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">keydown / keyup</span></td>
+                                <td>Tecla presionada / soltada</td>
+                                <td><span class="code-cell">document.addEventListener("keydown", fn);</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">scroll</span></td>
+                                <td>Scroll en la ventana o un elemento</td>
+                                <td><span class="code-cell">window.addEventListener("scroll", fn);</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">resize</span></td>
+                                <td>Ventana redimensionada</td>
+                                <td><span class="code-cell">window.addEventListener("resize", fn);</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">load / DOMContentLoaded</span></td>
+                                <td>load: todo cargado. DOMContentLoaded: solo el HTML listo</td>
+                                <td><span class="code-cell">document.addEventListener("DOMContentLoaded", fn);</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">mouseenter / mouseleave</span></td>
+                                <td>Mouse entra / sale de un elemento (no bubbling)</td>
+                                <td><span class="code-cell">el.addEventListener("mouseenter", fn);</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">event delegation</span></td>
+                                <td>Un solo listener en el padre para muchos hijos</td>
+                                <td><span class="code-cell">ul.addEventListener("click", e => { if(e.target.tagName==="LI") ... })</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- ===================== ASINCRONIA ===================== -->
+            <section class="cheatsheet-section animate-on-scroll" id="async">
+                <h2 class="cheatsheet-section-title">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4"/><path d="m6.8 15-3.5 2"/><path d="m20.7 17-3.5 2"/><path d="M6.8 9-3.5-2"/><path d="m20.7 7-3.5-2"/><path d="m9 22 3-8 3 8"/><path d="M9 22h6"/></svg>
+                    Asincronia y Fetch
+                </h2>
+                <div class="cheatsheet-table-wrapper">
+                    <table class="cheatsheet-table">
+                        <thead>
+                            <tr>
+                                <th>Metodo / Sintaxis</th>
+                                <th>Descripcion</th>
+                                <th>Ejemplo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="code-cell">new Promise((resolve, reject) => {})</span></td>
+                                <td>Crea una nueva Promise</td>
+                                <td><span class="code-cell">const p = new Promise((res, rej) => { });</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">.then(fn) / .catch(fn)</span></td>
+                                <td>Maneja el resultado exitoso / error de una Promise</td>
+                                <td><span class="code-cell">p.then(val => { }).catch(err => { });</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">.finally(fn)</span></td>
+                                <td>Se ejecuta siempre al final (exito o error)</td>
+                                <td><span class="code-cell">p.finally(() => console.log("fin"));</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">Promise.all([...])</span></td>
+                                <td>Espera a que TODAS se resuelvan. Si una falla, todo falla</td>
+                                <td><span class="code-cell">Promise.all([p1, p2, p3])</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">Promise.allSettled([...])</span></td>
+                                <td>Espera a todas, devuelve resultados individuales</td>
+                                <td><span class="code-cell">Promise.allSettled([p1, p2])</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">Promise.race([...])</span></td>
+                                <td>La primera en resolver o rechazar gana</td>
+                                <td><span class="code-cell">Promise.race([fetch(url), timeout(5000)])</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">Promise.any([...])</span></td>
+                                <td>La primera en RESOLVER gana (ignora rechazos)</td>
+                                <td><span class="code-cell">Promise.any([source1, source2])</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">async function fn() {}</span></td>
+                                <td>Declara una funcion que devuelve una Promise</td>
+                                <td><span class="code-cell">async function getData() { }</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">await expr</span></td>
+                                <td>Pausa hasta que la Promise se resuelva (solo dentro de async)</td>
+                                <td><span class="code-cell">const data = await fetch(url);</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">fetch(url, options)</span></td>
+                                <td>Peticion HTTP basada en Promises (GET por defecto)</td>
+                                <td><span class="code-cell">const res = await fetch("https://api.com/data");</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">response.ok</span></td>
+                                <td>true si el status es 200-299 (SIEMPRE verificar, fetch no falla en 4xx/5xx)</td>
+                                <td><span class="code-cell">if (!res.ok) throw new Error(res.status);</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">response.json()</span></td>
+                                <td>Parsea el body como JSON (devuelve Promise)</td>
+                                <td><span class="code-cell">const data = await res.json();</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">response.text()</span></td>
+                                <td>Devuelve el body como string</td>
+                                <td><span class="code-cell">const html = await res.text();</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">response.status</span></td>
+                                <td>Codigo de estado HTTP (200, 404, 500...)</td>
+                                <td><span class="code-cell">console.log(res.status);</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">AbortController</span></td>
+                                <td>Cancela peticiones fetch en curso</td>
+                                <td><span class="code-cell">const ctrl = new AbortController(); fetch(url, { signal: ctrl.signal }); ctrl.abort();</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- ===================== ALMACENAMIENTO ===================== -->
+            <section class="cheatsheet-section animate-on-scroll" id="storage">
+                <h2 class="cheatsheet-section-title">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
+                    Almacenamiento
+                </h2>
+                <div class="cheatsheet-table-wrapper">
+                    <table class="cheatsheet-table">
+                        <thead>
+                            <tr>
+                                <th>Metodo / API</th>
+                                <th>Descripcion</th>
+                                <th>Ejemplo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="code-cell">localStorage.setItem(k, v)</span></td>
+                                <td>Guarda un valor (siempre string). Persiste permanentemente</td>
+                                <td><span class="code-cell">localStorage.setItem("user", JSON.stringify({name:"Ana"}));</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">localStorage.getItem(k)</span></td>
+                                <td>Lee un valor. Devuelve null si no existe</td>
+                                <td><span class="code-cell">JSON.parse(localStorage.getItem("user"))</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">localStorage.removeItem(k)</span></td>
+                                <td>Elimina un item especifico</td>
+                                <td><span class="code-cell">localStorage.removeItem("user");</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">localStorage.clear()</span></td>
+                                <td>Elimina TODO el almacenamiento del dominio</td>
+                                <td><span class="code-cell">localStorage.clear();</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">localStorage.key(i) / .length</span></td>
+                                <td>Clave en posicion i / cantidad de items</td>
+                                <td><span class="code-cell">localStorage.length</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">sessionStorage.*</span></td>
+                                <td>Misma API que localStorage pero se borra al cerrar la pestana</td>
+                                <td><span class="code-cell">sessionStorage.setItem("draft", "hola");</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">document.cookie</span></td>
+                                <td>Lee/escribe cookies (string: "nombre=valor; otra=valor"). Se envia al servidor en cada request</td>
+                                <td><span class="code-cell">document.cookie = "tema=dark; path=/; max-age=31536000";</span></td>
+                            </tr>
+                            <tr>
+                                <td><span class="code-cell">indexedDB.open(name, ver)</span></td>
+                                <td>Abre o crea una base de datos del lado del cliente (asincrona, objetos estructurados, indices)</td>
+                                <td><span class="code-cell">const req = indexedDB.open("MiDB", 1);</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Navigation between cheatsheets -->
+            <nav class="section-nav mt-8" style="display: flex; justify-content: space-between; padding-top: var(--space-6); border-top: 1px solid var(--border-color);">
+                <a href="../cheatsheets/css-cheatsheet.html" class="btn btn-secondary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                    CSS Cheatsheet
+                </a>
+                <a href="../cheatsheets/git-cheatsheet.html" class="btn btn-secondary">
+                    Git Cheatsheet
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                </a>
+            </nav>
+
+        </main>
+
+        <!-- Footer -->
+        <footer class="site-footer" id="site-footer"></footer>
+    </div>
+
+    <!-- Highlight.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+    <!-- App JS -->
+    <script type="module" src="../js/app.js"></script>
+</body>
+</html>
