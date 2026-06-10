@@ -10,6 +10,7 @@ import { initTheme } from './theme-toggle.js';
 import { initSidebar } from './sidebar.js';
 import { initScrollAnimations } from './scroll-animations.js';
 import { initHighlighting, initCopyButtons } from './code-blocks.js';
+import { initSearch } from './search.js';
 
 /**
  * Bootstraps the application
@@ -21,7 +22,10 @@ const bootstrap = async () => {
     // 2. Load shared components (header, sidebar, footer)
     await loadCommonComponents();
 
-    // 3. Other modules auto-initialize via 'components:loaded' event:
+    // 3. Initialize search (needs the input from header component)
+    initSearch();
+
+    // 4. Other modules auto-initialize via 'components:loaded' event:
     //    - sidebar.js
     //    - scroll-animations.js
     //    - code-blocks.js

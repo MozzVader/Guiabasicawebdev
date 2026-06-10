@@ -41,6 +41,10 @@
         width: 200px;
     }
 
+    .search-results {
+        min-width: 340px;
+    }
+
     .main-content {
         padding: var(--space-6);
     }

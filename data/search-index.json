@@ -1,0 +1,363 @@
+[
+  {
+    "title": "Inicio",
+    "url": "index.html",
+    "description": "WebForge: guía completa y cheatsheet de referencia para desarrollo web frontend. HTML, CSS, JavaScript, Git, SEO y más.",
+    "headings": [],
+    "category": "General"
+  },
+  {
+    "title": "Animaciones y Transiciones",
+    "url": "sections/css-animaciones.html",
+    "description": "Domina las animaciones y transiciones CSS: propiedades de transición (transition-property, duration, timing-function, delay), @keyframes (from/to, porcentajes), animation (name, duration, iteration-count, direction, fill-mode), transform (translate, rotate, scale, skew), performance (will-change, compositing, layout thrashing), easing functions (ease, linear, cubic-bezier) y View Transitions API.",
+    "headings": [
+      "Transiciones CSS",
+      "Animaciones con @keyframes",
+      "Transform: translate, rotate, scale, skew",
+      "Easing Functions: la curva de movimiento",
+      "Performance: 60fps sin tirones",
+      "View Transitions API: transiciones entre páginas",
+      "Buenas prácticas"
+    ],
+    "category": "CSS"
+  },
+  {
+    "title": "CSS Básico",
+    "url": "sections/css-basico.html",
+    "description": "Aprende los fundamentos de CSS: selectores, box model, especificidad, display, position, overflow y float. La base sobre la que se construye todo el estilo web.",
+    "headings": [
+      "Selectores",
+      "Box Model",
+      "Especificidad",
+      "Display",
+      "Position",
+      "Overflow",
+      "Float y Clear",
+      "Propiedades Shorthand Comunes"
+    ],
+    "category": "CSS"
+  },
+  {
+    "title": "Flexbox",
+    "url": "sections/css-flexbox.html",
+    "description": "Domina Flexbox: el sistema de layout unidimensional de CSS. Propiedades del contenedor (direction, justify, align, wrap, gap), propiedades de los items (grow, shrink, basis, align-self, order) y patrones comunes de layout.",
+    "headings": [
+      "Propiedades del contenedor",
+      "Propiedades de los ítems",
+      "Patrones comunes con Flexbox"
+    ],
+    "category": "CSS"
+  },
+  {
+    "title": "Frameworks CSS",
+    "url": "sections/css-frameworks.html",
+    "description": "Frameworks CSS: qué son, cuándo usarlos y cuándo CSS puro es mejor. Tailwind CSS (filosofía utility-first, configuración, responsive, dark mode), Bootstrap 5 (componentes, grid system), comparativa Tailwind vs Bootstrap, y CSS puro vs frameworks: ventajas y desventajas de cada enfoque.",
+    "headings": [
+      "Qué son y cuándo usarlos",
+      "Tailwind CSS: filosofía utility-first",
+      "Bootstrap 5: componentes y grid system",
+      "Comparativa: Tailwind vs Bootstrap",
+      "CSS Puro vs Frameworks: resumen final"
+    ],
+    "category": "CSS"
+  },
+  {
+    "title": "CSS Grid",
+    "url": "sections/css-grid.html",
+    "description": "Domina CSS Grid: el sistema de layout bidimensional de CSS. Define filas y columnas con grid-template, controla la ubicación de ítems con grid-column/row, usa la unidad fr, minmax(), auto-fill/auto-fit, grid-template-areas y patrones de layout complejos.",
+    "headings": [
+      "Propiedades del contenedor",
+      "Funciones esenciales: repeat(), minmax(), auto-fill, auto-fit",
+      "Propiedades de los ítems",
+      "Grid implícito y auto-flow",
+      "Patrones comunes con CSS Grid",
+      "Grid vs Flexbox: cuándo usar cada uno"
+    ],
+    "category": "CSS"
+  },
+  {
+    "title": "Maquetación Web y Convenciones",
+    "url": "sections/css-maquetacion.html",
+    "description": "Aprende a maquetar sitios web profesionales: flujo de trabajo (diseño, maqueta, desarrollo), convención BEM (Block Element Modifier), diseño mobile-first, estrategia de breakpoints, componentes atómicos (atoms, molecules, organisms) y herramientas esenciales (Figma a código, DevTools, grid overlays).",
+    "headings": [
+      "Flujo de Trabajo: Diseño → Maqueta → Desarrollo",
+      "Convención BEM: Block Element Modifier",
+      "Diseño Mobile-First",
+      "Estrategia de Breakpoints",
+      "Componentes Atómicos: Atoms → Molecules → Organisms",
+      "Herramientas Esenciales",
+      "Buenas Prácticas de Maquetación"
+    ],
+    "category": "CSS"
+  },
+  {
+    "title": "Preprocesadores CSS",
+    "url": "sections/css-preprocesadores.html",
+    "description": "Preprocesadores CSS: qué son, por qué nacieron y cómo funcionan. SASS (variables, nesting, mixins, functions, partials, @use, @forward), LESS comparación con SASS, PostCSS y el enfoque moderno de plugins. ¿Vale la pena hoy con CSS nativo?",
+    "headings": [
+      "SASS: el preprocesador más popular",
+      "LESS: comparación con SASS",
+      "PostCSS: el enfoque moderno de plugins",
+      "¿Vale la pena usar un preprocesador hoy?"
+    ],
+    "category": "CSS"
+  },
+  {
+    "title": "Responsive Design",
+    "url": "sections/css-responsive.html",
+    "description": "Domina el Responsive Design: media queries y breakpoints, enfoque mobile-first, unidades relativas (rem, em, vw, vh), tipografía fluida con clamp(), container queries, imágenes responsivas con picture/srcset, y media queries de preferencia del usuario.",
+    "headings": [
+      "Media Queries: sintaxis y breakpoints",
+      "Enfoque Mobile-First",
+      "Unidades relativas: rem, em, vw, vh, %",
+      "Tipografía fluida con clamp()",
+      "Container Queries",
+      "Imágenes responsivas: picture y srcset",
+      "Media queries de preferencias del usuario",
+      "Buenas prácticas y herramientas"
+    ],
+    "category": "CSS"
+  },
+  {
+    "title": "Variables CSS",
+    "url": "sections/css-variables.html",
+    "description": "Domina las Custom Properties de CSS: sintaxis, var(), fallbacks, temas dinámicos dark/light, @property y manipulación con JavaScript. La base de todo sistema de diseño mantenible.",
+    "headings": [
+      "Custom Properties (definición)",
+      "La función var()",
+      "Cascada, herencia y scope",
+      "Theming: dark / light mode",
+      "@property: propiedades registradas",
+      "Variables dinámicas con JavaScript"
+    ],
+    "category": "CSS"
+  },
+  {
+    "title": "Git & GitHub",
+    "url": "sections/git-github.html",
+    "description": "Aprende Git y GitHub desde cero: conceptos basicos, comandos esenciales, branching, merge, pull requests, Issues y flujo de trabajo profesional.",
+    "headings": [
+      "Conceptos basicos",
+      "Flujo de trabajo basico de Git",
+      "Configuracion inicial",
+      "Comandos esenciales",
+      "Branching (Ramas)",
+      "GitHub",
+      "Convenciones de commit",
+      "Comandos avanzados utiles",
+      "Fork & Contribuir a Open Source"
+    ],
+    "category": "Git"
+  },
+  {
+    "title": "Herramientas & Workflow",
+    "url": "sections/herramientas-workflow.html",
+    "description": "Herramientas esenciales para desarrollo web: VS Code, DevTools, Prettier, Emmet, Live Server, compatibilidad de navegadores y plataformas de deploy.",
+    "headings": [
+      "VS Code",
+      "Live Server",
+      "Chrome DevTools",
+      "Prettier",
+      "Emmet",
+      "Git: Editor + GUI",
+      "Compatibilidad de Navegadores",
+      "Deploy: Publicar tu Sitio",
+      "Workflow Recomendado"
+    ],
+    "category": "Herramientas"
+  },
+  {
+    "title": "Accesibilidad (a11y)",
+    "url": "sections/html-accesibilidad.html",
+    "description": "Aprende accesibilidad web: principios WCAG, atributos ARIA, contraste, navegación por teclado, screen readers y herramientas de testing.",
+    "headings": [
+      "Principios WCAG",
+      "Atributos ARIA",
+      "Contraste y tipografía",
+      "Navegación por teclado",
+      "Screen readers y contenido oculto",
+      "Imágenes accesibles",
+      "Herramientas de testing"
+    ],
+    "category": "HTML"
+  },
+  {
+    "title": "HTML Basico",
+    "url": "sections/html-basico.html",
+    "description": "Aprende los fundamentos de HTML: estructura de un documento, etiquetas esenciales, texto, links, imagenes, listas, tablas y mas.",
+    "headings": [
+      "Estructura de un documento HTML",
+      "Etiquetas esenciales",
+      "Formato de texto",
+      "Links e imagenes",
+      "Listas",
+      "Tablas"
+    ],
+    "category": "HTML"
+  },
+  {
+    "title": "Formularios & Validación",
+    "url": "sections/html-formularios.html",
+    "description": "Aprende a crear formularios HTML completos: tipos de input, labels, fieldsets, validacion nativa, patrones, accesibilidad y buenas practicas.",
+    "headings": [
+      "Estructura de un formulario",
+      "<label>, <fieldset> y accesibilidad",
+      "Tipos de input",
+      "<textarea> y <select>",
+      "Validación nativa de HTML5",
+      "Atributos de accesibilidad en formularios",
+      "Ejemplo: formulario de registro"
+    ],
+    "category": "HTML"
+  },
+  {
+    "title": "Multimedia & Gráficos",
+    "url": "sections/html-multimedia.html",
+    "description": "Aprende a incorporar multimedia en HTML: video, audio, picture con art direction, formatos modernos (WebP, AVIF), canvas, SVG inline e iframes.",
+    "headings": [
+      "<video> — Video nativo",
+      "<audio> — Audio nativo",
+      "<picture> — Imágenes adaptativas",
+      "<canvas> — Gráficos dinámicos",
+      "<svg> — Gráficos vectoriales",
+      "<iframe> — Contenido embebido"
+    ],
+    "category": "HTML"
+  },
+  {
+    "title": "HTML Semántico",
+    "url": "sections/html-semantico.html",
+    "description": "Aprende HTML semantico: header, nav, main, footer, article, section, aside, figure, details, time, mark y mas. Mejora el SEO, accesibilidad y legibilidad de tus paginas.",
+    "headings": [
+      "¿Qué es HTML semántico?",
+      "Estructura de un documento semántico",
+      "<article>, <section> y <aside>",
+      "<figure> y <figcaption>",
+      "<details> y <summary>",
+      "Etiquetas de texto semántico",
+      "¿Por qué importa?",
+      "Ejemplo: página de blog semántica"
+    ],
+    "category": "HTML"
+  },
+  {
+    "title": "Almacenamiento",
+    "url": "sections/js-almacenamiento.html",
+    "description": "Aprende almacenamiento en JavaScript: localStorage, sessionStorage, cookies, IndexedDB, cuándo usar cada uno y buenas prácticas de seguridad.",
+    "headings": [
+      "localStorage",
+      "sessionStorage",
+      "Cookies",
+      "IndexedDB",
+      "¿Cuándo usar cada uno?",
+      "Más allá del navegador: Datos remotos"
+    ],
+    "category": "JavaScript"
+  },
+  {
+    "title": "Asincronía",
+    "url": "sections/js-asincronia.html",
+    "description": "Aprende asincronia en JavaScript: callbacks, Promises, async/await, Fetch API, manejo de errores, patrones de loading y consumo de APIs REST.",
+    "headings": [
+      "Callbacks",
+      "Promises",
+      "Async / Await",
+      "Fetch API",
+      "Headers y configuración avanzada",
+      "API REST y Status Codes",
+      "Manejo de errores y patrones UI"
+    ],
+    "category": "JavaScript"
+  },
+  {
+    "title": "JavaScript Basico",
+    "url": "sections/js-basico.html",
+    "description": "Aprende los fundamentos de JavaScript: variables, tipos de datos, operadores, condicionales, loops y funciones. La base de todo desarrollo web interactivo.",
+    "headings": [
+      "Variables",
+      "Tipos de datos",
+      "Operadores",
+      "Condicionales",
+      "Loops (bucles)",
+      "Funciones"
+    ],
+    "category": "JavaScript"
+  },
+  {
+    "title": "DOM Manipulation",
+    "url": "sections/js-dom.html",
+    "description": "Aprende a manipular el DOM con JavaScript: seleccionar elementos, crear nodos, modificar contenido, recorrer el arbol y trabajar con data attributes.",
+    "headings": [
+      "Qué es el DOM",
+      "Selección de elementos",
+      "Creación y eliminación de nodos",
+      "Modificación de contenido y estilos",
+      "Traversing del DOM",
+      "Data attributes (dataset)"
+    ],
+    "category": "JavaScript"
+  },
+  {
+    "title": "Eventos & Event Handling",
+    "url": "sections/js-eventos.html",
+    "description": "Aprende a manejar eventos en JavaScript: addEventListener, event object, bubbling, capturing, event delegation, custom events, keyboard events y optimizacion con throttle y debounce.",
+    "headings": [
+      "addEventListener y removeEventListener",
+      "Tipos de eventos",
+      "El objeto Event",
+      "Bubbling y Capturing",
+      "Event Delegation",
+      "Custom Events",
+      "Keyboard Events",
+      "Throttle y Debounce"
+    ],
+    "category": "JavaScript"
+  },
+  {
+    "title": "ES6+ Moderno",
+    "url": "sections/js-moderno.html",
+    "description": "JavaScript moderno: arrow functions, template literals, destructuring, spread/rest, optional chaining, metodos de array y objeto, y modulos ES.",
+    "headings": [
+      "Arrow functions",
+      "Template literals",
+      "Destructuring",
+      "Spread y Rest",
+      "Optional chaining y nullish coalescing",
+      "Metodos de arrays",
+      "Metodos de objetos",
+      "Modulos ES"
+    ],
+    "category": "JavaScript"
+  },
+  {
+    "title": "Recursos",
+    "url": "sections/recursos.html",
+    "description": "Recursos recomendados para desarrollo web: documentación oficial, videos y cursos, herramientas online, comunidades y libros gratuitos.",
+    "headings": [
+      "Documentación Oficial",
+      "Videos y Cursos",
+      "Herramientas Online",
+      "Comunidades",
+      "Libros y Lectura Gratuita"
+    ],
+    "category": "Recursos"
+  },
+  {
+    "title": "SEO & Performance",
+    "url": "sections/seo-performance.html",
+    "description": "SEO básico y performance web: meta tags, Open Graph, Core Web Vitals, lazy loading, optimización de imágenes, Lighthouse y structured data.",
+    "headings": [
+      "Meta Tags Esenciales",
+      "Open Graph & Social Cards",
+      "HTML Semántico y su Impacto en SEO",
+      "Structured Data (JSON-LD)",
+      "Core Web Vitals",
+      "Lazy Loading",
+      "Optimización de Imágenes",
+      "Lighthouse",
+      "Sitemap.xml y robots.txt",
+      "Checklist SEO Rápido"
+    ],
+    "category": "SEO"
+  }
+]
