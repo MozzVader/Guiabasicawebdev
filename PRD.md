@@ -621,7 +621,7 @@ Las cheatsheets son secciones dedicadas con formato de **referencia rápida**. T
 
 ## 10. Plan de Desarrollo (Fases)
 
-### Fase 1: Cimentación
+### Fase 1: Cimentación ✅
 - [x] Configurar estructura de archivos y carpetas
 - [x] Crear `variables.css` con toda la paleta de colores y tipografía
 - [x] Crear `reset.css` y `base.css`
@@ -652,7 +652,7 @@ Las cheatsheets son secciones dedicadas con formato de **referencia rápida**. T
 - [x] Escribir `sections/git-github.html`
 - [x] Escribir `cheatsheets/git-cheatsheet.html`
 
-### Fase 5: Contenido — HTML
+### Fase 5: Contenido — HTML ✅
 - [x] Escribir `sections/html-basico.html`
 - [x] Escribir `sections/html-semantico.html`
 - [x] Escribir `sections/html-formularios.html`
@@ -660,7 +660,7 @@ Las cheatsheets son secciones dedicadas con formato de **referencia rápida**. T
 - [x] Escribir `sections/html-accesibilidad.html`
 - [x] Escribir `cheatsheets/html-cheatsheet.html`
 
-### Fase 6: Contenido — CSS
+### Fase 6: Contenido — CSS ✅
 - [x] Escribir `sections/css-basico.html`
 - [x] Escribir `sections/css-variables.html`
 - [x] Escribir `sections/css-flexbox.html`
@@ -672,7 +672,7 @@ Las cheatsheets son secciones dedicadas con formato de **referencia rápida**. T
 - [x] Escribir `sections/css-maquetacion.html`
 - [x] Escribir `cheatsheets/css-cheatsheet.html`
 
-### Fase 7: Contenido — JavaScript
+### Fase 7: Contenido — JavaScript ✅
 - [x] Escribir `sections/js-basico.html`
 - [x] Escribir `sections/js-moderno.html`
 - [x] Escribir `sections/js-dom.html`
@@ -681,23 +681,23 @@ Las cheatsheets son secciones dedicadas con formato de **referencia rápida**. T
 - [x] Escribir `sections/js-almacenamiento.html`
 - [x] Escribir `cheatsheets/js-cheatsheet.html`
 
-### Fase 8: Contenido — SEO & Extras
+### Fase 8: Contenido — SEO & Extras ✅
 - [x] Escribir `sections/seo-performance.html`
 - [x] Escribir `cheatsheets/seo-cheatsheet.html`
 - [x] Escribir `sections/herramientas-workflow.html`
 - [x] Reorganizar menú: SEO como categoría propia, Extras con Herramientas + Recursos
-- [ ] Escribir `sections/recursos.html` (links, tutoriales, videos, comunidades)
+- [x] Escribir `sections/recursos.html` (links, tutoriales, videos, comunidades)
 
 ### Fase 9: Funcionalidades Extra & Polish
-- [ ] Implementar buscador in-page (`search.js`)
-- [ ] Crear og-image.png
+- [x] Implementar buscador in-page (`search.js`)
+- [x] Crear og-image.png
 - [x] Crear favicon.svg
 - [x] Revisión de SEO: meta tags, Open Graph, sitemap
-- [ ] Revisión de accesibilidad: contrastes, aria attributes, keyboard nav
-- [ ] Revisión de performance: Lighthouse audit
+- [x] Revisión de accesibilidad: contrastes, aria attributes, keyboard nav
+- [x] Revisión de performance: Lighthouse audit
 - [ ] Testing cross-browser: Chrome, Firefox, Safari, Edge
 - [ ] Testing responsive: mobile, tablet, desktop
-- [ ] Crear `CONTRIBUTING.md`
+- [x] Crear `CONTRIBUTING.md`
 
 ---
 
