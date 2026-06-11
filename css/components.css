@@ -1103,6 +1103,121 @@
     }
 }
 
+/* --- Heading Demo --- */
+.heading-demo__row {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-4);
+    padding: var(--space-2) 0;
+    border-bottom: 1px solid var(--border-color-light);
+}
+
+.heading-demo__row:last-child {
+    border-bottom: none;
+}
+
+.heading-demo__tag {
+    flex-shrink: 0;
+    font-family: var(--font-code);
+    font-size: var(--font-size-xs);
+    color: var(--accent-cyan);
+    opacity: 0.7;
+    min-width: 3.5em;
+    text-align: right;
+}
+
+.heading-demo__row h1,
+.heading-demo__row h2,
+.heading-demo__row h3,
+.heading-demo__row h4,
+.heading-demo__row h5,
+.heading-demo__row h6 {
+    margin: 0;
+    line-height: 1.2;
+}
+
+/* --- List Demo --- */
+.list-demo {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-6);
+}
+
+.list-demo__col > ul,
+.list-demo__col > ol {
+    padding-left: var(--space-6);
+    margin-top: var(--space-2);
+}
+
+.list-demo__col li {
+    margin-bottom: var(--space-1);
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    line-height: var(--line-height-snug);
+}
+
+.list-demo__tag {
+    font-family: var(--font-code);
+    font-size: var(--font-size-xs);
+    color: var(--accent-cyan);
+    opacity: 0.7;
+}
+
+.list-demo__col dt {
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--font-size-sm);
+    color: var(--text-primary);
+    margin-top: var(--space-2);
+}
+
+.list-demo__col dd {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    margin-bottom: var(--space-1);
+    padding-left: var(--space-4);
+}
+
+/* --- Table Demo --- */
+.table-demo {
+    width: 100%;
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-snug);
+}
+
+.table-demo th,
+.table-demo td {
+    padding: var(--space-2) var(--space-4);
+    text-align: left;
+    color: var(--text-secondary);
+}
+
+.table-demo th {
+    font-family: var(--font-heading);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
+    border-bottom: 2px solid var(--border-color);
+    background: var(--bg-primary);
+}
+
+.table-demo td {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.table-demo tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.table-demo tbody tr:hover {
+    background: rgba(88, 166, 255, 0.06);
+}
+
+@media (max-width: 640px) {
+    .list-demo {
+        grid-template-columns: 1fr;
+        gap: var(--space-5);
+    }
+}
+
 /* === Copy Link Tooltip === */
 #copy-tooltip {
     position: absolute;
