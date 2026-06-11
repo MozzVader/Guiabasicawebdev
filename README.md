@@ -19,12 +19,15 @@
 
 WebForge es un recurso web open source que funciona simultáneamente como **guía de aprendizaje** y **cheatsheet de referencia rápida** para desarrollo web. Cubre HTML, CSS, JavaScript, Git, SEO y más.
 
+Incluye **10 playgrounds interactivos** que permiten experimentar con cada concepto en vivo directamente en el navegador: Flexbox, Grid, animaciones, responsive, formularios, DOM, eventos, JavaScript básico, asincronía y multimedia.
+
 ### Temas cubiertos
 
 - **Git & GitHub** — Control de versiones y colaboración
 - **HTML** — Estructura, semántica, formularios, multimedia, accesibilidad
 - **CSS** — Básico, Flexbox, Grid, responsive, animaciones, frameworks
 - **JavaScript** — Básico, ES6+, DOM, eventos, asincronía, almacenamiento
+- **Playgrounds** — 10 demos interactivos para experimentar con cada tema
 - **SEO** — Meta tags, Open Graph, Core Web Vitals, sitemap, structured data
 - **Extras** — Herramientas & Workflow, Recursos
 
@@ -40,8 +43,9 @@ WebForge es un recurso web open source que funciona simultáneamente como **guí
 
 ```
 ├── index.html              # Landing page
-├── sections/               # Páginas de contenido por tema
-├── cheatsheets/            # Cheatsheets de referencia rápida
+├── sections/               # 24 páginas de contenido por tema
+├── cheatsheets/            # 5 cheatsheets de referencia rápida
+├── demos/                  # 10 playgrounds interactivos
 ├── components/             # Componentes HTML compartidos (header, sidebar, footer)
 ├── css/                    # Estilos CSS modulares
 ├── js/                     # JavaScript modular
