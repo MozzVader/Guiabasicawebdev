@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grid Playground</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+  font-family:'Inter',system-ui,-apple-system,sans-serif;
+  background:#0d1117;
+  color:#e6edf3;
+  padding:16px;
+  overflow-x:hidden;
+}
+
+/* --- Controls --- */
+.controls{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-bottom:14px;
+}
+
+.control-group{
+  display:flex;
+  flex-direction:column;
+  gap:3px;
+  flex:1 1 120px;
+  min-width:110px;
+}
+
+.control-group label{
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:.8px;
+  color:#8b949e;
+  font-weight:600;
+}
+
+.control-group select{
+  background:#161b22;
+  color:#e6edf3;
+  border:1px solid #30363d;
+  border-radius:6px;
+  padding:7px 8px;
+  font-size:12px;
+  font-family:'JetBrains Mono',monospace;
+  cursor:pointer;
+  outline:none;
+  transition:border-color .2s;
+  appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238b949e' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:right 8px center;
+  padding-right:26px;
+}
+
+.control-group select:focus{
+  border-color:#58a6ff;
+}
+
+/* --- Live CSS Output --- */
+.css-output{
+  background:#161b22;
+  border:1px solid #30363d;
+  border-radius:6px;
+  padding:10px 14px;
+  margin-bottom:14px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  color:#8b949e;
+  line-height:1.7;
+  overflow-x:auto;
+  white-space:pre;
+}
+
+.css-output .prop{color:#79c0ff}
+.css-output .val{color:#a5d6ff}
+.css-output .brace{color:#8b949e}
+.css-output .comment{color:#484f58;font-style:italic}
+
+/* --- Playground Area --- */
+.playground{
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  gap:0px;
+  justify-items:stretch;
+  align-items:stretch;
+  min-height:220px;
+  padding:16px;
+  background:#161b22;
+  border:2px dashed #30363d;
+  border-radius:8px;
+  transition:all .3s ease;
+  position:relative;
+}
+
+.playground::before{
+  content:'.container';
+  position:absolute;
+  top:-10px;
+  left:12px;
+  background:#0d1117;
+  padding:0 6px;
+  font-size:10px;
+  color:#484f58;
+  font-family:'JetBrains Mono',monospace;
+}
+
+/* --- Grid Items --- */
+.item{
+  min-height:50px;
+  border-radius:6px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:700;
+  font-size:14px;
+  color:#fff;
+  transition:all .3s ease;
+  user-select:none;
+  padding:8px;
+}
+
+.item:nth-child(1){background:#3b82f6;min-height:50px}
+.item:nth-child(2){background:#8b5cf6;min-height:80px}
+.item:nth-child(3){background:#ec4899;min-height:55px}
+.item:nth-child(4){background:#f59e0b;min-height:100px}
+.item:nth-child(5){background:#22c55e;min-height:60px}
+.item:nth-child(6){background:#06b6d4;min-height:70px}
+.item:nth-child(7){background:#f43f5e;min-height:45px}
+.item:nth-child(8){background:#84cc16;min-height:90px}
+.item:nth-child(9){background:#6366f1;min-height:65px}
+.item:nth-child(10){background:#d946ef;min-height:75px}
+.item:nth-child(11){background:#0ea5e9;min-height:55px}
+.item:nth-child(12){background:#f97316;min-height:85px}
+
+/* Item span variants for testing multi-cell items */
+.item.span-2{grid-column:span 2}
+.item.span-row{grid-row:span 2}
+.item.span-both{grid-column:span 2;grid-row:span 2}
+
+/* --- Item Size Mode --- */
+.size-mode{
+  display:flex;
+  gap:6px;
+  align-items:center;
+  margin-bottom:10px;
+  flex-wrap:wrap;
+}
+
+.size-mode span{
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:.8px;
+  color:#8b949e;
+  font-weight:600;
+  margin-right:2px;
+}
+
+.size-btn{
+  background:#21262d;
+  color:#8b949e;
+  border:1px solid #30363d;
+  border-radius:6px;
+  padding:4px 10px;
+  font-size:11px;
+  font-family:'JetBrains Mono',monospace;
+  cursor:pointer;
+  transition:all .2s;
+}
+
+.size-btn:hover{
+  border-color:#484f58;
+  color:#e6edf3;
+}
+
+.size-btn.active{
+  background:rgba(88,166,255,.12);
+  border-color:#58a6ff;
+  color:#58a6ff;
+}
+
+/* --- Action Buttons --- */
+.actions{
+  display:flex;
+  gap:8px;
+  margin-top:12px;
+  flex-wrap:wrap;
+}
+
+.btn{
+  background:#21262d;
+  color:#e6edf3;
+  border:1px solid #30363d;
+  border-radius:6px;
+  padding:6px 14px;
+  font-size:12px;
+  font-family:'Inter',system-ui,sans-serif;
+  cursor:pointer;
+  transition:all .2s;
+}
+
+.btn:hover{
+  background:#30363d;
+  border-color:#58a6ff;
+}
+
+.btn:active{
+  transform:scale(.97);
+}
+</style>
+</head>
+<body>
+
+<div class="controls">
+  <div class="control-group">
+    <label>grid-template-columns</label>
+    <select id="gtc">
+      <option value="repeat(3, 1fr)" selected>repeat(3, 1fr)</option>
+      <option value="repeat(4, 1fr)">repeat(4, 1fr)</option>
+      <option value="200px 1fr 200px">200px 1fr 200px</option>
+      <option value="1fr 2fr 1fr">1fr 2fr 1fr</option>
+      <option value="repeat(auto-fill, minmax(120px, 1fr))">auto-fill minmax(120px,1fr)</option>
+      <option value="repeat(auto-fit, minmax(120px, 1fr))">auto-fit minmax(120px,1fr)</option>
+      <option value="100px 100px 100px">3 x 100px</option>
+      <option value="1fr 1fr 1fr 1fr 1fr">5 x 1fr</option>
+    </select>
+  </div>
+  <div class="control-group">
+    <label>gap</label>
+    <select id="gp">
+      <option value="0px" selected>0</option>
+      <option value="8px">8px</option>
+      <option value="12px">12px</option>
+      <option value="16px">16px</option>
+      <option value="24px">24px</option>
+    </select>
+  </div>
+  <div class="control-group">
+    <label>justify-items</label>
+    <select id="ji">
+      <option value="stretch" selected>stretch</option>
+      <option value="start">start</option>
+      <option value="end">end</option>
+      <option value="center">center</option>
+    </select>
+  </div>
+  <div class="control-group">
+    <label>align-items</label>
+    <select id="ai">
+      <option value="stretch" selected>stretch</option>
+      <option value="start">start</option>
+      <option value="end">end</option>
+      <option value="center">center</option>
+    </select>
+  </div>
+  <div class="control-group">
+    <label>grid-auto-flow</label>
+    <select id="gaf">
+      <option value="row" selected>row</option>
+      <option value="column">column</option>
+      <option value="row dense">row dense</option>
+      <option value="column dense">column dense</option>
+    </select>
+  </div>
+</div>
+
+<div class="size-mode">
+  <span>Item 2:</span>
+  <button class="size-btn active" data-item="1" data-class="">1x1</button>
+  <button class="size-btn" data-item="1" data-class="span-2">span 2 col</button>
+  <button class="size-btn" data-item="1" data-class="span-row">span 2 row</button>
+  <button class="size-btn" data-item="1" data-class="span-both">2x2</button>
+</div>
+
+<div class="css-output" id="cssOutput"></div>
+
+<div class="playground" id="playground">
+  <div class="item">1</div>
+  <div class="item">2</div>
+  <div class="item">3</div>
+  <div class="item">4</div>
+  <div class="item">5</div>
+  <div class="item">6</div>
+</div>
+
+<div class="actions">
+  <button class="btn" id="addItem">+ Item</button>
+  <button class="btn" id="removeItem">&minus; Item</button>
+  <button class="btn" id="reset">Reset</button>
+</div>
+
+<script>
+var playground = document.getElementById('playground');
+var cssOutput = document.getElementById('cssOutput');
+var gtc = document.getElementById('gtc');
+var gp = document.getElementById('gp');
+var ji = document.getElementById('ji');
+var ai = document.getElementById('ai');
+var gaf = document.getElementById('gaf');
+
+var itemCount = 6;
+var item2Class = '';
+
+function update() {
+  playground.style.gridTemplateColumns = gtc.value;
+  playground.style.gap = gp.value;
+  playground.style.justifyItems = ji.value;
+  playground.style.alignItems = ai.value;
+  playground.style.gridAutoFlow = gaf.value;
+
+  var gtcDisplay = gtc.value.length > 35 ? gtc.value.substring(0, 35) + '...' : gtc.value;
+
+  cssOutput.innerHTML =
+    '<span class="brace">.container {</span>\n' +
+    '  <span class="prop">display</span>: <span class="val">grid</span>;\n' +
+    '  <span class="prop">grid-template-columns</span>: <span class="val">' + gtcDisplay + '</span>;\n' +
+    '  <span class="prop">gap</span>: <span class="val">' + gp.value + '</span>;\n' +
+    '  <span class="prop">justify-items</span>: <span class="val">' + ji.value + '</span>;\n' +
+    '  <span class="prop">align-items</span>: <span class="val">' + ai.value + '</span>;\n' +
+    '  <span class="prop">grid-auto-flow</span>: <span class="val">' + gaf.value + '</span>;\n' +
+    '<span class="brace">}</span>';
+}
+
+[gtc, gp, ji, ai, gaf].forEach(function(s) {
+  s.addEventListener('change', function() {
+    update();
+    setTimeout(resize, 50);
+  });
+});
+
+// Size mode buttons
+document.querySelectorAll('.size-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    var itemIndex = parseInt(btn.getAttribute('data-item'));
+    var newClass = btn.getAttribute('data-class');
+
+    // Remove active from siblings
+    btn.parentNode.querySelectorAll('.size-btn').forEach(function(b) {
+      b.classList.remove('active');
+    });
+    btn.classList.add('active');
+
+    // Apply to item 2 (index 1)
+    var items = playground.querySelectorAll('.item');
+    if (items[itemIndex]) {
+      items[itemIndex].classList.remove('span-2', 'span-row', 'span-both');
+      if (newClass) {
+        items[itemIndex].classList.add(newClass);
+      }
+    }
+
+    setTimeout(resize, 50);
+  });
+});
+
+function createItem(index) {
+  var div = document.createElement('div');
+  div.className = 'item';
+  div.textContent = index + 1;
+  return div;
+}
+
+document.getElementById('addItem').addEventListener('click', function() {
+  if (itemCount >= 12) return;
+  playground.appendChild(createItem(itemCount));
+  itemCount++;
+  setTimeout(resize, 50);
+});
+
+document.getElementById('removeItem').addEventListener('click', function() {
+  if (itemCount <= 1) return;
+  playground.removeChild(playground.lastChild);
+  itemCount--;
+  setTimeout(resize, 50);
+});
+
+document.getElementById('reset').addEventListener('click', function() {
+  gtc.value = 'repeat(3, 1fr)';
+  gp.value = '0px';
+  ji.value = 'stretch';
+  ai.value = 'stretch';
+  gaf.value = 'row';
+
+  // Reset size mode buttons
+  document.querySelectorAll('.size-btn').forEach(function(b, i) {
+    b.classList.remove('active');
+    if (i === 0) b.classList.add('active');
+  });
+
+  playground.innerHTML = '';
+  itemCount = 6;
+  for (var i = 0; i < 6; i++) {
+    playground.appendChild(createItem(i));
+  }
+  update();
+  setTimeout(resize, 50);
+});
+
+// Auto-resize iframe to fit content
+function resize() {
+  var h = document.body.scrollHeight;
+  if (window.parent && window.parent.postMessage) {
+    window.parent.postMessage({ type: 'demo-resize', height: h }, '*');
+  }
+}
+
+new MutationObserver(resize).observe(document.body, { childList: true, subtree: true, attributes: true });
+window.addEventListener('resize', resize);
+
+update();
+setTimeout(resize, 100);
+</script>
+
+</body>
+</html>
