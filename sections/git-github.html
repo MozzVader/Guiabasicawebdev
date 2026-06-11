@@ -401,6 +401,59 @@ git fetch origin && git diff main origin/main</code></pre>
                         <p>Si trabajas en equipo, <strong>siempre</strong> hacé <code>git pull</code> antes de <code>git push</code>. Esto evita conflictos y asegurarse de que estás integrando los cambios más recientes de tus compañeros. Si hay conflictos, Git te lo indicará y tendrás que resolverlos archivo por archivo antes de completar el merge.</p>
                     </div>
                 </div>
+
+                <!-- rename & move -->
+                <h3>Renombrar y mover archivos</h3>
+
+                <p>
+                    Tarde o temprano vas a necesitar renombrar un archivo: quizás te equivocaste de nombre, o querés estandarizar la nomenclatura del proyecto. La primera tentación es ir a GitHub y hacerlo desde ahí, pero <strong>no podés renombrar archivos directamente desde la interfaz web de GitHub</strong>. Tenés que hacerlo desde tu terminal local.
+                </p>
+
+                <p>
+                    El comando correcto es <code>git mv</code>, que le dice a Git que el archivo fue renombrado (no borrado y creado de nuevo). Esto es importante porque <code>git mv</code> preserva el historial del archivo: Git entiende que es el mismo archivo con otro nombre. Si en cambio borras el archivo y creás uno nuevo con el nombre deseado, Git los trata como dos archivos distintos y perdés la conexión con el historial anterior.
+                </p>
+
+                <div class="code-block">
+                    <div class="code-block-header">
+                        <span class="code-block-lang">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M6 21V9a9 9 0 0 0 9 9"/></svg>
+                            Bash
+                        </span>
+                        <button class="code-block-copy" aria-label="Copiar código">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                            Copiar
+                        </button>
+                    </div>
+                    <pre><code class="language-bash"># Navegar a tu repositorio local
+cd path/to/your/repository
+
+# Renombrar un archivo (preserva el historial)
+git mv old-image-name.png new-image-name.png
+
+# Mover un archivo a otra carpeta
+git mv index.html pages/index.html
+
+# Renombrar y mover al mismo tiempo
+git mv css/old-styles.css styles/main.css
+
+# Commitear el cambio
+git commit -m "rename: renombrar archivo de imagen"
+
+# Subir al remoto (reemplaza 'main' por tu branch si es diferente)
+git push origin main</code></pre>
+                </div>
+
+                <div class="callout callout-danger">
+                    <svg class="callout-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>
+                    <div class="callout-content">
+                        <p class="callout-title">No renombres desde el explorador de archivos</p>
+                        <p>Si renombras un archivo desde tu explorador de archivos (Finder, Explorer, Nautilus) sin usar <code>git mv</code>, Git lo ve como una <strong>eliminación</strong> del archivo viejo y la <strong>creación</strong> de uno nuevo. Vas a tener que hacer <code>git add</code> del archivo nuevo y <code>git rm</code> del viejo manualmente, y el historial se corta. Si ya lo hiciste, no entra en pánico: podés corregirlo haciendo <code>git add -A</code> antes de commitear, o usando <code>git mv</code> para deshacer el desastre.</p>
+                    </div>
+                </div>
+
+                <p>
+                    <code>git mv</code> también sirve para mover archivos entre carpetas, no solo para cambiarles el nombre. De hecho, renombrar y mover son la misma operación para Git: en ambos casos el archivo cambia de path. Podés combinar ambas cosas en un solo comando, como en el ejemplo de mover <code>css/old-styles.css</code> a <code>styles/main.css</code>.
+                </p>
             </section>
 
             <!-- Sub-section: Branching -->
