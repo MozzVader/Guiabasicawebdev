@@ -135,10 +135,44 @@ const showCopyTooltip = (anchor) => {
     }, 1500);
 };
 
+// === Page Transitions ===
+const initPageTransitions = () => {
+    const DURATION = 150; // ms — keep it snappy
+    let isNavigating = false;
+
+    // Fade out on internal link click
+    document.addEventListener('click', (e) => {
+        const link = e.target.closest('a[href]');
+        if (!link) return;
+
+        // Skip external links, anchors, and special links
+        const href = link.getAttribute('href');
+        if (!href ||
+            href.startsWith('http') ||
+            href.startsWith('#') ||
+            href.startsWith('mailto:') ||
+            href.startsWith('tel:') ||
+            link.target === '_blank' ||
+            e.ctrlKey || e.metaKey || e.shiftKey) return;
+
+        e.preventDefault();
+        if (isNavigating) return;
+        isNavigating = true;
+
+        document.body.style.opacity = '0';
+        document.body.style.transition = `opacity ${DURATION}ms ease`;
+
+        setTimeout(() => {
+            window.location.href = href;
+        }, DURATION);
+    });
+};
+
 // Initialize after components load
 document.addEventListener('components:loaded', () => {
     initProgressBar();
     initBackToTop();
     initSearchShortcut();
     initHeadingCopy();
+    initPageTransitions();
 });
