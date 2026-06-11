@@ -1,0 +1,1252 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JS Básico Playground</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #0d1117;
+    --card: #161b22;
+    --border: #30363d;
+    --fg: #e6edf3;
+    --muted: #8b949e;
+    --accent: #58a6ff;
+    --green: #3fb950;
+    --red: #f85149;
+    --orange: #d29922;
+    --purple: #bc8cff;
+    --pink: #f778ba;
+    --cyan: #39d2c0;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 13px;
+    padding: 12px;
+    overflow-x: hidden;
+  }
+
+  /* Tabs */
+  .tabs {
+    display: flex;
+    gap: 2px;
+    margin-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab {
+    padding: 8px 14px;
+    background: transparent;
+    border: none;
+    color: var(--muted);
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    transition: all .15s;
+  }
+  .tab:hover { color: var(--fg); }
+  .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  /* Controls bar */
+  .controls {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+    min-height: 32px;
+  }
+  .controls label { font-size: 11px; color: var(--muted); font-weight: 500; }
+  .ctrl-select {
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--fg);
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-family: inherit;
+    cursor: pointer;
+  }
+  .ctrl-btn {
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--fg);
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all .15s;
+  }
+  .ctrl-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .ctrl-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+  /* Playground area */
+  .playground {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 10px;
+    min-height: 160px;
+  }
+
+  /* Code output */
+  .code-output {
+    background: #0d1117;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    line-height: 1.6;
+    color: var(--muted);
+    max-height: 130px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    word-break: break-all;
+  }
+  .code-output .kw { color: var(--purple); }
+  .code-output .fn { color: var(--accent); }
+  .code-output .str { color: #a5d6ff; }
+  .code-output .cmt { color: #484f58; font-style: italic; }
+  .code-output .num { color: var(--orange); }
+  .code-output .bool { color: var(--cyan); }
+  .code-output .err { color: var(--red); }
+
+  /* ========== VARIABLES TAB ========== */
+  .scope-visual {
+    display: flex;
+    gap: 12px;
+  }
+  .scope-box {
+    flex: 1;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    position: relative;
+  }
+  .scope-box .scope-label {
+    position: absolute;
+    top: -9px;
+    left: 10px;
+    background: var(--card);
+    padding: 0 6px;
+    font-size: 10px;
+    color: var(--muted);
+    font-weight: 500;
+  }
+  .scope-box.global { border-color: var(--accent); }
+  .scope-box.func-scope { border-color: var(--orange); }
+  .scope-box.block-scope { border-color: var(--purple); }
+  .var-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 0;
+    border-bottom: 1px solid rgba(48,54,61,.5);
+  }
+  .var-row:last-child { border-bottom: none; }
+  .var-kw {
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-size: 10px;
+    font-weight: 600;
+    min-width: 34px;
+    text-align: center;
+  }
+  .var-kw.const { background: rgba(63,185,80,.15); color: var(--green); }
+  .var-kw.let { background: rgba(88,166,255,.15); color: var(--accent); }
+  .var-kw.var { background: rgba(248,81,73,.15); color: var(--red); }
+  .var-name { color: var(--fg); }
+  .var-eq { color: var(--muted); }
+  .var-val { color: var(--cyan); }
+  .var-access {
+    margin-left: auto;
+    font-size: 9px;
+    padding: 1px 5px;
+    border-radius: 3px;
+  }
+  .var-access.ok { background: rgba(63,185,80,.12); color: var(--green); }
+  .var-access.err { background: rgba(248,81,73,.12); color: var(--red); text-decoration: line-through; }
+  .var-access.leaked { background: rgba(210,153,34,.12); color: var(--orange); }
+
+  .hoisting-demo {
+    margin-top: 10px;
+    display: flex;
+    gap: 12px;
+  }
+  .hoist-box {
+    flex: 1;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px;
+    position: relative;
+  }
+  .hoist-box .hoist-label {
+    font-size: 10px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .hoist-line {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    padding: 2px 0;
+    line-height: 1.5;
+  }
+  .hoist-line .line-num { color: #484f58; margin-right: 6px; user-select: none; }
+  .hoist-highlight { background: rgba(248,81,73,.1); border-left: 2px solid var(--red); padding-left: 6px; margin-left: -8px; }
+  .hoist-ok { background: rgba(63,185,80,.1); border-left: 2px solid var(--green); padding-left: 6px; margin-left: -8px; }
+
+  /* ========== TYPES TAB ========== */
+  .type-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+  .type-card {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 8px 10px;
+    cursor: pointer;
+    transition: all .15s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .type-card:hover { border-color: var(--accent); background: rgba(88,166,255,.04); }
+  .type-card.active { border-color: var(--accent); background: rgba(88,166,255,.08); }
+  .type-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .type-dot.primitive { background: var(--green); }
+  .type-dot.object { background: var(--orange); }
+  .type-card .type-name { font-weight: 500; font-size: 12px; }
+  .type-card .type-example { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--muted); }
+
+  .type-detail {
+    margin-top: 10px;
+    background: rgba(255,255,255,.02);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 12px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  .type-detail-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 2px; }
+  .type-detail-value { font-family: 'JetBrains Mono', monospace; font-size: 12px; }
+
+  .truthy-table {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    gap: 4px;
+    margin-top: 10px;
+  }
+  .truthy-cell {
+    text-align: center;
+    padding: 6px 4px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    cursor: pointer;
+    transition: all .15s;
+  }
+  .truthy-cell:hover { transform: scale(1.04); }
+  .truthy-cell .val { display: block; font-size: 12px; margin-bottom: 2px; }
+  .truthy-cell .result { font-size: 10px; font-weight: 600; }
+  .truthy-cell.is-truthy { border-color: rgba(63,185,80,.3); }
+  .truthy-cell.is-truthy .result { color: var(--green); }
+  .truthy-cell.is-falsy { border-color: rgba(248,81,73,.3); }
+  .truthy-cell.is-falsy .result { color: var(--red); }
+
+  /* ========== OPERATORS TAB ========== */
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+  }
+  .compare-table th {
+    text-align: left;
+    padding: 5px 8px;
+    font-size: 10px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    border-bottom: 1px solid var(--border);
+    font-weight: 500;
+  }
+  .compare-table td {
+    padding: 5px 8px;
+    border-bottom: 1px solid rgba(48,54,61,.4);
+  }
+  .compare-table tr:hover td { background: rgba(88,166,255,.03); }
+  .compare-table .op-true { color: var(--green); }
+  .compare-table .op-false { color: var(--red); }
+  .compare-table .op-warn { background: rgba(210,153,34,.06); }
+
+  .ternary-demo {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-top: 10px;
+  }
+  .ternary-input {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--fg);
+    padding: 8px 10px;
+    border-radius: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    width: 60px;
+    text-align: center;
+  }
+  .ternary-visual {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+  }
+  .ternary-visual .tv-cond { padding: 4px 8px; border-radius: 4px; border: 1px solid var(--border); color: var(--muted); }
+  .ternary-visual .tv-cond.active { border-color: var(--green); color: var(--green); background: rgba(63,185,80,.08); }
+  .ternary-visual .tv-q { color: var(--muted); font-size: 10px; }
+  .ternary-visual .tv-branch { padding: 4px 10px; border-radius: 4px; border: 1px solid var(--border); color: var(--muted); transition: all .2s; }
+  .ternary-visual .tv-branch.taken { border-color: var(--accent); color: var(--accent); background: rgba(88,166,255,.1); }
+  .ternary-visual .tv-colon { color: var(--muted); }
+  .ternary-result {
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 13px;
+    transition: all .2s;
+  }
+
+  .shortcircuit-demo {
+    display: flex;
+    gap: 12px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+  }
+  .sc-box {
+    flex: 1;
+    min-width: 120px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .sc-box:hover { border-color: var(--accent); }
+  .sc-box .sc-op { font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+  .sc-box .sc-result { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--muted); }
+
+  /* ========== LOOPS TAB ========== */
+  .loop-viz {
+    display: flex;
+    gap: 12px;
+  }
+  .loop-config {
+    width: 180px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .loop-config label {
+    font-size: 11px;
+    color: var(--muted);
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .loop-config input, .loop-config select {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--fg);
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+  }
+  .loop-result {
+    flex: 1;
+  }
+  .loop-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-bottom: 8px;
+    min-height: 32px;
+  }
+  .loop-item {
+    padding: 4px 10px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    animation: popIn .15s ease;
+    background: rgba(88,166,255,.04);
+  }
+  .loop-item.skipped {
+    opacity: .3;
+    text-decoration: line-through;
+    border-color: transparent;
+  }
+  .loop-item.break-hit {
+    border-color: var(--red);
+    background: rgba(248,81,73,.1);
+    color: var(--red);
+  }
+  @keyframes popIn { from { opacity: 0; transform: scale(.8); } to { opacity: 1; transform: scale(1); } }
+  .loop-iter-info {
+    font-size: 11px;
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .loop-iter-info span { color: var(--accent); }
+
+  /* ========== FUNCTIONS TAB ========== */
+  .fn-builder {
+    display: flex;
+    gap: 12px;
+  }
+  .fn-config {
+    width: 200px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .fn-config label {
+    font-size: 11px;
+    color: var(--muted);
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .fn-config input, .fn-config select {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--fg);
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+  }
+  .fn-preview {
+    flex: 1;
+  }
+  .fn-signature {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    padding: 8px 10px;
+    background: rgba(255,255,255,.02);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    margin-bottom: 8px;
+    line-height: 1.6;
+  }
+  .fn-calls {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+  }
+  .fn-call-btn {
+    padding: 4px 10px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--card);
+    color: var(--fg);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    cursor: pointer;
+    transition: all .15s;
+  }
+  .fn-call-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .fn-output {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 8px 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    min-height: 36px;
+    color: var(--muted);
+  }
+  .fn-output .fn-return-val { color: var(--green); }
+  .fn-output .fn-step { color: var(--muted); font-size: 10px; }
+
+  .fn-types {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+  .fn-type-btn {
+    padding: 4px 10px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: transparent;
+    color: var(--muted);
+    font-family: inherit;
+    font-size: 11px;
+    cursor: pointer;
+    transition: all .15s;
+  }
+  .fn-type-btn:hover { border-color: var(--accent); }
+  .fn-type-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<div class="tabs">
+  <button class="tab active" data-tab="vars">Variables & Scope</button>
+  <button class="tab" data-tab="types">Tipos & Truthy</button>
+  <button class="tab" data-tab="ops">Operadores</button>
+  <button class="tab" data-tab="loops">Loops</button>
+  <button class="tab" data-tab="funcs">Funciones</button>
+</div>
+
+<!-- ===== VARIABLES ===== -->
+<div class="panel active" id="panel-vars">
+  <div class="controls">
+    <label>Ejemplo:</label>
+    <select class="ctrl-select" id="vars-example">
+      <option value="scope">Block Scope: let vs var</option>
+      <option value="const-mut">const: no reasignar, sí mutar</option>
+      <option value="hoisting">Hoisting: var vs let</option>
+    </select>
+  </div>
+  <div class="playground" id="vars-playground"></div>
+  <div class="code-output" id="vars-code">// Seleccioná un ejemplo para ver el código</div>
+</div>
+
+<!-- ===== TYPES ===== -->
+<div class="panel" id="panel-types">
+  <div class="controls">
+    <label>Hacé click en un tipo:</label>
+    <div style="flex:1"></div>
+    <button class="ctrl-btn" id="types-truthy-btn">Ver tabla Truthy/Falsy</button>
+  </div>
+  <div class="playground" id="types-playground">
+    <div class="type-grid" id="type-grid"></div>
+    <div class="type-detail" id="type-detail" style="display:none">
+      <div>
+        <div class="type-detail-label">Valor</div>
+        <div class="type-detail-value" id="td-value">--</div>
+      </div>
+      <div>
+        <div class="type-detail-label">typeof</div>
+        <div class="type-detail-value" id="td-typeof" style="color:var(--accent)">--</div>
+      </div>
+      <div>
+        <div class="type-detail-label">Categoría</div>
+        <div class="type-detail-value" id="td-cat">--</div>
+      </div>
+      <div>
+        <div class="type-detail-label">Truthy/Falsy</div>
+        <div class="type-detail-value" id="td-tf">--</div>
+      </div>
+    </div>
+    <div class="truthy-table" id="truthy-table" style="display:none"></div>
+  </div>
+  <div class="code-output" id="types-code">// Click en cualquier tipo para ver sus propiedades</div>
+</div>
+
+<!-- ===== OPERATORS ===== -->
+<div class="panel" id="panel-ops">
+  <div class="controls">
+    <label>Sección:</label>
+    <select class="ctrl-select" id="ops-section">
+      <option value="compare">=== vs ==</option>
+      <option value="ternary">Ternario</option>
+      <option value="shortcircuit">Short-circuit (&& / ||)</option>
+    </select>
+  </div>
+  <div class="playground" id="ops-playground"></div>
+  <div class="code-output" id="ops-code">// Seleccioná una sección</div>
+</div>
+
+<!-- ===== LOOPS ===== -->
+<div class="panel" id="panel-loops">
+  <div class="controls">
+    <label>Tipo:</label>
+    <select class="ctrl-select" id="loop-type">
+      <option value="for">for clásico</option>
+      <option value="forof">for...of</option>
+      <option value="forin">for...in</option>
+      <option value="while">while</option>
+    </select>
+    <button class="ctrl-btn" id="loop-run">&#9654; Ejecutar</button>
+    <button class="ctrl-btn" id="loop-step">&#9655; Paso a paso</button>
+    <button class="ctrl-btn" id="loop-reset">Reset</button>
+  </div>
+  <div class="playground">
+    <div class="loop-viz">
+      <div class="loop-config">
+        <label>Colección:
+          <select id="loop-collection">
+            <option value="frutas">["manzana", "banana", "naranja", "kiwi"]</option>
+            <option value="numeros">[10, 20, 30, 40, 50]</option>
+            <option value="letras">"hola"</option>
+            <option value="objeto">{ nombre: "Ana", edad: 25, rol: "dev" }</option>
+          </select>
+        </label>
+        <label>Condición extra:
+          <select id="loop-extra">
+            <option value="none">Ninguna</option>
+            <option value="skip-2">continue en índice 2</option>
+            <option value="break-3">break en índice 3</option>
+          </select>
+        </label>
+        <div class="loop-iter-info" id="loop-info"></div>
+      </div>
+      <div class="loop-result">
+        <div class="loop-items" id="loop-items"></div>
+        <div style="font-size:11px;color:var(--muted);font-family:'JetBrains Mono',monospace" id="loop-log"></div>
+      </div>
+    </div>
+  </div>
+  <div class="code-output" id="loops-code">// Configurá el loop y presioná "Ejecutar"</div>
+</div>
+
+<!-- ===== FUNCTIONS ===== -->
+<div class="panel" id="panel-funcs">
+  <div class="controls">
+    <label>Tipo:</label>
+    <div class="fn-types" id="fn-types">
+      <button class="fn-type-btn active" data-fntype="declaracion">Declaración</button>
+      <button class="fn-type-btn" data-fntype="expresion">Expresión</button>
+      <button class="fn-type-btn" data-fntype="arrow">Arrow</button>
+    </div>
+  </div>
+  <div class="playground">
+    <div class="fn-builder">
+      <div class="fn-config">
+        <label>Nombre: <input type="text" id="fn-name" value="saludar"></label>
+        <label>Parámetros (csv): <input type="text" id="fn-params" value="nombre, edad" placeholder="a, b"></label>
+        <label>Default valor: <input type="text" id="fn-default" value="Mundo" placeholder='"Mundo"'></label>
+        <label>Body:
+          <select id="fn-body">
+            <option value="template">Template literal</option>
+            <option value="sum">Suma con return</option>
+            <option value="compare">Comparación</option>
+            <option value="object">Devuelve objeto</option>
+          </select>
+        </label>
+      </div>
+      <div class="fn-preview">
+        <div class="fn-signature" id="fn-signature"></div>
+        <div style="font-size:11px;color:var(--muted);margin-bottom:6px">Llamadas:</div>
+        <div class="fn-calls" id="fn-calls"></div>
+        <div style="font-size:11px;color:var(--muted);margin-bottom:4px">Salida:</div>
+        <div class="fn-output" id="fn-output">--</div>
+      </div>
+    </div>
+  </div>
+  <div class="code-output" id="funcs-code">// Modificá los parámetros y seleccioná el tipo de función</div>
+</div>
+
+<script>
+// ========== TABS ==========
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('panel-' + tab.dataset.tab).classList.add('active');
+  });
+});
+
+// ========== AUTO-RESIZE ==========
+function autoResize() {
+  const h = document.documentElement.scrollHeight;
+  window.parent.postMessage({ type: 'demo-resize', height: h }, '*');
+}
+new ResizeObserver(autoResize).observe(document.body);
+setTimeout(autoResize, 100);
+
+// ========== VARIABLES TAB ==========
+const varsExamples = {
+  scope: {
+    html: () => {
+      return `<div class="scope-visual">
+        <div class="scope-box global">
+          <span class="scope-label" style="color:var(--accent)">Global Scope</span>
+          <div class="var-row"><span class="var-kw let">let</span><span class="var-name">x</span><span class="var-eq">=</span><span class="var-val">10</span><span class="var-access ok">&#10003; accesible</span></div>
+          <div class="var-row"><span class="var-kw var">var</span><span class="var-name">y</span><span class="var-eq">=</span><span class="var-val">20</span><span class="var-access leaked">&#9888; se filtra</span></div>
+          <div style="border-left:2px solid var(--purple);margin:6px 0 4px 6px;padding-left:8px">
+            <div style="font-size:9px;color:var(--purple);margin-bottom:4px;font-weight:600">if (true) {</div>
+            <div class="var-row"><span class="var-kw let">let</span><span class="var-name">a</span><span class="var-eq">=</span><span class="var-val">1</span><span class="var-access ok">solo acá</span></div>
+            <div class="var-row"><span class="var-kw var">var</span><span class="var-name">b</span><span class="var-eq">=</span><span class="var-val">2</span><span class="var-access leaked">se escapa!</span></div>
+            <div style="font-size:9px;color:var(--purple);margin-top:4px">}</div>
+          </div>
+          <div style="font-size:10px;color:var(--muted);margin-top:4px">fuera del if: a=<span style="color:var(--red)">ReferenceError</span>, b=<span style="color:var(--orange)">2</span></div>
+        </div>
+      </div>`;
+    },
+    code: `<span class="kw">let</span> x = <span class="num">10</span>;
+<span class="kw">var</span> y = <span class="num">20</span>;
+
+<span class="kw">if</span> (<span class="bool">true</span>) {
+  <span class="kw">let</span> a = <span class="num">1</span>;  <span class="cmt">// block scope ✅</span>
+  <span class="kw">var</span> b = <span class="num">2</span>;   <span class="cmt">// function scope ⚠️</span>
+}
+
+console.<span class="fn">log</span>(a); <span class="cmt">// ReferenceError ❌</span>
+console.<span class="fn">log</span>(b); <span class="cmt">// 2 — se filtró fuera del if ⚠️</span>`,
+  },
+  'const-mut': {
+    html: () => {
+      return `<div class="scope-visual">
+        <div class="scope-box" style="border-color:var(--green)">
+          <span class="scope-label" style="color:var(--green)">const usuario</span>
+          <div class="var-row"><span class="var-kw const">const</span><span class="var-name">nombre</span><span class="var-eq">→</span><span class="var-val">"Ana"</span></div>
+          <div class="var-row"><span class="var-kw const">const</span><span class="var-name">edad</span><span class="var-eq">→</span><span class="var-val">25</span></div>
+          <div class="var-row" style="opacity:.5"><span class="var-kw const">const</span><span class="var-name">email</span><span class="var-eq">→</span><span class="var-val" style="text-decoration:line-through">undefined</span><span class="var-access ok">se puede agregar</span></div>
+          <div style="font-size:10px;color:var(--muted);margin-top:6px">
+            <span style="color:var(--green)">&#10003; usuario.nombre = "Beto"</span> — OK, mutar propiedad<br>
+            <span style="color:var(--green)">&#10003; usuario.email = "beto@mail"</span> — OK, agregar propiedad<br>
+            <span style="color:var(--red)">&#10007; usuario = {}</span> — ERROR, no reasignar
+          </div>
+        </div>
+        <div class="scope-box" style="border-color:var(--green)">
+          <span class="scope-label" style="color:var(--green)">const colores</span>
+          <div class="var-row"><span class="var-kw const">const</span><span class="var-name">[0]</span><span class="var-eq">→</span><span class="var-val">"rojo"</span></div>
+          <div class="var-row"><span class="var-kw const">const</span><span class="var-name">[1]</span><span class="var-eq">→</span><span class="var-val">"azul"</span></div>
+          <div class="var-row"><span class="var-kw const">const</span><span class="var-name">[2]</span><span class="var-eq">→</span><span class="var-val" style="color:var(--green)">"verde"</span><span class="var-access ok">push!</span></div>
+          <div style="font-size:10px;color:var(--muted);margin-top:6px">
+            <span style="color:var(--green)">&#10003; colores.push("verde")</span> — OK, mutar array<br>
+            <span style="color:var(--red)">&#10007; colores = []</span> — ERROR
+          </div>
+        </div>
+      </div>`;
+    },
+    code: `<span class="cmt">// const no permite REASIGNAR, pero sí MUTAR</span>
+<span class="kw">const</span> usuario = { nombre: <span class="str">"Ana"</span>, edad: <span class="num">25</span> };
+
+usuario.edad = <span class="num">26</span>;           <span class="cmt">// ✅ modificar propiedad</span>
+usuario.email = <span class="str">"ana@mail"</span>;  <span class="cmt">// ✅ agregar propiedad</span>
+<span class="cmt">// usuario = {};               // ❌ TypeError!</span>
+
+<span class="kw">const</span> colores = [<span class="str">"rojo"</span>, <span class="str">"azul"</span>];
+colores.<span class="fn">push</span>(<span class="str">"verde"</span>);        <span class="cmt">// ✅ mutar el array</span>
+<span class="cmt">// colores = [];               // ❌ TypeError!</span>`,
+  },
+  hoisting: {
+    html: () => {
+      return `<div class="hoisting-demo">
+        <div class="hoist-box" style="flex:1;border-color:var(--red)">
+          <div class="hoist-label" style="color:var(--red)">var — hoisted con undefined</div>
+          <div class="hoist-line"><span class="line-num">1</span>console.<span class="fn">log</span>(x);</div>
+          <div class="hoist-line hoist-highlight"><span class="line-num">2</span>→ <span style="color:var(--red)">undefined</span> (no error!)</div>
+          <div class="hoist-line"><span class="line-num">3</span>var x = <span style="color:var(--num)">5</span>;</div>
+          <div style="font-size:10px;color:var(--muted);margin-top:6px">
+            <span style="color:var(--red)">El motor "sube" la declaración pero no la asignación.</span><br>
+            Equivale a: <code style="color:var(--orange)">var x; console.log(x); x = 5;</code>
+          </div>
+        </div>
+        <div class="hoist-box" style="flex:1;border-color:var(--green)">
+          <div class="hoist-label" style="color:var(--green)">let — Temporal Dead Zone</div>
+          <div class="hoist-line"><span class="line-num">1</span>console.<span class="fn">log</span>(y);</div>
+          <div class="hoist-line hoist-highlight" style="border-color:var(--red)"><span class="line-num">2</span>→ <span style="color:var(--red)">ReferenceError!</span></div>
+          <div class="hoist-line"><span class="line-num">3</span>let y = <span style="color:var(--num)">5</span>;</div>
+          <div style="font-size:10px;color:var(--muted);margin-top:6px">
+            <span style="color:var(--green)">let/const SÍ hacen hoisting pero quedan en la "zona muerta" hasta la declaración.</span><br>
+            Acceder antes = error. Es más seguro.
+          </div>
+        </div>
+      </div>`;
+    },
+    code: `<span class="cmt">// var: hoisted con undefined (confuso)</span>
+console.<span class="fn">log</span>(x); <span class="cmt">// undefined (no da error)</span>
+<span class="kw">var</span> x = <span class="num">5</span>;
+<span class="cmt">// Internamente: var x; → console.log(x) → x = 5;</span>
+
+<span class="cmt">// let: hoisted pero en Temporal Dead Zone</span>
+console.<span class="fn">log</span>(y); <span class="cmt">// ReferenceError ❌</span>
+<span class="kw">let</span> y = <span class="num">5</span>;
+<span class="cmt">// Más seguro: te obliga a declarar antes de usar</span>`,
+  }
+};
+
+function renderVarsExample() {
+  const key = document.getElementById('vars-example').value;
+  const ex = varsExamples[key];
+  document.getElementById('vars-playground').innerHTML = ex.html();
+  document.getElementById('vars-code').innerHTML = ex.code;
+  autoResize();
+}
+
+document.getElementById('vars-example').addEventListener('change', renderVarsExample);
+renderVarsExample();
+
+// ========== TYPES TAB ==========
+const typeData = [
+  { val: '"Hola"', type: 'string', cat: 'primitivo', display: '"Hola"' },
+  { val: '42', type: 'number', cat: 'primitivo', display: '42' },
+  { val: '3.14', type: 'number', cat: 'primitivo', display: '3.14' },
+  { val: 'true', type: 'boolean', cat: 'primitivo', display: 'true' },
+  { val: 'null', type: 'object ⚠️', cat: 'primitivo', display: 'null' },
+  { val: 'undefined', type: 'undefined', cat: 'primitivo', display: 'undefined' },
+  { val: '9007199254740991n', type: 'bigint', cat: 'primitivo', display: '42n' },
+  { val: 'Symbol("id")', type: 'symbol', cat: 'primitivo', display: 'Symbol' },
+  { val: '{ nombre: "Ana" }', type: 'object', cat: 'objeto', display: '{...}' },
+  { val: '[1, 2, 3]', type: 'object', cat: 'objeto', display: '[...]' },
+  { val: 'function(){}', type: 'function', cat: 'objeto', display: 'fn' },
+  { val: '/regex/gi', type: 'object', cat: 'objeto', display: '/regex/' },
+];
+
+const truthyFalsy = [
+  { val: 'false', tf: false }, { val: '0', tf: false }, { val: '-0', tf: false },
+  { val: '0n', tf: false }, { val: '""', tf: false }, { val: 'null', tf: false },
+  { val: 'undefined', tf: false }, { val: 'NaN', tf: false },
+  { val: 'true', tf: true }, { val: '1', tf: true }, { val: '-1', tf: true },
+  { val: '"hola"', tf: true }, { val: '"0"', tf: true }, { val: '"false"', tf: true },
+  { val: '[]', tf: true }, { val: '{}', tf: true }, { val: '() => {}', tf: true },
+  { val: 'Infinity', tf: true },
+];
+
+const typeGrid = document.getElementById('type-grid');
+typeData.forEach((t, i) => {
+  const card = document.createElement('div');
+  card.className = 'type-card';
+  card.innerHTML = `<span class="type-dot ${t.cat === 'primitivo' ? 'primitive' : 'object'}"></span><span class="type-name">${t.type}</span><span class="type-example">${t.display}</span>`;
+  card.addEventListener('click', () => {
+    document.querySelectorAll('.type-card').forEach(c => c.classList.remove('active'));
+    card.classList.add('active');
+    const detail = document.getElementById('type-detail');
+    const tt = document.getElementById('truthy-table');
+    detail.style.display = 'flex';
+    tt.style.display = 'none';
+    document.getElementById('td-value').textContent = t.val;
+    const typeofVal = t.type.includes('⚠️') ? 'object (bug histórico!)' : t.type;
+    document.getElementById('td-typeof').innerHTML = `<span style="color:${t.type.includes('⚠️') ? 'var(--red)' : 'var(--accent)'}">"${typeofVal}"</span>`;
+    document.getElementById('td-cat').textContent = t.cat === 'primitivo' ? 'Primitivo (inmutable, por valor)' : 'Objeto (mutable, por referencia)';
+    let tfVal;
+    try { tfVal = eval(t.val); tfVal = tfVal ? 'Truthy' : 'Falsy'; } catch { tfVal = 'N/A'; }
+    document.getElementById('td-tf').innerHTML = `<span style="color:${tfVal === 'Truthy' ? 'var(--green)' : tfVal === 'Falsy' ? 'var(--red)' : 'var(--muted)'}">${tfVal}</span>`;
+    document.getElementById('types-code').innerHTML = `<span class="kw">typeof</span> ${t.val}  <span class="cmt">// →</span> <span style="color:${t.type.includes('⚠') ? 'var(--red)' : 'var(--accent)'}">"${typeofVal}"</span>${t.type.includes('⚠') ? '\n<span class="cmt">// ⚠️ typeof null === "object" es un bug histórico de JS</span>' : ''}`;
+    autoResize();
+  });
+  typeGrid.appendChild(card);
+});
+
+document.getElementById('types-truthy-btn').addEventListener('click', () => {
+  const tt = document.getElementById('truthy-table');
+  const detail = document.getElementById('type-detail');
+  const isVisible = tt.style.display !== 'none';
+  tt.style.display = isVisible ? 'none' : 'grid';
+  detail.style.display = isVisible ? 'flex' : 'none';
+  if (!isVisible) {
+    tt.innerHTML = '';
+    truthyFalsy.forEach(tf => {
+      const cell = document.createElement('div');
+      cell.className = `truthy-cell ${tf.tf ? 'is-truthy' : 'is-falsy'}`;
+      cell.innerHTML = `<span class="val">${tf.val}</span><span class="result">${tf.tf ? '✓ truthy' : '✗ falsy'}</span>`;
+      cell.addEventListener('click', () => {
+        const boolStr = tf.tf ? 'true' : 'false';
+        document.getElementById('types-code').innerHTML = `<span class="kw">if</span> (${tf.val}) {\n  <span class="cmt">// ${tf.tf ? '✅ Entra' : '❌ NO entra'} porque ${tf.val} es ${boolStr}</span>\n}`;
+      });
+      tt.appendChild(cell);
+    });
+  }
+  autoResize();
+});
+
+// ========== OPERATORS TAB ==========
+const opsData = {
+  compare: {
+    html: () => {
+      const rows = [
+        ['5 === 5', 'true', true], ['5 === "5"', 'false', false], ['null === null', 'true', true],
+        ['null === undefined', 'false', false], ["'' === false", 'false', false], ['0 === false', 'false', false],
+        ['5 == 5', 'true', true], ['5 == "5"', 'true ⚠️', true], ['null == undefined', 'true ⚠️', true],
+        ["'' == false", 'true ⚠️', true], ['0 == false', 'true ⚠️', true], ["0 == ''", 'true ⚠️', true],
+      ];
+      return `<table class="compare-table"><tr><th>Expresión</th><th>Resultado</th><th>¿Correcto?</th></tr>${rows.map(([expr, res, ok]) =>
+        `<tr class="${!ok ? 'op-warn' : ''}"><td>${expr}</td><td class="${ok ? 'op-true' : 'op-false'}">${res}</td><td style="font-size:12px">${ok ? '✅' : '⚠️ coercion'}</td></tr>`
+      ).join('')}</table>`;
+    },
+    code: `<span class="cmt">// === compara valor Y tipo (sin coercion)</span>
+<span class="num">5</span> === <span class="num">5</span>          <span class="cmt">// true</span>
+<span class="num">5</span> === <span class="str">"5"</span>        <span class="cmt">// false (number ≠ string)</span>
+
+<span class="cmt">// == convierte tipos antes de comparar (EVITAR)</span>
+<span class="num">5</span> == <span class="str">"5"</span>         <span class="cmt">// true ⚠️ (convierte "5" a 5)</span>
+<span class="num">0</span> == <span class="bool">false</span>      <span class="cmt">// true ⚠️ (ambos → 0)</span>
+<span class="str">""</span> == <span class="bool">false</span>     <span class="cmt">// true ⚠️ (ambos → 0)</span>
+<span class="kw">null</span> == <span class="kw">undefined</span> <span class="cmt">// true ⚠️ (caso especial)</span>
+
+<span class="cmt">// Regla: SIEMPRE usa === y !==</span>`,
+  },
+  ternary: {
+    html: () => {
+      return `<div class="ternary-demo">
+        <div style="text-align:center"><div style="font-size:11px;color:var(--muted);margin-bottom:4px">Edad:</div><input type="number" class="ternary-input" id="ternary-age" value="20" min="0" max="100"></div>
+        <div class="ternary-visual" id="ternary-visual">
+          <span class="tv-cond" id="tv-cond">edad &gt;= 18</span>
+          <span class="tv-q">?</span>
+          <span class="tv-branch" id="tv-yes">"Mayor"</span>
+          <span class="tv-colon">:</span>
+          <span class="tv-branch" id="tv-no">"Menor"</span>
+        </div>
+        <div class="ternary-result" id="ternary-result" style="background:rgba(63,185,80,.1);color:var(--green)">Mayor de edad</div>
+      </div>`;
+    },
+    code: `<span class="kw">const</span> edad = <span class="num">20</span>;
+<span class="kw">const</span> resultado = edad >= <span class="num">18</span> ? <span class="str">"Mayor"</span> : <span class="str">"Menor"</span>;
+<span class="cmt">// resultado → "Mayor"</span>`,
+  },
+  shortcircuit: {
+    html: () => {
+      const examples = [
+        { op: '||', left: '""', right: '"Anónimo"', result: '"Anónimo"', desc: 'primer truthy' },
+        { op: '||', left: '"Hola"', right: '"Anónimo"', result: '"Hola"', desc: 'primer truthy' },
+        { op: '&&', left: 'usuario', right: 'usuario.nombre', result: '"Ana"', desc: 'si left es truthy → right' },
+        { op: '&&', left: 'null', right: 'usuario.nombre', result: 'null', desc: 'si left es falsy → left' },
+        { op: '??', left: 'null', right: '"default"', result: '"default"', desc: 'solo si null/undefined' },
+        { op: '??', left: '0', right: '"default"', result: '0', desc: '0 NO es null!' },
+      ];
+      return `<div class="shortcircuit-demo">${examples.map(ex =>
+        `<div class="sc-box" onclick="document.getElementById('ops-code').innerHTML = \`${ex.left} ${ex.op} ${ex.right}  <span class="cmt">// → ${ex.result}  (${ex.desc})</span>\`">
+          <div class="sc-op">${ex.left} <span style="color:var(--accent)">${ex.op}</span> ${ex.right}</div>
+          <div class="sc-result">→ ${ex.result}</div>
+        </div>`
+      ).join('')}</div>`;
+    },
+    code: `<span class="cmt">// || devuelve el PRIMER valor truthy</span>
+<span class="str">""</span> || <span class="str">"Anónimo"</span>   <span class="cmt">// → "Anónimo"</span>
+<span class="str">"Hola"</span> || <span class="str">"Anónimo"</span> <span class="cmt">// → "Hola"</span>
+
+<span class="cmt">// && devuelve el PRIMER valor falsy (o el último si todos truthy)</span>
+<span class="kw">null</span> && obj.nombre  <span class="cmt">// → null (seguro, no da error)</span>
+usuario && usuario.nombre <span class="cmt">// → "Ana"</span>
+
+<span class="cmt">// ?? nullish coalescing (solo null/undefined, no 0 ni "")</span>
+<span class="kw">null</span> ?? <span class="str">"default"</span> <span class="cmt">// → "default"</span>
+<span class="num">0</span> ?? <span class="str">"default"</span>    <span class="cmt">// → 0 (a diferencia de ||)</span>`,
+  }
+};
+
+function renderOps() {
+  const key = document.getElementById('ops-section').value;
+  document.getElementById('ops-playground').innerHTML = opsData[key].html();
+  document.getElementById('ops-code').innerHTML = opsData[key].code;
+  if (key === 'ternary') setupTernary();
+  autoResize();
+}
+
+function setupTernary() {
+  const input = document.getElementById('ternary-age');
+  if (!input) return;
+  const update = () => {
+    const age = parseInt(input.value) || 0;
+    const isMajor = age >= 18;
+    document.getElementById('tv-cond').classList.toggle('active', true);
+    document.getElementById('tv-yes').classList.toggle('taken', isMajor);
+    document.getElementById('tv-no').classList.toggle('taken', !isMajor);
+    const res = document.getElementById('ternary-result');
+    res.textContent = isMajor ? 'Mayor de edad' : 'Menor de edad';
+    res.style.background = isMajor ? 'rgba(63,185,80,.1)' : 'rgba(210,153,34,.1)';
+    res.style.color = isMajor ? 'var(--green)' : 'var(--orange)';
+    document.getElementById('ops-code').innerHTML = `<span class="kw">const</span> edad = <span class="num">${age}</span>;\n<span class="kw">const</span> resultado = edad >= <span class="num">18</span> ? <span class="str">"Mayor"</span> : <span class="str">"Menor"</span>;\n<span class="cmt">// → "${isMajor ? 'Mayor' : 'Menor'}"</span>`;
+  };
+  input.addEventListener('input', update);
+  update();
+}
+
+document.getElementById('ops-section').addEventListener('change', renderOps);
+renderOps();
+
+// ========== LOOPS TAB ==========
+const collections = {
+  frutas: ['manzana', 'banana', 'naranja', 'kiwi'],
+  numeros: [10, 20, 30, 40, 50],
+  letras: 'hola',
+  objeto: { nombre: 'Ana', edad: 25, rol: 'dev' },
+};
+
+let loopStepIndex = -1;
+let loopAnimTimer = null;
+
+function getLoopData() {
+  const colKey = document.getElementById('loop-collection').value;
+  const extra = document.getElementById('loop-extra').value;
+  const type = document.getElementById('loop-type').value;
+  return { colKey, extra, type, data: collections[colKey] };
+}
+
+function resetLoop() {
+  loopStepIndex = -1;
+  if (loopAnimTimer) { clearTimeout(loopAnimTimer); loopAnimTimer = null; }
+  document.getElementById('loop-items').innerHTML = '';
+  document.getElementById('loop-log').textContent = '';
+  document.getElementById('loop-info').innerHTML = '';
+  autoResize();
+}
+
+function runLoop(stepped) {
+  resetLoop();
+  const { colKey, extra, type, data } = getLoopData();
+  const items = [];
+  let logLines = [];
+  let codeLines = [];
+
+  const isObj = typeof data === 'object' && !Array.isArray(data) && typeof data !== 'string';
+  const entries = isObj ? Object.entries(data) : (typeof data === 'string' ? [...data] : data);
+  const length = entries.length;
+
+  // Build code
+  if (type === 'for') {
+    codeLines = [
+      `<span class="kw">for</span> (<span class="kw">let</span> i = <span class="num">0</span>; i < <span class="num">${length}</span>; i++) {`,
+      `  <span class="kw">const</span> item = ${isObj ? `Object.${type === 'forin' ? 'keys' : 'entries'}(data)[i]` : `collection[i]`};`,
+      `  <span class="cmt">// procesar item</span>`,
+      `}`,
+    ];
+    if (type === 'for') codeLines = [
+      `<span class="kw">for</span> (<span class="kw">let</span> i = <span class="num">0</span>; i < ${isObj ? 'Object.keys(data)' : 'collection'}.length; i++) {`,
+      `  console.<span class="fn">log</span>(i, ${isObj ? 'data' : 'collection'}[i]);`,
+      extra === 'skip-2' ? `  <span class="kw">if</span> (i === <span class="num">2</span>) <span class="kw">continue</span>;` : '',
+      extra === 'break-3' ? `  <span class="kw">if</span> (i === <span class="num">3</span>) <span class="kw">break</span>;` : '',
+      `}`,
+    ].filter(Boolean);
+  } else if (type === 'forof') {
+    codeLines = [
+      `<span class="kw">for</span> (<span class="kw">const</span> item <span class="kw">of</span> ${isObj ? 'Object.values(data)' : (typeof data === 'string' ? '"hola"' : 'collection')}) {`,
+      `  console.<span class="fn">log</span>(item);`,
+      extra === 'skip-2' ? `  <span class="kw">if</span> (item === ${JSON.stringify(entries[2])}) <span class="kw">continue</span>;` : '',
+      extra === 'break-3' ? `  <span class="kw">if</span> (item === ${JSON.stringify(entries[3])}) <span class="kw">break</span>;` : '',
+      `}`,
+    ].filter(Boolean);
+  } else if (type === 'forin') {
+    codeLines = [
+      `<span class="kw">for</span> (<span class="kw">const</span> key <span class="kw">in</span> data) {`,
+      `  console.<span class="fn">log</span>(key, data[key]);`,
+      `}`,
+    ];
+  } else if (type === 'while') {
+    codeLines = [
+      `<span class="kw">let</span> i = <span class="num">0</span>;`,
+      `<span class="kw">while</span> (i < <span class="num">${length}</span>) {`,
+      `  console.<span class="fn">log</span>(i, ${isObj ? 'Object.values(data)' : (typeof data === 'string' ? '"hola"' : 'collection')}[i]);`,
+      `  i++;`,
+      `}`,
+    ];
+  }
+
+  const addStep = (idx) => {
+    if (idx >= length) {
+      document.getElementById('loop-info').innerHTML = `<span>Fin.</span> ${entries.length} iteraciones`;
+      return false;
+    }
+    const skip = extra === 'skip-2' && idx === 2;
+    const brk = extra === 'break-3' && idx === 3;
+
+    if (skip) {
+      items.push({ label: `[${idx}] ${entries[idx]}`, cls: 'skipped' });
+      logLines.push(`i=${idx} → continue (saltado)`);
+    } else if (brk) {
+      items.push({ label: `[${idx}] ${entries[idx]} ⛔`, cls: 'break-hit' });
+      logLines.push(`i=${idx} → break! (loop terminado)`);
+      document.getElementById('loop-info').innerHTML = `<span>Break</span> en i=${idx}`;
+      return false;
+    } else {
+      items.push({ label: `[${idx}] ${entries[idx]}`, cls: '' });
+      logLines.push(`i=${idx} → ${entries[idx]}`);
+    }
+    document.getElementById('loop-info').innerHTML = `Iteración: <span>${idx + 1}</span> / ${length}`;
+    return true;
+  };
+
+  const renderAll = () => {
+    const container = document.getElementById('loop-items');
+    container.innerHTML = '';
+    items.forEach(it => {
+      const el = document.createElement('span');
+      el.className = `loop-item ${it.cls}`;
+      el.textContent = it.label;
+      container.appendChild(el);
+    });
+    document.getElementById('loop-log').textContent = logLines.join(' | ');
+    document.getElementById('loops-code').innerHTML = codeLines.join('\n');
+    autoResize();
+  };
+
+  if (stepped) {
+    let step = 0;
+    const doStep = () => {
+      const cont = addStep(step);
+      renderAll();
+      if (cont && step < length - 1) {
+        step++;
+        loopAnimTimer = setTimeout(doStep, 400);
+      }
+    };
+    doStep();
+  } else {
+    for (let i = 0; i < length; i++) {
+      const cont = addStep(i);
+      if (!cont) break;
+    }
+    renderAll();
+  }
+}
+
+document.getElementById('loop-run').addEventListener('click', () => runLoop(false));
+document.getElementById('loop-step').addEventListener('click', () => runLoop(true));
+document.getElementById('loop-reset').addEventListener('click', resetLoop);
+['loop-type', 'loop-collection', 'loop-extra'].forEach(id => {
+  document.getElementById(id).addEventListener('change', resetLoop);
+});
+
+// ========== FUNCTIONS TAB ==========
+const fnBodies = {
+  template: (name, params, defVal) => {
+    const p0 = params[0] || 'val';
+    return {
+      signature: `<span class="kw">function</span> <span class="fn">${name}</span>(${params.map((p,i) => i===0 ? `${p} = <span class="str">"${defVal}"</span>` : p).join(', ')}) {\n  <span class="kw">return</span> <span style="color:#a5d6ff">\`Hola, \${${p0}}!\`</span>;\n}`,
+      calls: [
+        { label: `${name}()`, desc: 'sin args' },
+        { label: `${name}("Beto")`, desc: 'con arg' },
+        { label: `${name}("Beto", 30)`, desc: 'con todos' },
+      ],
+      exec: (args) => {
+        const v = args[0] !== undefined ? args[0] : defVal;
+        return `Hola, ${v}!`;
+      }
+    };
+  },
+  sum: (name, params) => {
+    const p0 = params[0] || 'a', p1 = params[1] || 'b';
+    return {
+      signature: `<span class="kw">function</span> <span class="fn">${name}</span>(${p0}, ${p1}) {\n  <span class="kw">return</span> ${p0} + ${p1};\n}`,
+      calls: [
+        { label: `${name}(3, 4)`, args: [3, 4] },
+        { label: `${name}(10, 20)`, args: [10, 20] },
+        { label: `${name}("a", "b")`, args: ['a', 'b'] },
+      ],
+      exec: (args) => args[0] + args[1],
+    };
+  },
+  compare: (name, params) => {
+    const p0 = params[0] || 'a', p1 = params[1] || 'b';
+    return {
+      signature: `<span class="kw">function</span> <span class="fn">${name}</span>(${p0}, ${p1}) {\n  <span class="kw">if</span> (${p0} > ${p1}) <span class="kw">return</span> <span class="str">"${p0} es mayor"</span>;\n  <span class="kw">if</span> (${p0} < ${p1}) <span class="kw">return</span> <span class="str">"${p1} es mayor"</span>;\n  <span class="kw">return</span> <span class="str">"son iguales"</span>;\n}`,
+      calls: [
+        { label: `${name}(5, 3)`, args: [5, 3] },
+        { label: `${name}(2, 8)`, args: [2, 8] },
+        { label: `${name}(4, 4)`, args: [4, 4] },
+      ],
+      exec: (args) => args[0] > args[1] ? `${args[0]} es mayor` : args[0] < args[1] ? `${args[1]} es mayor` : 'son iguales',
+    };
+  },
+  object: (name, params) => {
+    const p0 = params[0] || 'nombre', p1 = params[1] || 'edad';
+    return {
+      signature: `<span class="kw">function</span> <span class="fn">${name}</span>(${p0}, ${p1}) {\n  <span class="kw">return</span> { ${p0}, ${p1}, activo: <span class="bool">true</span> };\n}`,
+      calls: [
+        { label: `${name}("Ana", 25)`, args: ['Ana', 25] },
+        { label: `${name}("Beto")`, args: ['Beto', undefined] },
+      ],
+      exec: (args) => ({ [p0]: args[0], [p1]: args[1], activo: true }),
+    };
+  },
+};
+
+let currentFnType = 'declaracion';
+
+function buildFn() {
+  const name = document.getElementById('fn-name').value || 'fn';
+  const paramsRaw = document.getElementById('fn-params').value.replace(/\s/g, '');
+  const params = paramsRaw ? paramsRaw.split(',') : [];
+  const defVal = document.getElementById('fn-default').value;
+  const bodyKey = document.getElementById('fn-body').value;
+  const body = fnBodies[bodyKey](name, params, defVal);
+
+  // Signature with type prefix
+  let sigPrefix = '';
+  if (currentFnType === 'declaracion') sigPrefix = '';
+  else if (currentFnType === 'expresion') sigPrefix = `<span class="kw">const</span> <span class="fn">${name}</span> = `;
+  else if (currentFnType === 'arrow') sigPrefix = `<span class="kw">const</span> <span class="fn">${name}</span> = `;
+  let sig = body.signature;
+  if (currentFnType === 'arrow') {
+    sig = sig.replace('<span class="kw">function</span> <span class="fn">' + name + '</span>', '');
+  }
+  if (currentFnType === 'expresion') {
+    sig = sig.replace('<span class="kw">function</span> <span class="fn">' + name + '</span>', '<span class="kw">function</span>');
+  }
+
+  document.getElementById('fn-signature').innerHTML = sigPrefix + sig;
+
+  // Calls
+  const callsContainer = document.getElementById('fn-calls');
+  callsContainer.innerHTML = '';
+  body.calls.forEach(call => {
+    const btn = document.createElement('button');
+    btn.className = 'fn-call-btn';
+    btn.textContent = call.label;
+    btn.addEventListener('click', () => {
+      const args = call.args || [];
+      let result;
+      try { result = body.exec(args); } catch { result = undefined; }
+      const resultStr = typeof result === 'object' ? JSON.stringify(result) : String(result);
+      document.getElementById('fn-output').innerHTML = `<span class="fn">${call.label}</span> → <span class="fn-return-val">${resultStr}</span>`;
+
+      const typeNote = currentFnType === 'declaracion' ? '<span class="cmt">// Tiene hoisting: la podés llamar antes de declararla</span>' :
+                       currentFnType === 'expresion' ? '<span class="cmt">// NO tiene hoisting: declará antes de usar</span>' :
+                       '<span class="cmt">// Arrow function: no tiene su propio "this"</span>';
+      document.getElementById('funcs-code').innerHTML = `${sigPrefix}${sig}\n\n<span class="cmt">// Llamada:</span>\n<span class="fn">${call.label}</span>  <span class="cmt">// →</span> <span class="fn-return-val">${resultStr}</span>\n${typeNote}`;
+      autoResize();
+    });
+    callsContainer.appendChild(btn);
+  });
+
+  document.getElementById('fn-output').textContent = '--';
+  document.getElementById('funcs-code').innerHTML = sigPrefix + sig;
+  autoResize();
+}
+
+document.querySelectorAll('.fn-type-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.fn-type-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentFnType = btn.dataset.fntype;
+    buildFn();
+  });
+});
+
+['fn-name', 'fn-params', 'fn-default', 'fn-body'].forEach(id => {
+  document.getElementById(id).addEventListener('input', buildFn);
+});
+
+buildFn();
+</script>
+</body>
+</html>
