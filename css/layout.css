@@ -403,7 +403,8 @@
 
 .site-footer > .footer-links:last-child {
     flex: 1;
-    text-align: right;
+    display: flex;
+    justify-content: flex-end;
 }
 
 .footer-center {
