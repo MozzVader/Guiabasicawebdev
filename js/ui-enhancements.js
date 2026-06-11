@@ -213,12 +213,19 @@ const initTocFab = () => {
         '<nav class="toc-drawer__list">' + listHTML + '</nav>';
     document.body.appendChild(drawer);
 
+    // --- Create overlay (click-outside-to-close) ---
+    const overlay = document.createElement('div');
+    overlay.id = 'toc-overlay';
+    overlay.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(overlay);
+
     // --- Toggle logic ---
     let isOpen = false;
 
     const open = () => {
         isOpen = true;
         drawer.classList.add('is-open');
+        overlay.classList.add('is-visible');
         fab.classList.add('is-active');
         fab.setAttribute('aria-expanded', 'true');
     };
@@ -226,12 +233,14 @@ const initTocFab = () => {
     const close = () => {
         isOpen = false;
         drawer.classList.remove('is-open');
+        overlay.classList.remove('is-visible');
         fab.classList.remove('is-active');
         fab.setAttribute('aria-expanded', 'false');
     };
 
     fab.addEventListener('click', () => isOpen ? close() : open());
     drawer.querySelector('.toc-drawer__close').addEventListener('click', close);
+    overlay.addEventListener('click', close);
 
     // Click a heading link → smooth scroll + close drawer
     drawer.addEventListener('click', (e) => {

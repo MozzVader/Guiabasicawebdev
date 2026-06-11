@@ -651,6 +651,22 @@
     border-color: var(--text-muted);
 }
 
+/* === TOC Overlay (click-outside-to-close) === */
+#toc-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: calc(var(--z-drawer) - 10);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 250ms ease;
+}
+
+#toc-overlay.is-visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
 /* === TOC FAB === */
 #toc-fab {
     position: fixed;
@@ -696,7 +712,7 @@
     border-left: 1px solid var(--border-color);
     z-index: var(--z-drawer);
     transform: translateX(100%);
-    transition: transform var(--transition-base);
+    transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
     flex-direction: column;
     box-shadow: -4px 0 24px rgba(0, 0, 0, 0.3);
@@ -800,7 +816,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-    #toc-drawer {
+    #toc-drawer,
+    #toc-overlay {
         transition: none;
     }
 }
