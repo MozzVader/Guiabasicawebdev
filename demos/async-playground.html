@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Async Playground</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{--bg:#0d1117;--card:#161b22;--border:#30363d;--fg:#e6edf3;--muted:#8b949e;--accent:#58a6ff;--green:#3fb950;--red:#f85149;--orange:#d29922;--purple:#bc8cff;--pink:#f778ba;--cyan:#39d2c0}
+  body{background:var(--bg);color:var(--fg);font-family:'Inter',system-ui,sans-serif;font-size:13px;padding:12px;overflow-x:hidden}
+
+  .tabs{display:flex;gap:2px;margin-bottom:12px;border-bottom:1px solid var(--border);overflow-x:auto;scrollbar-width:none}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{padding:8px 14px;background:transparent;border:none;color:var(--muted);font-family:inherit;font-size:12px;font-weight:500;cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:all .15s}
+  .tab:hover{color:var(--fg)}
+  .tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+  .panel{display:none}.panel.active{display:block}
+
+  .controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:10px;min-height:32px}
+  .controls label{font-size:11px;color:var(--muted);font-weight:500}
+  .ctrl-select{background:var(--card);border:1px solid var(--border);color:var(--fg);padding:4px 8px;border-radius:6px;font-size:12px;font-family:inherit;cursor:pointer}
+  .ctrl-btn{background:var(--card);border:1px solid var(--border);color:var(--fg);padding:4px 10px;border-radius:6px;font-size:11px;font-family:inherit;cursor:pointer;transition:all .15s}
+  .ctrl-btn:hover{border-color:var(--accent);color:var(--accent)}
+  .ctrl-btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .ctrl-btn.primary:hover{background:#79c0ff}
+  .ctrl-btn:disabled{opacity:.4;cursor:not-allowed}
+
+  .playground{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:10px;min-height:160px}
+
+  .code-output{background:#0d1117;border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-family:'JetBrains Mono',monospace;font-size:11.5px;line-height:1.6;color:var(--muted);max-height:140px;overflow-y:auto;white-space:pre-wrap;word-break:break-all}
+  .code-output .kw{color:var(--purple)}.code-output .fn{color:var(--accent)}.code-output .str{color:#a5d6ff}.code-output .cmt{color:#484f58;font-style:italic}.code-output .num{color:var(--orange)}.code-output .bool{color:var(--cyan)}.code-output .err{color:var(--red)}
+
+  .log{background:#0d1117;border:1px solid var(--border);border-radius:8px;padding:8px 10px;max-height:130px;overflow-y:auto;font-family:'JetBrains Mono',monospace;font-size:11px;line-height:1.7;margin-bottom:10px}
+  .log:empty::before{content:'Ejecutá para ver la salida...';color:#484f58}
+  .log-entry{display:flex;gap:6px;align-items:flex-start}
+  .log-entry .log-time{color:#484f58;font-size:10px;min-width:42px;flex-shrink:0}
+  .log-entry .log-arrow{flex-shrink:0}
+  .log-entry .log-msg{color:var(--fg);word-break:break-all}
+  .log-entry.log-ok .log-arrow{color:var(--green)}
+  .log-entry.log-err .log-arrow{color:var(--red)}
+  .log-entry.log-warn .log-arrow{color:var(--orange)}
+  .log-entry.log-step .log-arrow{color:var(--muted)}
+
+  /* Event Loop */
+  .el-columns{display:flex;gap:10px}
+  .el-col{flex:1;border:1px solid var(--border);border-radius:8px;padding:8px;min-height:200px;display:flex;flex-direction:column}
+  .el-col-title{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-bottom:6px;display:flex;align-items:center;gap:4px}
+  .el-col-title .dot{width:6px;height:6px;border-radius:50%}
+  .el-stack{flex:1;display:flex;flex-direction:column;gap:3px}
+  .el-frame{padding:4px 8px;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:11px;animation:slideIn .2s ease}
+  .el-frame.sync{background:rgba(88,166,255,.1);border-left:2px solid var(--accent);color:var(--accent)}
+  .el-frame.async{background:rgba(210,153,34,.1);border-left:2px solid var(--orange);color:var(--orange)}
+  .el-frame.macro{background:rgba(188,140,255,.1);border-left:2px solid var(--purple);color:var(--purple)}
+  .el-frame.micro{background:rgba(57,210,192,.1);border-left:2px solid var(--cyan);color:var(--cyan)}
+  @keyframes slideIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+  .el-frame.active{box-shadow:0 0 8px rgba(88,166,255,.3)}
+  .el-frame.done{opacity:.4}
+
+  /* Promise states */
+  .promise-viz{display:flex;flex-direction:column;gap:12px}
+  .promise-state-machine{display:flex;align-items:center;justify-content:center;gap:8px;padding:10px}
+  .p-state{padding:8px 16px;border:2px solid var(--border);border-radius:8px;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500;transition:all .3s;min-width:90px;text-align:center}
+  .p-state.pending{border-color:var(--orange);color:var(--orange);background:rgba(210,153,34,.06)}
+  .p-state.fulfilled{border-color:var(--green);color:var(--green);background:rgba(63,185,80,.1);box-shadow:0 0 12px rgba(63,185,80,.2)}
+  .p-state.rejected{border-color:var(--red);color:var(--red);background:rgba(248,81,73,.1);box-shadow:0 0 12px rgba(248,81,73,.2)}
+  .p-arrow{color:var(--muted);font-size:18px;transition:color .3s}
+  .p-arrow.lit-green{color:var(--green)}.p-arrow.lit-red{color:var(--red)}
+  .p-chain{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
+  .p-chain-item{padding:4px 10px;border:1px solid var(--border);border-radius:6px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);transition:all .2s;position:relative}
+  .p-chain-item.executed{border-color:var(--green);color:var(--green);background:rgba(63,185,80,.06)}
+  .p-chain-item.skipped{opacity:.3}
+
+  /* Fetch sim */
+  .fetch-row{display:flex;gap:8px;align-items:center;margin-bottom:8px}
+  .fetch-url{flex:1;background:var(--bg);border:1px solid var(--border);color:var(--fg);padding:6px 10px;border-radius:6px;font-family:'JetBrains Mono',monospace;font-size:12px}
+  .fetch-methods{display:flex;gap:4px;margin-bottom:8px}
+  .fetch-methods .ctrl-btn.active{background:var(--green);border-color:var(--green)}
+  .fetch-timeline{display:flex;flex-direction:column;gap:4px;margin-top:8px}
+  .fetch-step{display:flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:11px;padding:4px 8px;border-radius:4px;background:rgba(255,255,255,.02);animation:slideIn .2s ease}
+  .fetch-step .step-num{color:var(--muted);font-size:10px;min-width:16px}
+  .fetch-step .step-bar{height:4px;border-radius:2px;transition:width .3s}
+  .fetch-step .step-bar.blue{background:var(--accent)}.fetch-step .step-bar.green{background:var(--green)}.fetch-step .step-bar.red{background:var(--red)}
+
+  /* Error patterns */
+  .pattern-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .pattern-card{border:1px solid var(--border);border-radius:8px;padding:10px;cursor:pointer;transition:all .15s}
+  .pattern-card:hover{border-color:var(--accent)}
+  .pattern-card.active{border-color:var(--accent);background:rgba(88,166,255,.05)}
+  .pattern-card .pat-name{font-weight:600;font-size:12px;margin-bottom:2px}
+  .pattern-card .pat-desc{font-size:10px;color:var(--muted)}
+  .pattern-result{margin-top:10px;background:#0d1117;border:1px solid var(--border);border-radius:8px;padding:10px;font-family:'JetBrains Mono',monospace;font-size:11px;line-height:1.6}
+
+  ::-webkit-scrollbar{width:6px;height:6px}
+  ::-webkit-scrollbar-track{background:transparent}
+  ::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+</style>
+</head>
+<body>
+
+<div class="tabs">
+  <button class="tab active" data-tab="eventloop">Event Loop</button>
+  <button class="tab" data-tab="promises">Promises</button>
+  <button class="tab" data-tab="asyncawait">Async / Await</button>
+  <button class="tab" data-tab="fetch">Fetch API</button>
+  <button class="tab" data-tab="errors">Error Patterns</button>
+</div>
+
+<!-- ===== EVENT LOOP ===== -->
+<div class="panel active" id="panel-eventloop">
+  <div class="controls">
+    <label>Ejemplo:</label>
+    <select class="ctrl-select" id="el-example">
+      <option value="basic">Orden de ejecución</option>
+      <option value="micro-vs-macro">Micro vs Macro tasks</option>
+      <option value="practical">Caso práctico</option>
+    </select>
+    <button class="ctrl-btn primary" id="el-run">&#9654; Ejecutar</button>
+    <button class="ctrl-btn" id="el-reset">Reset</button>
+  </div>
+  <div class="playground">
+    <div class="el-columns">
+      <div class="el-col">
+        <div class="el-col-title"><span class="dot" style="background:var(--accent)"></span>Call Stack</div>
+        <div class="el-stack" id="el-stack"></div>
+      </div>
+      <div class="el-col">
+        <div class="el-col-title"><span class="dot" style="background:var(--purple)"></span>Macrotask Queue</div>
+        <div class="el-stack" id="el-macro"></div>
+      </div>
+      <div class="el-col">
+        <div class="el-col-title"><span class="dot" style="background:var(--cyan)"></span>Microtask Queue</div>
+        <div class="el-stack" id="el-micro"></div>
+      </div>
+    </div>
+  </div>
+  <div class="log" id="el-log"></div>
+  <div class="code-output" id="el-code">// Seleccioná un ejemplo y presioná "Ejecutar"</div>
+</div>
+
+<!-- ===== PROMISES ===== -->
+<div class="panel" id="panel-promises">
+  <div class="controls">
+    <label>Acción:</label>
+    <select class="ctrl-select" id="prom-action">
+      <option value="resolve">Resolve promise</option>
+      <option value="reject">Reject promise</option>
+    </select>
+    <label style="margin-left:8px">Delay:</label>
+    <select class="ctrl-select" id="prom-delay">
+      <option value="500">500ms</option>
+      <option value="1000">1000ms</option>
+      <option value="2000">2000ms</option>
+    </select>
+    <button class="ctrl-btn primary" id="prom-create">&#9654; Crear Promise</button>
+    <button class="ctrl-btn" id="prom-all">Promise.all</button>
+    <button class="ctrl-btn" id="prom-allset">Promise.allSettled</button>
+    <button class="ctrl-btn" id="prom-race">Promise.race</button>
+    <button class="ctrl-btn" id="prom-any">Promise.any</button>
+  </div>
+  <div class="playground">
+    <div class="promise-state-machine" id="prom-state-machine">
+      <div class="p-state pending" id="prom-state">pending</div>
+      <div style="display:flex;flex-direction:column;gap:4px">
+        <span class="p-arrow" id="prom-arrow-res">&#8594;</span>
+        <span class="p-arrow" id="prom-arrow-rej">&#8595;</span>
+      </div>
+      <div class="p-state" id="prom-fulfilled" style="opacity:.3">fulfilled</div>
+      <div class="p-state" id="prom-rejected" style="opacity:.3">rejected</div>
+    </div>
+    <div class="p-chain" id="prom-chain">
+      <span style="font-size:11px;color:var(--muted)">La cadena .then()/.catch()/.finally() aparecerá acá</span>
+    </div>
+  </div>
+  <div class="log" id="prom-log"></div>
+  <div class="code-output" id="prom-code">// Creá una promise o usá los métodos estáticos</div>
+</div>
+
+<!-- ===== ASYNC/AWAIT ===== -->
+<div class="panel" id="panel-asyncawait">
+  <div class="controls">
+    <label>Ejemplo:</label>
+    <select class="ctrl-select" id="aw-example">
+      <option value="sequential">Secuencial (await uno por uno)</option>
+      <option value="parallel">Paralelo (Promise.all)</option>
+      <option value="compare">Comparar: .then vs await</option>
+    </select>
+    <button class="ctrl-btn primary" id="aw-run">&#9654; Ejecutar</button>
+    <button class="ctrl-btn" id="aw-reset">Reset</button>
+  </div>
+  <div class="playground">
+    <div id="aw-timeline" style="display:flex;flex-direction:column;gap:3px"></div>
+  </div>
+  <div class="log" id="aw-log"></div>
+  <div class="code-output" id="aw-code">// Seleccioná un ejemplo y ejecutá</div>
+</div>
+
+<!-- ===== FETCH ===== -->
+<div class="panel" id="panel-fetch">
+  <div class="controls">
+    <label>Método:</label>
+    <div class="fetch-methods" id="fetch-methods">
+      <button class="ctrl-btn active" data-method="GET">GET</button>
+      <button class="ctrl-btn" data-method="POST">POST</button>
+      <button class="ctrl-btn" data-method="PUT">PUT</button>
+      <button class="ctrl-btn" data-method="DELETE">DELETE</button>
+    </div>
+  </div>
+  <div class="playground">
+    <div class="fetch-row">
+      <span style="color:var(--accent);font-family:'JetBrains Mono',monospace;font-size:12px;min-width:46px" id="fetch-method-label">GET</span>
+      <input class="fetch-url" id="fetch-url" value="https://api.ejemplo.com/usuarios/1">
+      <button class="ctrl-btn primary" id="fetch-send">Enviar</button>
+    </div>
+    <div style="display:flex;gap:8px;margin-bottom:8px">
+      <label class="ctrl-btn" style="font-size:11px;cursor:pointer"><input type="checkbox" id="fetch-sim-error" style="accent-color:var(--red);margin-right:4px">Simular error 404</label>
+      <label class="ctrl-btn" style="font-size:11px;cursor:pointer"><input type="checkbox" id="fetch-sim-delay" style="accent-color:var(--orange);margin-right:4px">Latencia alta (2s)</label>
+    </div>
+    <div class="fetch-timeline" id="fetch-timeline"></div>
+  </div>
+  <div class="log" id="fetch-log"></div>
+  <div class="code-output" id="fetch-code">// Configurá la petición y presioná "Enviar"</div>
+</div>
+
+<!-- ===== ERROR PATTERNS ===== -->
+<div class="panel" id="panel-errors">
+  <div class="controls"><label>Hacé click en un patrón:</label></div>
+  <div class="playground">
+    <div class="pattern-grid">
+      <div class="pattern-card active" data-pat="trycatch">
+        <div class="pat-name">try / catch / finally</div>
+        <div class="pat-desc">Captura errores en async/await</div>
+      </div>
+      <div class="pattern-card" data-pat="then-catch">
+        <div class="pat-name">.then() / .catch()</div>
+        <div class="pat-desc">Encadenamiento con Promises</div>
+      </div>
+      <div class="pattern-card" data-pat="guard">
+        <div class="pat-name">Guard clause</div>
+        <div class="pat-desc">Validar antes de await</div>
+      </div>
+      <div class="pattern-card" data-pat="wrapper">
+        <div class="pat-name">Wrapper utilitario</div>
+        <div class="pat-desc">try/catch simplificado con [err, data]</div>
+      </div>
+    </div>
+    <div class="pattern-result" id="pat-result">
+      <span style="color:var(--muted)">Seleccioná un patrón para ver el ejemplo</span>
+    </div>
+  </div>
+  <div class="code-output" id="err-code">// Hacé click en un patrón para ejecutarlo</div>
+</div>
+
+<script>
+// ===== TABS =====
+document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => {
+  document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(x => x.classList.remove('active'));
+  t.classList.add('active');
+  document.getElementById('panel-' + t.dataset.tab).classList.add('active');
+}));
+
+// ===== AUTO-RESIZE =====
+function autoResize() { window.parent.postMessage({ type: 'demo-resize', height: document.documentElement.scrollHeight }, '*'); }
+new ResizeObserver(autoResize).observe(document.body);
+setTimeout(autoResize, 100);
+
+// ===== HELPERS =====
+const $ = id => document.getElementById(id);
+let stepId = 0;
+function addLog(container, msg, type = 'ok') {
+  const entry = document.createElement('div');
+  entry.className = `log-entry log-${type}`;
+  const arrow = type === 'ok' ? '✓' : type === 'err' ? '✗' : type === 'warn' ? '⚠' : '›';
+  entry.innerHTML = `<span class="log-time">${stepId++}ms</span><span class="log-arrow">${arrow}</span><span class="log-msg">${msg}</span>`;
+  container.appendChild(entry);
+  container.scrollTop = container.scrollHeight;
+}
+function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+// ===== EVENT LOOP =====
+const elExamples = {
+  basic: {
+    steps: [
+      { action: 'push-stack', text: 'console.log("1. Síncrono")', type: 'sync', log: '1. Síncrono', delay: 400 },
+      { action: 'push-stack', text: 'setTimeout(cb, 0)', type: 'sync', delay: 300 },
+      { action: 'push-macro', text: 'setTimeout callback', type: 'macro', delay: 100 },
+      { action: 'push-stack', text: 'Promise.resolve().then(cb)', type: 'sync', delay: 300 },
+      { action: 'push-micro', text: 'Promise.then callback', type: 'micro', delay: 100 },
+      { action: 'push-stack', text: 'console.log("2. Síncrono")', type: 'sync', log: '2. Síncrono', delay: 400 },
+      { action: 'clear-stack', delay: 200 },
+      { action: 'flush-micro', log: '3. Microtask (Promise.then)', delay: 500 },
+      { action: 'clear-micro', delay: 100 },
+      { action: 'pop-macro', log: '4. Macrotask (setTimeout)', delay: 500 },
+    ],
+    code: `console.<span class="fn">log</span>(<span class="str">"1. Síncrono"</span>);          <span class="cmt">// 1ro</span>
+
+<span class="fn">setTimeout</span>(() => {
+  console.<span class="fn">log</span>(<span class="str">"4. Macrotask"</span>);      <span class="cmt">// 4to (macrotask queue)</span>
+}, <span class="num">0</span>);
+
+<span class="kw">Promise</span>.<span class="fn">resolve</span>().<span class="fn">then</span>(() => {
+  console.<span class="fn">log</span>(<span class="str">"3. Microtask"</span>);    <span class="cmt">// 3ro (microtask queue)</span>
+});
+
+console.<span class="fn">log</span>(<span class="str">"2. Síncrono"</span>);          <span class="cmt">// 2do</span>
+
+<span class="cmt">// Orden: 1 → 2 → 3 → 4</span>
+<span class="cmt">// Las microtasks SIEMPRE antes que las macrotasks</span>`,
+  },
+  'micro-vs-macro': {
+    steps: [
+      { action: 'push-stack', text: 'setTimeout(A, 0)', type: 'sync', delay: 200 },
+      { action: 'push-macro', text: 'A: setTimeout callback', type: 'macro', delay: 50 },
+      { action: 'push-stack', text: 'Promise.resolve().then(B)', type: 'sync', delay: 200 },
+      { action: 'push-micro', text: 'B: Promise.then callback', type: 'micro', delay: 50 },
+      { action: 'push-stack', text: 'setTimeout(C, 0)', type: 'sync', delay: 200 },
+      { action: 'push-macro', text: 'C: setTimeout callback', type: 'macro', delay: 50 },
+      { action: 'push-stack', text: 'Promise.resolve().then(D)', type: 'sync', delay: 200 },
+      { action: 'push-micro', text: 'D: Promise.then callback', type: 'micro', delay: 50 },
+      { action: 'clear-stack', delay: 200 },
+      { action: 'flush-micro', log: 'B (microtask)', delay: 400 },
+      { action: 'flush-micro', log: 'D (microtask)', delay: 400 },
+      { action: 'clear-micro', delay: 100 },
+      { action: 'pop-macro', log: 'A (macrotask)', delay: 500 },
+      { action: 'pop-macro', log: 'C (macrotask)', delay: 500 },
+    ],
+    code: `<span class="cmt">// ¿En qué orden se ejecutan?</span>
+<span class="fn">setTimeout</span>(() => console.<span class="fn">log</span>(<span class="str">"A"</span>), <span class="num">0</span>);
+<span class="kw">Promise</span>.<span class="fn">resolve</span>().<span class="fn">then</span>(() => console.<span class="fn">log</span>(<span class="str">"B"</span>));
+<span class="fn">setTimeout</span>(() => console.<span class="fn">log</span>(<span class="str">"C"</span>), <span class="num">0</span>);
+<span class="kw">Promise</span>.<span class="fn">resolve</span>().<span class="fn">then</span>(() => console.<span class="fn">log</span>(<span class="str">"D"</span>));
+
+<span class="cmt">// Orden: B → D → A → C</span>
+<span class="cmt">// TODAS las microtasks antes que CUALQUIERA macrotask</span>`,
+  },
+  practical: {
+    steps: [
+      { action: 'push-stack', text: 'fetchUser(1)', type: 'sync', delay: 300 },
+      { action: 'push-macro', text: 'fetch callback (response)', type: 'macro', delay: 50 },
+      { action: 'push-stack', text: 'console.log("Render UI")', type: 'sync', log: 'Render UI', delay: 400 },
+      { action: 'clear-stack', delay: 200 },
+      { action: 'push-micro', text: 'response.json().then()', type: 'micro', delay: 200 },
+      { action: 'flush-micro', log: 'Procesar respuesta del fetch', delay: 500 },
+      { action: 'clear-micro', delay: 100 },
+      { action: 'pop-macro', log: 'Fetch completo: { user: "Ana" }', delay: 500 },
+    ],
+    code: `<span class="cmt">// La UI no se bloquea mientras espera el fetch</span>
+<span class="fn">fetch</span>(<span class="str">"/api/user/1"</span>)
+  .<span class="fn">then</span>(res => res.<span class="fn">json</span>())
+  .<span class="fn">then</span>(user => console.<span class="fn">log</span>(user));
+
+console.<span class="fn">log</span>(<span class="str">"Render UI"</span>); <span class="cmt">// Se ejecuta ANTES del fetch</span>
+
+<span class="cmt">// Orden: "Render UI" → fetch response</span>
+<span class="cmt">// El fetch es una macrotask que espera en la cola</span>`,
+  }
+};
+
+let elRunning = false;
+async function runEventLoop() {
+  if (elRunning) return;
+  elRunning = true;
+  const key = $('el-example').value;
+  const ex = elExamples[key];
+  $('el-stack').innerHTML = '';
+  $('el-macro').innerHTML = '';
+  $('el-micro').innerHTML = '';
+  $('el-log').innerHTML = '';
+  $('el-code').innerHTML = ex.code;
+  stepId = 0;
+
+  for (const step of ex.steps) {
+    await delay(step.delay);
+    if (step.action === 'push-stack') {
+      const el = document.createElement('div');
+      el.className = `el-frame ${step.type} active`;
+      el.textContent = step.text;
+      $('el-stack').prepend(el);
+    } else if (step.action === 'push-macro') {
+      const el = document.createElement('div');
+      el.className = 'el-frame macro';
+      el.textContent = step.text;
+      $('el-macro').appendChild(el);
+    } else if (step.action === 'push-micro') {
+      const el = document.createElement('div');
+      el.className = 'el-frame micro';
+      el.textContent = step.text;
+      $('el-micro').appendChild(el);
+    } else if (step.action === 'clear-stack') {
+      $('el-stack').querySelectorAll('.el-frame').forEach(f => { f.classList.add('done'); f.classList.remove('active'); });
+    } else if (step.action === 'flush-micro') {
+      const items = $('el-micro').querySelectorAll('.el-frame');
+      for (const item of items) { item.classList.add('active'); await delay(200); item.classList.add('done'); item.classList.remove('active'); }
+    } else if (step.action === 'clear-micro') {
+      $('el-micro').innerHTML = '';
+    } else if (step.action === 'pop-macro') {
+      const first = $('el-macro').querySelector('.el-frame');
+      if (first) { first.classList.add('active'); await delay(300); first.remove(); }
+    }
+    if (step.log) addLog($('el-log'), step.log, step.log.includes('error') || step.log.includes('Error') ? 'err' : 'ok');
+    autoResize();
+  }
+  elRunning = false;
+}
+
+$('el-run').addEventListener('click', runEventLoop);
+$('el-reset').addEventListener('click', () => {
+  elRunning = false;
+  $('el-stack').innerHTML = '';
+  $('el-macro').innerHTML = '';
+  $('el-micro').innerHTML = '';
+  $('el-log').innerHTML = '';
+  stepId = 0;
+  autoResize();
+});
+$('el-example').addEventListener('change', () => {
+  const key = $('el-example').value;
+  $('el-code').innerHTML = elExamples[key].code;
+});
+
+// ===== PROMISES =====
+let promCounter = 0;
+
+function createPromise() {
+  const action = $('prom-action').value;
+  const delayMs = parseInt($('prom-delay').value);
+  promCounter++;
+  const id = promCounter;
+
+  // Reset state machine
+  $('prom-state').className = 'p-state pending';
+  $('prom-state').textContent = `pending (#${id})`;
+  $('prom-arrow-res').className = 'p-arrow';
+  $('prom-arrow-rej').className = 'p-arrow';
+  $('prom-fulfilled').style.opacity = '.3'; $('prom-fulfilled').className = 'p-state';
+  $('prom-rejected').style.opacity = '.3'; $('prom-rejected').className = 'p-state';
+  $('prom-chain').innerHTML = '';
+
+  addLog($('prom-log'), `Creando promise #${id} (${action} en ${delayMs}ms)...`, 'step');
+
+  const p = new Promise((resolve, reject) => {
+    setTimeout(() => {
+      if (action === 'resolve') resolve(`Datos del servidor (#${id})`);
+      else reject(new Error(`Error 404: no encontrado (#${id})`));
+    }, delayMs);
+  });
+
+  // Chain
+  const chainItems = [];
+  const thenItem = addChainItem('.then(data => procesar(data))');
+  const catchItem = addChainItem('.catch(err => manejarError(err))');
+  const finallyItem = addChainItem('.finally(() => cleanup())');
+
+  p.then(data => {
+    $('prom-state').className = 'p-state fulfilled'; $('prom-state').textContent = `fulfilled`;
+    $('prom-arrow-res').className = 'p-arrow lit-green';
+    $('fulfilled').style.opacity = '1'; $('prom-fulfilled').className = 'p-state fulfilled';
+    thenItem.classList.add('executed');
+    finallyItem.classList.add('executed');
+    addLog($('prom-log'), `✅ Resuelta: "${data}"`, 'ok');
+    $('prom-code').innerHTML = `<span class="kw">const</span> p = <span class="kw">new</span> <span class="fn">Promise</span>((resolve, reject) => {\n  <span class="fn">setTimeout</span>(() => <span class="fn">resolve</span>(<span class="str">"${data}"</span>), <span class="num">${delayMs}</span>);\n});\n\np.<span class="fn">then</span>(data => <span class="fn">procesar</span>(data))\n .<span class="fn">catch</span>(err => <span class="fn">manejarError</span>(err))\n .<span class="fn">finally</span>(() => <span class="fn">cleanup</span>());`;
+  }).catch(err => {
+    $('prom-state').className = 'p-state rejected'; $('prom-state').textContent = `rejected`;
+    $('prom-arrow-rej').className = 'p-arrow lit-red';
+    $('prom-rejected').style.opacity = '1'; $('prom-rejected').className = 'p-state rejected';
+    thenItem.classList.add('skipped');
+    catchItem.classList.add('executed');
+    finallyItem.classList.add('executed');
+    addLog($('prom-log'), `❌ Rechazada: "${err.message}"`, 'err');
+    $('prom-code').innerHTML = `<span class="kw">const</span> p = <span class="kw">new</span> <span class="fn">Promise</span>((resolve, reject) => {\n  <span class="fn">setTimeout</span>(() => <span class="fn">reject</span>(<span class="kw">new</span> <span class="fn">Error</span>(<span class="str">"${err.message}"</span>)), <span class="num">${delayMs}</span>);\n});\n\np.<span class="fn">then</span>(data => ...)  <span class="cmt">// saltado</span>\n .<span class="fn">catch</span>(err => <span class="fn">manejarError</span>(err))  <span class="cmt">// ✅ atrapa el error</span>\n .<span class="fn">finally</span>(() => <span class="fn">cleanup</span>());  <span class="cmt">// siempre</span>`;
+  });
+  autoResize();
+}
+
+function addChainItem(text) {
+  const el = document.createElement('div');
+  el.className = 'p-chain-item';
+  el.textContent = text;
+  $('prom-chain').appendChild(el);
+  return el;
+}
+
+function makeDelayedPromise(ms, shouldResolve, val) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => shouldResolve ? resolve(val) : reject(new Error(`Falló: ${val}`)), ms);
+  });
+}
+
+$('prom-create').addEventListener('click', createPromise);
+
+$('prom-all').addEventListener('click', async () => {
+  $('prom-log').innerHTML = '';
+  addLog($('prom-log'), 'Promise.all — espera a TODAS', 'step');
+  addLog($('prom-log'), 'Creando 3 promises: 300ms, 500ms, 200ms...', 'step');
+  $('prom-code').innerHTML = `<span class="kw">const</span> results = <span class="kw">await</span> <span class="fn">Promise.all</span>([p1, p2, p3]);\n<span class="cmt">// Si TODAS resuelven → array con los 3 resultados</span>\n<span class="cmt">// Si CUALQUIERA falla → todo falla inmediatamente</span>`;
+  try {
+    const results = await Promise.all([
+      makeDelayedPromise(300, true, 'Usuario'),
+      makeDelayedPromise(500, true, 'Posts'),
+      makeDelayedPromise(200, true, 'Config'),
+    ]);
+    addLog($('prom-log'), `✅ Todas resueltas: [${results.join(', ')}]`, 'ok');
+  } catch (e) {
+    addLog($('prom-log'), `❌ Una falló: ${e.message}`, 'err');
+  }
+  autoResize();
+});
+
+$('prom-allset').addEventListener('click', async () => {
+  $('prom-log').innerHTML = '';
+  addLog($('prom-log'), 'Promise.allSettled — espera a TODAS, sin fallar', 'step');
+  $('prom-code').innerHTML = `<span class="kw">const</span> results = <span class="kw">await</span> <span class="fn">Promise.allSettled</span>([p1, p2, p3]);\n<span class="cmt">// Siempre espera a todas</span>\n<span class="cmt">// Cada resultado: { status: "fulfilled"|"rejected", value|reason }</span>`;
+  const results = await Promise.allSettled([
+    makeDelayedPromise(300, true, 'OK'),
+    makeDelayedPromise(200, false, 'Error'),
+    makeDelayedPromise(400, true, 'También OK'),
+  ]);
+  results.forEach((r, i) => {
+    const msg = r.status === 'fulfilled' ? `✅ #${i}: ${r.value}` : `❌ #${i}: ${r.reason.message}`;
+    addLog($('prom-log'), msg, r.status === 'fulfilled' ? 'ok' : 'err');
+  });
+  autoResize();
+});
+
+$('prom-race').addEventListener('click', async () => {
+  $('prom-log').innerHTML = '';
+  addLog($('prom-log'), 'Promise.race — la PRIMERA en terminar gana', 'step');
+  $('prom-code').innerHTML = `<span class="kw">const</span> result = <span class="kw">await</span> <span class="fn">Promise.race</span>([lenta, rapida]);\n<span class="cmt">// Devuelve la primera que se resuelva O rechace</span>\n<span class="cmt">// Útil para timeouts</span>`;
+  try {
+    const result = await Promise.race([
+      makeDelayedPromise(1000, true, 'Lenta'),
+      makeDelayedPromise(200, true, 'Rápida'),
+    ]);
+    addLog($('prom-log'), `🏁 Primera: "${result}"`, 'ok');
+  } catch (e) {
+    addLog($('prom-log'), `❌ ${e.message}`, 'err');
+  }
+  autoResize();
+});
+
+$('prom-any').addEventListener('click', async () => {
+  $('prom-log').innerHTML = '';
+  addLog($('prom-log'), 'Promise.any — la primera en RESOLVER (ignora rechazos)', 'step');
+  $('prom-code').innerHTML = `<span class="kw">const</span> result = <span class="kw">await</span> <span class="fn">Promise.any</span>([fail1, ok, fail2]);\n<span class="cmt">// Ignora los rechazos, espera la primera resolución exitosa</span>`;
+  try {
+    const result = await Promise.any([
+      Promise.reject('CDN 1 caído'),
+      makeDelayedPromise(400, true, 'CDN 2: datos'),
+      Promise.reject('CDN 3 timeout'),
+    ]);
+    addLog($('prom-log'), `🏁 Primera exitosa: "${result}"`, 'ok');
+  } catch (e) {
+    addLog($('prom-log'), `❌ Todas fallaron: ${e.message}`, 'err');
+  }
+  autoResize();
+});
+
+// ===== ASYNC/AWAIT =====
+async function runAsyncAwait() {
+  const key = $('aw-example').value;
+  $('aw-timeline').innerHTML = '';
+  $('aw-log').innerHTML = '';
+  stepId = 0;
+
+  const addTimeline = (text, type, duration) => {
+    const el = document.createElement('div');
+    el.className = 'fetch-step';
+    const barColor = type === 'await' ? 'blue' : type === 'done' ? 'green' : type === 'error' ? 'red' : 'blue';
+    el.innerHTML = `<span class="step-num">›</span>${text} <span class="step-bar ${barColor}" style="width:${duration}%;min-width:20px;display:inline-block;vertical-align:middle;margin-left:6px;height:6px;border-radius:3px"></span>`;
+    $('aw-timeline').appendChild(el);
+  };
+
+  if (key === 'sequential') {
+    addTimeline('await fetchUser(1)...', 'await', 100);
+    $('aw-code').innerHTML = `<span class="kw">async function</span> <span class="fn">cargarDatos</span>() {\n  <span class="kw">const</span> user = <span class="kw">await</span> <span class="fn">fetchUser</span>(<span class="num">1</span>);      <span class="cmt">// espera 500ms</span>\n  <span class="kw">const</span> posts = <span class="kw">await</span> <span class="fn">fetchPosts</span>(user.id); <span class="cmt">// espera 300ms</span>\n  <span class="kw">const</span> comments = <span class="kw">await</span> <span class="fn">fetchComments</span>(posts[<span class="num">0</span>].id);\n  <span class="kw">return</span> { user, posts, comments };\n}\n<span class="cmt">// Total: 500 + 300 + 200 = <span style="color:var(--red)">1000ms</span> (secuencial)</span>`;
+    addLog($('aw-log'), 'Iniciando fetchUser(1)...', 'step');
+    await delay(500);
+    addTimeline('→ user: { id: 1, nombre: "Ana" }', 'done', 100);
+    addLog($('aw-log'), '✅ user recibido ({ id: 1, nombre: "Ana" })', 'ok');
+
+    addTimeline('await fetchPosts(1)...', 'await', 100);
+    addLog($('aw-log'), 'Iniciando fetchPosts(1)...', 'step');
+    await delay(300);
+    addTimeline('→ posts: [{ id: 1, titulo: "..." }]', 'done', 100);
+    addLog($('aw-log'), '✅ posts recibidos (1 post)', 'ok');
+
+    addTimeline('await fetchComments(1)...', 'await', 100);
+    addLog($('aw-log'), 'Iniciando fetchComments(1)...', 'step');
+    await delay(200);
+    addTimeline('→ comments: [{ texto: "..." }]', 'done', 100);
+    addLog($('aw-log'), '✅ comments recibidos (2 comentarios)', 'ok');
+    addLog($('aw-log'), '⏱ Total secuencial: 1000ms', 'warn');
+
+  } else if (key === 'parallel') {
+    addTimeline('Iniciando 3 fetch en PARALELO...', 'await', 100);
+    $('aw-code').innerHTML = `<span class="kw">async function</span> <span class="fn">cargarDatosParalelo</span>() {\n  <span class="cmt">// Todas arrancan al mismo tiempo</span>\n  <span class="kw">const</span> [user, posts, comments] = <span class="kw">await</span> <span class="fn">Promise.all</span>([\n    <span class="fn">fetchUser</span>(<span class="num">1</span>),      <span class="cmt">// 500ms</span>\n    <span class="fn">fetchPosts</span>(<span class="num">1</span>),     <span class="cmt">// 300ms</span>\n    <span class="fn">fetchComments</span>(<span class="num">1</span>) <span class="cmt">// 200ms</span>\n  ]);\n  <span class="kw">return</span> { user, posts, comments };\n}\n<span class="cmt">// Total: max(500, 300, 200) = <span style="color:var(--green)">500ms</span> (paralelo!)</span>`;
+    addLog($('aw-log'), 'Iniciando 3 peticiones en paralelo...', 'step');
+
+    const p1 = (async () => { await delay(500); return 'user'; })();
+    const p2 = (async () => { await delay(300); return 'posts'; })();
+    const p3 = (async () => { await delay(200); return 'comments'; })();
+
+    setTimeout(() => { addTimeline('→ comments listo (200ms)', 'done', 60); addLog($('aw-log'), '✅ comments recibido (200ms)', 'ok'); }, 200);
+    setTimeout(() => { addTimeline('→ posts listo (300ms)', 'done', 80); addLog($('aw-log'), '✅ posts recibido (300ms)', 'ok'); }, 300);
+    setTimeout(() => { addTimeline('→ user listo (500ms)', 'done', 100); addLog($('aw-log'), '✅ user recibido (500ms)', 'ok'); }, 500);
+
+    await Promise.all([p1, p2, p3]);
+    addLog($('aw-log', '⏱ Total paralelo: 500ms (vs 1000ms secuencial)', 'warn'));
+
+  } else if (key === 'compare') {
+    $('aw-code').innerHTML = `<span class="cmt">// .then encadenado</span>\n<span class="fn">fetchUser</span>(<span class="num">1</span>)\n  .<span class="fn">then</span>(user => <span class="fn">fetchPosts</span>(user.id))\n  .<span class="fn">then</span>(posts => <span class="fn">fetchComments</span>(posts[<span class="num">0</span>].id))\n  .<span class="fn">then</span>(comments => console.<span class="fn">log</span>(comments))\n  .<span class="fn">catch</span>(err => console.<span class="fn">error</span>(err));\n\n<span class="cmt">// async/await (misma lógica, más legible)</span>\n<span class="kw">async function</span> <span class="fn">load</span>() {\n  <span class="kw">try</span> {\n    <span class="kw">const</span> user = <span class="kw">await</span> <span class="fn">fetchUser</span>(<span class="num">1</span>);\n    <span class="kw">const</span> posts = <span class="kw">await</span> <span class="fn">fetchPosts</span>(user.id);\n    <span class="kw">const</span> comments = <span class="kw">await</span> <span class="fn">fetchComments</span>(posts[<span class="num">0</span>].id);\n    console.<span class="fn">log</span>(comments);\n  } <span class="kw">catch</span> (err) {\n    console.<span class="fn">error</span>(err);\n  }\n}`;
+
+    addTimeline('.then: fetchUser(1)...', 'await', 80);
+    addLog($('aw-log'), 'fetchUser(1) → .then(user => ...)', 'step');
+    await delay(500);
+    addTimeline('→ .then encadenado: user recibido', 'done', 80);
+    addLog($('aw-log'), '  → user: { nombre: "Ana" }', 'ok');
+
+    addTimeline('.then: fetchPosts(1)...', 'await', 80);
+    await delay(300);
+    addTimeline('→ .then encadenado: posts recibidos', 'done', 80);
+    addLog($('aw-log'), '  → posts: [1 post]', 'ok');
+
+    addTimeline('.then: fetchComments(1)...', 'await', 80);
+    await delay(200);
+    addTimeline('→ .then encadenado: comments recibidos', 'done', 80);
+    addLog($('aw-log'), '  → comments: [2 comentarios]', 'ok');
+    addLog($('aw-log'), 'Ambos producen el mismo resultado. await es más legible.', 'warn');
+  }
+  autoResize();
+}
+
+$('aw-run').addEventListener('click', runAsyncAwait);
+$('aw-reset').addEventListener('click', () => { $('aw-timeline').innerHTML = ''; $('aw-log').innerHTML = ''; stepId = 0; autoResize(); });
+
+// ===== FETCH =====
+let fetchMethod = 'GET';
+$('fetch-methods').addEventListener('click', e => {
+  const btn = e.target.closest('[data-method]');
+  if (!btn) return;
+  document.querySelectorAll('#fetch-methods .ctrl-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  fetchMethod = btn.dataset.method;
+  $('fetch-method-label').textContent = fetchMethod;
+});
+
+$('fetch-send').addEventListener('click', async () => {
+  const url = $('fetch-url').value;
+  const simError = $('fetch-sim-error').checked;
+  const simDelay = $('fetch-sim-delay').checked;
+  const delayMs = simDelay ? 2000 : 500;
+
+  $('fetch-timeline').innerHTML = '';
+  $('fetch-log').innerHTML = '';
+  stepId = 0;
+
+  const addStep = (text, barColor, barWidth) => {
+    const el = document.createElement('div');
+    el.className = 'fetch-step';
+    el.innerHTML = `<span class="step-num">›</span>${text} <span class="step-bar ${barColor}" style="width:${barWidth}%;min-width:20px;display:inline-block;vertical-align:middle;margin-left:6px;height:6px;border-radius:3px"></span>`;
+    $('fetch-timeline').appendChild(el);
+  };
+
+  addLog($('fetch-log'), `${fetchMethod} ${url}`, 'step');
+  addStep(`1. ${fetchMethod} ${url} — enviando...`, 'blue', 30);
+  $('fetch-code').innerHTML = `<span class="kw">const</span> response = <span class="kw">await</span> <span class="fn">fetch</span>(<span class="str">"${url}"</span>, {\n  method: <span class="str">"${fetchMethod}"</span>,\n  headers: { <span class="str">"Content-Type"</span>: <span class="str">"application/json"</span> },\n${fetchMethod !== 'GET' ? `  body: <span class="fn">JSON.stringify</span>(data),\n` : ''}});\n\n<span class="kw">if</span> (!response.ok) <span class="kw">throw new</span> <span class="fn">Error</span>(response.status);\n<span class="kw">const</span> data = <span class="kw">await</span> response.<span class="fn">json</span>();`;
+  await delay(delayMs * 0.3);
+
+  if (simError) {
+    addStep(`2. Response: 404 Not Found`, 'red', 100);
+    addLog($('fetch-log'), '❌ Error: HTTP 404 - Not Found', 'err');
+    addStep(`3. .catch() atrapó el error`, 'red', 60);
+    addLog($('fetch-log'), 'Error manejado en catch: mostrando UI de error', 'warn');
+    $('fetch-code').innerHTML += `\n\n<span class="cmt">// ❌ response.status = 404</span>\n<span class="kw">if</span> (!response.ok) <span class="kw">throw new</span> <span class="fn">Error</span>(<span class="str">"HTTP 404"</span>);\n<span class="cmt">// → salta al catch</span>`;
+  } else {
+    addStep(`2. Response: 200 OK — leyendo body...`, 'blue', 60);
+    await delay(delayMs * 0.4);
+    addStep(`3. JSON parseado`, 'green', 40);
+    const body = fetchMethod === 'DELETE' ? '{ deleted: true }' : fetchMethod === 'GET' ? '{ id: 1, nombre: "Ana", rol: "admin" }' : '{ id: 42, creado: true }';
+    addLog($('fetch-log'), `✅ ${fetchMethod} exitoso: ${body}`, 'ok');
+    addStep(`4. Datos listos para renderizar`, 'green', 30);
+  }
+  autoResize();
+});
+
+// ===== ERROR PATTERNS =====
+const errorPatterns = {
+  trycatch: {
+    result: `<span style="color:var(--kw)">try</span> {\n  <span style="color:var(--kw">const</span> user = <span style="color:var(--kw)">await</span> <span style="color:var(--fn)">fetchUser</span>(<span style="color:var(--num)">1</span>);\n  <span style="color:var(--fn)">renderProfile</span>(user);\n} <span style="color:var(--kw)">catch</span> (error) {\n  <span style="color:var(--cmt)">// Cualquier error en el bloque try</span>\n  <span style="color:var(--fn)">showError</span>(<span style="color:var(--str">"No se pudo cargar el perfil"</span>);\n} <span style="color:var(--kw)">finally</span> {\n  <span style="color:var(--fn)">hideSpinner</span>(); <span style="color:var(--cmt)">// Siempre se ejecuta</span>\n}`,
+    code: `<span class="cmt">// El patrón más común con async/await</span>\n<span class="kw">async function</span> <span class="fn">loadProfile</span>() {\n  <span class="kw">try</span> {\n    <span class="kw">const</span> user = <span class="kw">await</span> <span class="fn">fetchUser</span>(<span class="num">1</span>);\n    <span class="fn">renderProfile</span>(user);\n  } <span class="kw">catch</span> (error) {\n    <span class="fn">showError</span>(<span class="str">"No se pudo cargar"</span>);\n  } <span class="kw">finally</span> {\n    <span class="fn">hideSpinner</span>();\n  }\n}`,
+  },
+  'then-catch': {
+    result: `<span style="color:var(--fn)">fetchUser</span>(<span style="color:var(--num)">1</span>)\n  .<span style="color:var(--fn)">then</span>(user => <span style="color:var(--fn)">renderProfile</span>(user))\n  .<span style="color:var(--fn)">catch</span>(err => <span style="color:var(--fn)">showError</span>(<span style="color:var(--str">"Error"</span>))\n  .<span style="color:var(--fn)">finally</span>(() => <span style="color:var(--fn)">hideSpinner</span>());`,
+    code: `<span class="cmt">// Con Promises: .catch() atrapa CUALQUIER error de la cadena</span>\n<span class="fn">fetchUser</span>(<span class="num">1</span>)\n  .<span class="fn">then</span>(user => <span class="fn">renderProfile</span>(user))\n  .<span class="fn">catch</span>(err => <span class="fn">showError</span>(<span class="str">"Error"</span>))\n  .<span class="fn">finally</span>(() => <span class="fn">hideSpinner</span>());\n\n<span class="cmt">// Un solo .catch() al final atrapa errores de todos los .then()</span>`,
+  },
+  guard: {
+    result: `<span style="color:var(--kw">async function</span> <span style="color:var(--fn)">deleteUser</span>(id) {\n  <span style="color:var(--kw">if</span> (!id || id < <span style="color:var(--num)">1</span>) {\n    <span style="color:var(--kw">return</span> <span style="color:var(--fn)">showError</span>(<span style="color:var(--str">"ID inválido"</span>);\n  }\n  <span style="color:var(--cmt">// Si llegamos acá, id es válido</span>\n  <span style="color:var(--kw">const</span> res = <span style="color:var(--kw)">await</span> <span style="color:var(--fn)">fetch</span>(<span style="color:var(--str">\`/api/users/\${id}\`</span>, { method: <span style="color:var(--str">"DELETE"</span> });\n  <span style="color:var(--fn">showSuccess</span>(<span style="color:var(--str">"Usuario eliminado"</span>);\n}`,
+    code: `<span class="cmt">// Validar ANTES del await evita errores innecesarios</span>\n<span class="kw">async function</span> <span class="fn">deleteUser</span>(id) {\n  <span class="kw">if</span> (!id || id < <span class="num">1</span>) {\n    <span class="kw">return</span> <span class="fn">showError</span>(<span class="str">"ID inválido"</span>); <span class="cmt">// early return</span>\n  }\n  <span class="cmt">// El await solo se ejecuta si la validación pasó</span>\n  <span class="kw">const</span> res = <span class="kw">await</span> <span class="fn">fetch</span>(\`/api/users/\${id}\`, { method: <span class="str">"DELETE"</span> });\n}`,
+  },
+  wrapper: {
+    result: `<span style="color:var(--cmt">// Wrapper utilitario</span>\n<span style="color:var(--kw">function</span> <span style="color:var(--fn)">safeAsync</span>(promise) {\n  <span style="color:var(--kw">return</span> promise.<span style="color:var(--fn">then</span>(data => [<span style="color:var(--kw">null</span>, data])\n                  .<span style="color:var(--fn)">catch</span>(err => [err, <span style="color:var(--kw">null</span>]);\n}\n\n<span style="color:var(--cmt">// Uso:</span>\n<span style="color:var(--kw">const</span> [err, user] = <span style="color:var(--kw">await</span> <span style="color:var(--fn">safeAsync</span>(<span style="color:var(--fn)">fetchUser</span>(<span style="color:var(--num)">1</span>));\n<span style="color:var(--kw">if</span> (err) <span style="color:var(--kw">return</span> <span style="color:var(--fn)">showError</span>(err.message);\n<span style="color:var(--fn">renderProfile</span>(user); <span style="color:var(--cmt">// Sin try/catch!</span>`,
+    code: `<span class="cmt">// Wrapper: convierte reject en [err, data] como Go</span>\n<span class="kw">function</span> <span class="fn">safeAsync</span>(promise) {\n  <span class="kw">return</span> promise\n    .<span class="fn">then</span>(data => [<span class="kw">null</span>, data])\n    .<span class="fn">catch</span>(err => [err, <span class="kw">null</span>]);\n}\n\n<span class="cmt">// Uso — sin try/catch:</span>\n<span class="kw">const</span> [err, user] = <span class="kw">await</span> <span class="fn">safeAsync</span>(<span class="fn">fetchUser</span>(<span class="num">1</span>));\n<span class="kw">if</span> (err) <span class="kw">return</span> <span class="fn">showError</span>(err);\n<span class="fn">renderProfile</span>(user);`,
+  },
+};
+
+document.querySelectorAll('.pattern-card').forEach(card => {
+  card.addEventListener('click', () => {
+    document.querySelectorAll('.pattern-card').forEach(c => c.classList.remove('active'));
+    card.classList.add('active');
+    const pat = card.dataset.pat;
+    $('pat-result').innerHTML = errorPatterns[pat].result;
+    $('err-code').innerHTML = errorPatterns[pat].code;
+    autoResize();
+  });
+});
+document.querySelector('.pattern-card[data-pat="trycatch"]').click();
+</script>
+</body>
+</html>

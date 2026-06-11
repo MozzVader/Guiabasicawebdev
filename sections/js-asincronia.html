@@ -68,6 +68,15 @@
                 <p>JavaScript es single-threaded: ejecuta un solo hilo de c&oacute;digo a la vez. Pero la web necesita hacer cosas que toman tiempo (pedir datos a un servidor, leer un archivo, esperar un timer) sin congelar la interfaz. La asincron&iacute;a es el mecanismo que permite al navegador "posponer" ciertas operaciones y continuar ejecutando el resto del c&oacute;digo mientras espera. Dominar callbacks, Promises, async/await y la Fetch API es esencial para cualquier aplicaci&oacute;n web moderna que se comunique con servidores o maneje datos en tiempo real.</p>
             </div>
 
+            <p class="demo-embed__intro">Visualiz&aacute; c&oacute;mo funciona el Event Loop con la animaci&oacute;n del call stack y las colas, experiment&aacute; con los estados de las Promises y sus m&eacute;todos est&aacute;ticos (all, allSettled, race, any), compar&aacute; async/await secuencial vs paralelo con timelines, simul&aacute; peticiones Fetch con distintos m&eacute;todos y errores, y explor&aacute; 4 patrones de manejo de errores.</p>
+            <div class="demo-embed">
+                <div class="demo-embed__bar">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+                    Async Playground
+                </div>
+                <iframe src="../demos/async-playground.html" loading="lazy" title="Async Playground"></iframe>
+            </div>
+
             <!-- ===================== CALLBACKS ===================== -->
             <section class="sub-section animate-on-scroll" id="callbacks">
                 <h2>
