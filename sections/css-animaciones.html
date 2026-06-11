@@ -87,6 +87,18 @@
                     Las transiciones CSS permiten animar el cambio de una propiedad entre dos valores. Cuando una propiedad CSS cambia (por un hover, un cambio de clase via JS, un pseudo-elemento, etc.), la transici&oacute;n interpola los valores intermedios durante la duraci&oacute;n especificada en lugar de cambiar instant&aacute;neamente. La propiedad <code>transition</code> es un shorthand que combina hasta cuatro sub-propiedades: <code>transition-property</code> (qu&eacute; propiedades animar), <code>transition-duration</code> (cu&aacute;nto dura), <code>transition-timing-function</code> (c&oacute;mo se acelera/desacelera) y <code>transition-delay</code> (cu&aacute;nto esperar antes de empezar).
                 </p>
 
+                <p class="demo-embed__intro">
+                    Experiment&aacute; con las transiciones en vivo. Eleg&iacute; qu&eacute; propiedad animar, la duraci&oacute;n, la curva de easing y el delay. Prob&aacute; los dos modos: <em>hover</em> (pas&aacute; el mouse sobre el elemento) y <em>click</em> (toggle con clic). Abajo podr&aacute;s comparar visualmente c&oacute;mo se mueven las diferentes curvas de easing.
+                </p>
+
+                <div class="demo-embed">
+                    <div class="demo-embed__bar">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h4l3-9 4 18 3-9h4"/></svg>
+                        <span>Playground &mdash; Transiciones CSS</span>
+                    </div>
+                    <iframe src="../demos/transitions-playground.html" title="Transitions Playground - Propiedades de transición" loading="lazy"></iframe>
+                </div>
+
                 <div class="code-block">
                     <div class="code-block-header">
                         <span class="code-block-lang">

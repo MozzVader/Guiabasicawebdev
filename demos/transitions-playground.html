@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Transitions Playground</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+  font-family:'Inter',system-ui,-apple-system,sans-serif;
+  background:#0d1117;
+  color:#e6edf3;
+  padding:16px;
+  overflow-x:hidden;
+}
+
+/* --- Controls --- */
+.controls{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-bottom:14px;
+}
+
+.control-group{
+  display:flex;
+  flex-direction:column;
+  gap:3px;
+  flex:1 1 120px;
+  min-width:110px;
+}
+
+.control-group label{
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:.8px;
+  color:#8b949e;
+  font-weight:600;
+}
+
+.control-group select{
+  background:#161b22;
+  color:#e6edf3;
+  border:1px solid #30363d;
+  border-radius:6px;
+  padding:7px 8px;
+  font-size:12px;
+  font-family:'JetBrains Mono',monospace;
+  cursor:pointer;
+  outline:none;
+  transition:border-color .2s;
+  appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238b949e' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:right 8px center;
+  padding-right:26px;
+}
+
+.control-group select:focus{
+  border-color:#58a6ff;
+}
+
+/* --- Trigger mode --- */
+.trigger-mode{
+  display:flex;
+  gap:6px;
+  align-items:center;
+  margin-bottom:12px;
+  flex-wrap:wrap;
+}
+
+.trigger-mode span{
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:.8px;
+  color:#8b949e;
+  font-weight:600;
+  margin-right:2px;
+}
+
+.trigger-btn{
+  background:#21262d;
+  color:#8b949e;
+  border:1px solid #30363d;
+  border-radius:6px;
+  padding:4px 10px;
+  font-size:11px;
+  font-family:'Inter',system-ui,sans-serif;
+  cursor:pointer;
+  transition:all .2s;
+}
+
+.trigger-btn:hover{
+  border-color:#484f58;
+  color:#e6edf3;
+}
+
+.trigger-btn.active{
+  background:rgba(88,166,255,.12);
+  border-color:#58a6ff;
+  color:#58a6ff;
+}
+
+/* --- Live CSS Output --- */
+.css-output{
+  background:#161b22;
+  border:1px solid #30363d;
+  border-radius:6px;
+  padding:10px 14px;
+  margin-bottom:14px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  color:#8b949e;
+  line-height:1.7;
+  overflow-x:auto;
+  white-space:pre;
+}
+
+.css-output .prop{color:#79c0ff}
+.css-output .val{color:#a5d6ff}
+.css-output .brace{color:#8b949e}
+.css-output .sel{color:#7ee787}
+.css-output .pseudo{color:#d2a8ff}
+
+/* --- Playground Area --- */
+.stage{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:180px;
+  padding:24px;
+  background:#161b22;
+  border:2px dashed #30363d;
+  border-radius:8px;
+  position:relative;
+  cursor:pointer;
+}
+
+.stage::before{
+  content:'hover o clickeá el elemento';
+  position:absolute;
+  top:-10px;
+  left:12px;
+  background:#0d1117;
+  padding:0 6px;
+  font-size:10px;
+  color:#484f58;
+  font-family:'JetBrains Mono',monospace;
+}
+
+.stage.click-mode::before{
+  content:'clickeá el elemento para togglear';
+}
+
+/* --- Target Element --- */
+.target{
+  width:120px;
+  height:80px;
+  background:#3b82f6;
+  border-radius:8px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:700;
+  font-size:13px;
+  color:#fff;
+  transition: background-color 0.3s ease, transform 0.3s ease, border-radius 0.3s ease, opacity 0.3s ease, box-shadow 0.3s ease;
+  user-select:none;
+  position:relative;
+}
+
+.target.state-b {
+  background:#ec4899;
+  transform: translateY(-10px) scale(1.1);
+  border-radius: 50%;
+  box-shadow: 0 8px 24px rgba(236, 72, 153, 0.4);
+  opacity: 0.8;
+}
+
+/* Easing visualizer */
+.easing-row{
+  display:flex;
+  gap:6px;
+  margin-top:12px;
+  flex-wrap:wrap;
+}
+
+.easing-item{
+  flex:1;
+  min-width:80px;
+  text-align:center;
+}
+
+.easing-label{
+  font-size:9px;
+  font-family:'JetBrains Mono',monospace;
+  color:#8b949e;
+  margin-bottom:4px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+
+.easing-track{
+  height:40px;
+  background:#161b22;
+  border:1px solid #30363d;
+  border-radius:6px;
+  position:relative;
+  overflow:hidden;
+}
+
+.easing-ball{
+  width:14px;
+  height:14px;
+  border-radius:50%;
+  background:#58a6ff;
+  position:absolute;
+  top:50%;
+  left:4px;
+  transform:translateY(-50%);
+  transition:none;
+}
+
+.easing-track:hover .easing-ball{
+  left:calc(100% - 18px);
+}
+
+.easing-track.linear .easing-ball{transition:left 0.6s linear}
+.easing-track.ease .easing-ball{transition:left 0.6s ease}
+.easing-track.ease-in .easing-ball{transition:left 0.6s ease-in}
+.easing-track.ease-out .easing-ball{transition:left 0.6s ease-out}
+.easing-track.ease-in-out .easing-ball{transition:left 0.6s ease-in-out}
+.easing-track.bounce .easing-ball{transition:left 0.8s cubic-bezier(0.68,-0.55,0.265,1.55)}
+</style>
+</head>
+<body>
+
+<div class="controls">
+  <div class="control-group">
+    <label>transition-property</label>
+    <select id="tp">
+      <option value="transform" selected>transform</option>
+      <option value="background-color">background-color</option>
+      <option value="border-radius">border-radius</option>
+      <option value="opacity">opacity</option>
+      <option value="box-shadow">box-shadow</option>
+      <option value="all">all (todas)</option>
+    </select>
+  </div>
+  <div class="control-group">
+    <label>transition-duration</label>
+    <select id="td">
+      <option value="0.1s">0.1s</option>
+      <option value="0.2s">0.2s</option>
+      <option value="0.3s" selected>0.3s</option>
+      <option value="0.5s">0.5s</option>
+      <option value="0.8s">0.8s</option>
+      <option value="1.2s">1.2s</option>
+      <option value="2s">2s</option>
+    </select>
+  </div>
+  <div class="control-group">
+    <label>transition-timing-function</label>
+    <select id="ttf">
+      <option value="ease" selected>ease</option>
+      <option value="linear">linear</option>
+      <option value="ease-in">ease-in</option>
+      <option value="ease-out">ease-out</option>
+      <option value="ease-in-out">ease-in-out</option>
+      <option value="cubic-bezier(0.68,-0.55,0.265,1.55)">bounce</option>
+      <option value="cubic-bezier(0.4,0,0.2,1)">material</option>
+      <option value="cubic-bezier(0.22,1,0.36,1)">smooth-out</option>
+    </select>
+  </div>
+  <div class="control-group">
+    <label>transition-delay</label>
+    <select id="t delay">
+      <option value="0s" selected>0s</option>
+      <option value="0.1s">0.1s</option>
+      <option value="0.2s">0.2s</option>
+      <option value="0.3s">0.3s</option>
+      <option value="0.5s">0.5s</option>
+    </select>
+  </div>
+</div>
+
+<div class="trigger-mode">
+  <span>Trigger:</span>
+  <button class="trigger-btn active" data-mode="hover">Hover</button>
+  <button class="trigger-btn" data-mode="click">Click (toggle)</button>
+</div>
+
+<div class="css-output" id="cssOutput"></div>
+
+<div class="stage" id="stage">
+  <div class="target" id="target">Elemento</div>
+</div>
+
+<div class="easing-row">
+  <div class="easing-item">
+    <div class="easing-label">linear</div>
+    <div class="easing-track linear"><div class="easing-ball"></div></div>
+  </div>
+  <div class="easing-item">
+    <div class="easing-label">ease</div>
+    <div class="easing-track ease"><div class="easing-ball"></div></div>
+  </div>
+  <div class="easing-item">
+    <div class="easing-label">ease-in</div>
+    <div class="easing-track ease-in"><div class="easing-ball"></div></div>
+  </div>
+  <div class="easing-item">
+    <div class="easing-label">ease-out</div>
+    <div class="easing-track ease-out"><div class="easing-ball"></div></div>
+  </div>
+  <div class="easing-item">
+    <div class="easing-label">ease-in-out</div>
+    <div class="easing-track ease-in-out"><div class="easing-ball"></div></div>
+  </div>
+  <div class="easing-item">
+    <div class="easing-label">bounce</div>
+    <div class="easing-track bounce"><div class="easing-ball"></div></div>
+  </div>
+</div>
+
+<script>
+var tp = document.getElementById('tp');
+var td = document.getElementById('td');
+var ttf = document.getElementById('ttf');
+var tDelay = document.getElementById('t delay');
+var cssOutput = document.getElementById('cssOutput');
+var target = document.getElementById('target');
+var stage = document.getElementById('stage');
+var isToggled = false;
+var triggerMode = 'hover';
+
+function getStateCSS() {
+  var prop = tp.value;
+  switch(prop) {
+    case 'transform': return 'transform: translateY(-10px) scale(1.1);';
+    case 'background-color': return 'background-color: #ec4899;';
+    case 'border-radius': return 'border-radius: 50%;';
+    case 'opacity': return 'opacity: 0.3;';
+    case 'box-shadow': return 'box-shadow: 0 8px 24px rgba(59,130,246,0.5);';
+    case 'all': return 'transform: translateY(-10px) scale(1.1);\n    background-color: #ec4899;\n    border-radius: 50%;\n    box-shadow: 0 8px 24px rgba(236,72,153,0.4);';
+    default: return '';
+  }
+}
+
+function update() {
+  var prop = tp.value;
+  var dur = td.value;
+  var func = ttf.value;
+  var delay = tDelay.value;
+
+  var funcDisplay = func.length > 40 ? func.substring(0, 40) + '...' : func;
+
+  cssOutput.innerHTML =
+    '<span class="sel">.element</span> <span class="brace">{</span>\n' +
+    '  <span class="prop">transition</span>: <span class="val">' + prop + '</span> <span class="val">' + dur + '</span> <span class="val">' + funcDisplay + '</span> <span class="val">' + delay + '</span>;\n' +
+    '<span class="brace">}</span>\n\n' +
+    '<span class="sel">.element</span><span class="pseudo">:hover</span> <span class="brace">{</span>\n' +
+    '  ' + getStateCSS().replace(/;/g, ';').split('\n').map(function(l) {
+      var parts = l.split(':');
+      if (parts.length === 2) return '  <span class="prop">' + parts[0].trim() + '</span>: <span class="val">' + parts[1].trim();
+      return l;
+    }).join('\n') + '\n' +
+    '<span class="brace">}</span>';
+
+  // Update transition on target
+  target.style.transition = prop + ' ' + dur + ' ' + func + ' ' + delay;
+
+  // Reset target to state A
+  resetTarget();
+}
+
+function resetTarget() {
+  target.style.transform = '';
+  target.style.backgroundColor = '#3b82f6';
+  target.style.borderRadius = '8px';
+  target.style.opacity = '';
+  target.style.boxShadow = '';
+  isToggled = false;
+  target.classList.remove('state-b');
+}
+
+function applyStateB() {
+  var prop = tp.value;
+  switch(prop) {
+    case 'transform':
+      target.style.transform = 'translateY(-10px) scale(1.1)';
+      target.style.backgroundColor = '#3b82f6';
+      target.style.borderRadius = '8px';
+      target.style.opacity = '';
+      target.style.boxShadow = '';
+      break;
+    case 'background-color':
+      target.style.backgroundColor = '#ec4899';
+      target.style.transform = '';
+      target.style.borderRadius = '8px';
+      target.style.opacity = '';
+      target.style.boxShadow = '';
+      break;
+    case 'border-radius':
+      target.style.borderRadius = '50%';
+      target.style.transform = '';
+      target.style.backgroundColor = '#3b82f6';
+      target.style.opacity = '';
+      target.style.boxShadow = '';
+      break;
+    case 'opacity':
+      target.style.opacity = '0.3';
+      target.style.transform = '';
+      target.style.backgroundColor = '#3b82f6';
+      target.style.borderRadius = '8px';
+      target.style.boxShadow = '';
+      break;
+    case 'box-shadow':
+      target.style.boxShadow = '0 8px 24px rgba(59,130,246,0.5)';
+      target.style.transform = '';
+      target.style.backgroundColor = '#3b82f6';
+      target.style.borderRadius = '8px';
+      target.style.opacity = '';
+      break;
+    case 'all':
+      target.style.transform = 'translateY(-10px) scale(1.1)';
+      target.style.backgroundColor = '#ec4899';
+      target.style.borderRadius = '50%';
+      target.style.boxShadow = '0 8px 24px rgba(236,72,153,0.4)';
+      target.style.opacity = '';
+      break;
+  }
+}
+
+// Hover trigger
+stage.addEventListener('mouseenter', function() {
+  if (triggerMode === 'hover') applyStateB();
+});
+stage.addEventListener('mouseleave', function() {
+  if (triggerMode === 'hover') resetTarget();
+});
+
+// Click trigger
+stage.addEventListener('click', function() {
+  if (triggerMode !== 'click') return;
+  if (isToggled) {
+    resetTarget();
+  } else {
+    applyStateB();
+  }
+  isToggled = !isToggled;
+});
+
+// Trigger mode buttons
+document.querySelectorAll('.trigger-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.trigger-btn').forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+    triggerMode = btn.getAttribute('data-mode');
+    stage.classList.toggle('click-mode', triggerMode === 'click');
+    resetTarget();
+  });
+});
+
+[tp, td, ttf, tDelay].forEach(function(s) {
+  s.addEventListener('change', update);
+});
+
+// Auto-resize iframe to fit content
+function resize() {
+  var h = document.body.scrollHeight;
+  if (window.parent && window.parent.postMessage) {
+    window.parent.postMessage({ type: 'demo-resize', height: h }, '*');
+  }
+}
+
+new MutationObserver(resize).observe(document.body, { childList: true, subtree: true, attributes: true });
+window.addEventListener('resize', resize);
+
+update();
+setTimeout(resize, 100);
+</script>
+
+</body>
+</html>
