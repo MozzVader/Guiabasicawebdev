@@ -1,11 +1,10 @@
 /**
  * WebForge — UI Enhancements
- * Reading progress bar + Back to top button.
+ * Reading progress bar, back to top, "/" search shortcut, heading link copy.
  */
 
 // === Reading Progress Bar ===
 const initProgressBar = () => {
-    // Don't show on landing page
     const pageWrapper = document.querySelector('.page-wrapper');
     if (pageWrapper?.classList.contains('landing-page')) return;
 
@@ -37,7 +36,6 @@ const initProgressBar = () => {
 
 // === Back to Top Button ===
 const initBackToTop = () => {
-    // Don't show on landing page
     const pageWrapper = document.querySelector('.page-wrapper');
     if (pageWrapper?.classList.contains('landing-page')) return;
 
@@ -72,8 +70,75 @@ const initBackToTop = () => {
     toggleVisibility();
 };
 
-// Initialize after components load (same as other modules)
+// === "/" Search Shortcut ===
+const initSearchShortcut = () => {
+    document.addEventListener('keydown', (e) => {
+        // Don't trigger if user is typing in an input, textarea, or contenteditable
+        const tag = e.target.tagName;
+        if (tag === 'INPUT' || tag === 'TEXTAREA' || e.target.isContentEditable) return;
+
+        if (e.key === '/') {
+            e.preventDefault();
+            const searchInput = document.getElementById('search-input');
+            if (searchInput) {
+                searchInput.focus();
+            }
+        }
+    });
+};
+
+// === Heading Link Copy ===
+const initHeadingCopy = () => {
+    document.addEventListener('click', (e) => {
+        const anchor = e.target.closest('.heading-anchor');
+        if (!anchor) return;
+
+        e.preventDefault();
+
+        const href = anchor.getAttribute('href');
+        if (!href) return;
+
+        const url = window.location.origin + window.location.pathname + href;
+
+        navigator.clipboard.writeText(url).then(() => {
+            showCopyTooltip(anchor);
+        }).catch(() => {
+            // Fallback for older browsers
+            const textArea = document.createElement('textarea');
+            textArea.value = url;
+            textArea.style.position = 'fixed';
+            textArea.style.opacity = '0';
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+            showCopyTooltip(anchor);
+        });
+    });
+};
+
+const showCopyTooltip = (anchor) => {
+    // Remove existing tooltip if any
+    const existing = document.getElementById('copy-tooltip');
+    if (existing) existing.remove();
+
+    const tooltip = document.createElement('span');
+    tooltip.id = 'copy-tooltip';
+    tooltip.textContent = 'Link copiado';
+    anchor.parentNode.style.position = 'relative';
+    anchor.parentNode.appendChild(tooltip);
+
+    // Remove after 1.5s
+    setTimeout(() => {
+        tooltip.style.opacity = '0';
+        setTimeout(() => tooltip.remove(), 200);
+    }, 1500);
+};
+
+// Initialize after components load
 document.addEventListener('components:loaded', () => {
     initProgressBar();
     initBackToTop();
+    initSearchShortcut();
+    initHeadingCopy();
 });
