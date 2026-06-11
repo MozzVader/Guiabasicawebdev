@@ -358,6 +358,51 @@
                         <p>El atributo <code>accept</code> en <code>&lt;input type="file"&gt;</code> filtra qu&eacute; tipos de archivos puede seleccionar el usuario. Acepta MIME types (<code>image/png</code>), extensiones (<code>.pdf</code>), o comodines (<code>image/*</code>). Es un filtro del lado del cliente (se puede saltar), as&iacute; que siempre valida tambi&eacute;n en el servidor.</p>
                     </div>
                 </div>
+
+                <div class="mini-demo">
+                    <span class="mini-demo__label">Visual</span>
+                    <div class="form-demo">
+                        <div class="form-demo__row">
+                            <code class="form-demo__tag">text</code>
+                            <input type="text" placeholder="Texto gen&eacute;rico..." class="form-demo__input">
+                        </div>
+                        <div class="form-demo__row">
+                            <code class="form-demo__tag">email</code>
+                            <input type="email" placeholder="tu@email.com" class="form-demo__input">
+                        </div>
+                        <div class="form-demo__row">
+                            <code class="form-demo__tag">search</code>
+                            <input type="search" placeholder="Buscar..." class="form-demo__input">
+                        </div>
+                        <div class="form-demo__row">
+                            <code class="form-demo__tag">number</code>
+                            <input type="number" value="42" min="0" max="100" class="form-demo__input">
+                        </div>
+                        <div class="form-demo__row">
+                            <code class="form-demo__tag">range</code>
+                            <input type="range" min="0" max="100" value="60" class="form-demo__range">
+                        </div>
+                        <div class="form-demo__row">
+                            <code class="form-demo__tag">color</code>
+                            <input type="color" value="#58a6ff" class="form-demo__color">
+                        </div>
+                        <div class="form-demo__row">
+                            <code class="form-demo__tag">date</code>
+                            <input type="date" class="form-demo__input">
+                        </div>
+                        <div class="form-demo__row">
+                            <code class="form-demo__tag">checkbox</code>
+                            <label class="form-demo__check"><input type="checkbox" checked> Opci&oacute;n A</label>
+                            <label class="form-demo__check"><input type="checkbox"> Opci&oacute;n B</label>
+                        </div>
+                        <div class="form-demo__row">
+                            <code class="form-demo__tag">radio</code>
+                            <label class="form-demo__check"><input type="radio" name="demo-radio" checked> S&iacute;</label>
+                            <label class="form-demo__check"><input type="radio" name="demo-radio"> No</label>
+                            <label class="form-demo__check"><input type="radio" name="demo-radio" disabled> Tal vez</label>
+                        </div>
+                    </div>
+                </div>
             </section>
 
             <!-- Sub-section: textarea y select -->
@@ -439,6 +484,51 @@
                     <div class="callout-content">
                         <p class="callout-title">datalist vs select</p>
                         <p>La diferencia clave es la flexibilidad: <code>&lt;select&gt;</code> obliga al usuario a elegir una de las opciones predefinidas. <code>&lt;datalist&gt;</code> muestra sugerencias pero permite escribir un valor custom. Es ideal para campos donde querés guiar al usuario sin restringirlo, como "ciudad" o "cargo". La combinaci&oacute;n input + datalist crea un campo con autocompletado nativo sin JavaScript.</p>
+                    </div>
+                </div>
+
+                <div class="mini-demo">
+                    <span class="mini-demo__label">Visual</span>
+                    <div class="form-demo">
+                        <div class="form-demo__row">
+                            <code class="form-demo__tag">select</code>
+                            <select class="form-demo__select">
+                                <option value="" disabled selected>Seleccion&aacute; una opci&oacute;n...</option>
+                                <optgroup label="Frontend">
+                                    <option>React</option>
+                                    <option>Vue</option>
+                                    <option>Svelte</option>
+                                </optgroup>
+                                <optgroup label="Backend">
+                                    <option>Node.js</option>
+                                    <option>Django</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                        <div class="form-demo__row">
+                            <code class="form-demo__tag">textarea</code>
+                            <textarea class="form-demo__textarea" rows="3" placeholder="Escribi algo aqu&iacute;..."></textarea>
+                        </div>
+                        <div class="form-demo__row">
+                            <code class="form-demo__tag">datalist</code>
+                            <input type="text" class="form-demo__input" list="demo-datalist-fwk" placeholder="Escrib&iacute; o eleg&iacute;...">
+                            <datalist id="demo-datalist-fwk">
+                                <option value="React">
+                                <option value="Vue">
+                                <option value="Angular">
+                                <option value="Svelte">
+                                <option value="Astro">
+                            </datalist>
+                        </div>
+                        <div class="form-demo__row">
+                            <code class="form-demo__tag">fieldset</code>
+                            <fieldset class="form-demo__fieldset">
+                                <legend>Nivel</legend>
+                                <label class="form-demo__check"><input type="radio" name="demo-fs-nivel" checked> B&aacute;sico</label>
+                                <label class="form-demo__check"><input type="radio" name="demo-fs-nivel"> Intermedio</label>
+                                <label class="form-demo__check"><input type="radio" name="demo-fs-nivel"> Avanzado</label>
+                            </fieldset>
+                        </div>
                     </div>
                 </div>
             </section>
