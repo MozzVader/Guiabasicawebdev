@@ -127,3 +127,28 @@ Stage Summary:
 - Archivo creado: demos/validation-playground.html (~420 líneas)
 - Archivo modificado: sections/html-formularios.html (embed en la sección validación)
 - Los mini-demos inline existentes se mantienen (no se tocan)
+---
+Task ID: 6
+Agent: main
+Task: Agregar DOM Playground a js-dom.html
+
+Work Log:
+- Leído js-dom.html (6 sub-secciones: que-es-dom, seleccion, creacion, modificacion, traversing, data-attributes)
+- Creado demos/dom-playground.html con:
+  - Input de selector CSS con live matching
+  - 12 quick selectors: h2, .card, .card-title, ul li, .btn, .btn.primary, .nav-bar span, input, [data-id], :nth-child, .card .card-text, .card > .card-title
+  - Mini DOM renderizado (nav bar, 3 cards con badges, lista, input, footer)
+  - Clic en cualquier elemento genera su selector automáticamente
+  - 7 acciones: textContent, addClass, style.bg, toggle(), cloneNode, remove(), attributes
+  - Output JS en vivo mostrando querySelector/querySelectorAll equivalente
+  - Inspector on hover (tag, id, class, data-attrs, textContent)
+  - Method badge dinámico (querySelector vs querySelectorAll según cantidad de matches)
+  - Undo y Reset DOM
+- Insertado demo-embed en js-dom.html después del intro de "Selección de elementos"
+- Ícono de rayo (lightning) en la barra del embed
+- Commit 038bb30 push exitoso
+
+Stage Summary:
+- Archivo creado: demos/dom-playground.html (~400 líneas)
+- Archivo modificado: sections/js-dom.html (embed en línea 176-186)
+- Combina selección + manipulación en un solo playground
