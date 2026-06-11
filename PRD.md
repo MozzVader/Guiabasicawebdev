@@ -688,15 +688,15 @@ Las cheatsheets son secciones dedicadas con formato de **referencia rápida**. T
 - [x] Reorganizar menú: SEO como categoría propia, Extras con Herramientas + Recursos
 - [x] Escribir `sections/recursos.html` (links, tutoriales, videos, comunidades)
 
-### Fase 9: Funcionalidades Extra & Polish
+### Fase 9: Funcionalidades Extra & Polish ✅
 - [x] Implementar buscador in-page (`search.js`)
 - [x] Crear og-image.png
 - [x] Crear favicon.svg
 - [x] Revisión de SEO: meta tags, Open Graph, sitemap
 - [x] Revisión de accesibilidad: contrastes, aria attributes, keyboard nav
 - [x] Revisión de performance: Lighthouse audit
-- [ ] Testing cross-browser: Chrome, Firefox, Safari, Edge
-- [ ] Testing responsive: mobile, tablet, desktop
+- [x] Testing cross-browser: Chrome, Firefox, Safari, Edge
+- [x] Testing responsive: mobile, tablet, desktop
 - [x] Crear `CONTRIBUTING.md`
 
 ---
@@ -743,4 +743,4 @@ Las cheatsheets son secciones dedicadas con formato de **referencia rápida**. T
 
 ---
 
-> **En progreso**: Fases 1-7 completadas. Fase 8 en curso (SEO & Extras). Próximo → Sección Recursos, luego Fase 9 (Polish).
+> **PRD COMPLETADO**: Fases 1-9 completadas.
