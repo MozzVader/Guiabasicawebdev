@@ -612,3 +612,41 @@
     color: var(--accent-cyan);
     text-decoration: underline;
 }
+
+/* === Reading Progress Bar === */
+#reading-progress {
+    position: fixed;
+    top: var(--header-height);
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan));
+    z-index: var(--z-header);
+    transition: none;
+    pointer-events: none;
+}
+
+/* === Back to Top Button === */
+#back-to-top {
+    position: fixed;
+    bottom: var(--space-8);
+    right: var(--space-8);
+    width: 40px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    background-color: var(--bg-secondary);
+    color: var(--text-muted);
+    cursor: pointer;
+    opacity: 0.3;
+    transition: opacity var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+    z-index: var(--z-content);
+}
+
+#back-to-top:hover {
+    opacity: 0.7;
+    color: var(--text-primary);
+    border-color: var(--text-muted);
+}

@@ -11,6 +11,7 @@ import { initSidebar } from './sidebar.js';
 import { initScrollAnimations } from './scroll-animations.js';
 import { initHighlighting, initCopyButtons } from './code-blocks.js';
 import { initSearch } from './search.js';
+import './ui-enhancements.js';
 
 /**
  * Bootstraps the application
