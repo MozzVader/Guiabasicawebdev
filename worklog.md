@@ -76,3 +76,28 @@ Stage Summary:
 - Archivo creado: demos/transitions-playground.html (~310 líneas)
 - Archivo modificado: sections/css-animaciones.html (embed en línea 90-100)
 - Bonus: easing comparison row para comparar visualmente curvas al hover
+---
+Task ID: 4
+Agent: main
+Task: Agregar Responsive Playground a css-responsive.html
+
+Work Log:
+- Leído css-responsive.html (8 sub-secciones: media-queries, mobile-first, unidades-relativas, clamp, container-queries, imágenes, preferencias, buenas-prácticas)
+- Creado demos/responsive-playground.html con:
+  - Slider de viewport (320px–1440px) con marcadores de breakpoint (sm/md/lg/xl)
+  - 3 patrones de layout: Card Grid, Holy Grail, Navbar + Hero
+  - Selector de enfoque: mobile-first vs desktop-first
+  - Selector de unidad tipográfica: px, rem, clamp(), vw
+  - Nombre de dispositivo en tiempo real (iPhone SE, iPad, Laptop, etc.)
+  - CSS output en vivo mostrando media queries activas (resaltado en verde)
+  - Botones de salto rápido: Mobile 375, Tablet 768, Laptop 1024, Desktop 1440
+  - Botón "Animar" para loop continuo 320→1440→320
+  - Leyenda de breakpoints con estado activo
+- Insertado demo-embed en css-responsive.html después del intro de "Media Queries"
+- Ícono de smartphone en la barra del embed
+- Commit 3f1bf77 push exitoso
+
+Stage Summary:
+- Archivo creado: demos/responsive-playground.html (~520 líneas)
+- Archivo modificado: sections/css-responsive.html (embed en línea 90-100)
+- Mismo patrón visual que los playgrounds anteriores (dark theme, controles, CSS output, auto-resize)
