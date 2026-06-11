@@ -546,6 +546,18 @@
                     HTML5 trae validaci&oacute;n incorporada que funciona sin JavaScript. El navegador verifica los campos antes de enviar el formulario y muestra mensajes de error contextuales. Esto cubre los casos m&aacute;s comunes y es perfectamente suficiente para muchos formularios. La validaci&oacute;n se activa al hacer click en el bot&oacute;n submit (o al llamar a <code>form.reportValidity()</code>), no mientras el usuario escribe (a menos que uses CSS <code>:invalid</code> para feedback en tiempo real).
                 </p>
 
+                <p class="demo-embed__intro">
+                    Experiment&aacute; con la validaci&oacute;n nativa en vivo. Eleg&iacute; un preset de formulario, activ&aacute; o desactiv&aacute; atributos de validaci&oacute;n con los checkboxes del panel derecho, y escribi en los campos para ver c&oacute;mo reaccionan. El panel inferior muestra el estado de la <code>Validity API</code> de cada campo en tiempo real. Prob&aacute; el toggle <code>novalidate</code> para ver la diferencia entre validaci&oacute;n nativa y sin validaci&oacute;n.
+                </p>
+
+                <div class="demo-embed">
+                    <div class="demo-embed__bar">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+                        <span>Playground &mdash; Validaci&oacute;n de Formularios</span>
+                    </div>
+                    <iframe src="../demos/validation-playground.html" title="Form Validation Playground - Atributos de validación nativa" loading="lazy"></iframe>
+                </div>
+
                 <h3>Atributos de validaci&oacute;n</h3>
 
                 <p>

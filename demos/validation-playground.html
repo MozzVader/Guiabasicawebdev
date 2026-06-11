@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Form Validation Playground</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+  font-family:'Inter',system-ui,-apple-system,sans-serif;
+  background:#0d1117;
+  color:#e6edf3;
+  padding:16px;
+  overflow-x:hidden;
+}
+
+/* --- Controls --- */
+.controls{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-bottom:14px;
+  align-items:flex-end;
+}
+
+.control-group{
+  display:flex;
+  flex-direction:column;
+  gap:3px;
+  flex:1 1 130px;
+  min-width:120px;
+}
+
+.control-group label{
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:.8px;
+  color:#8b949e;
+  font-weight:600;
+}
+
+.control-group select{
+  background:#161b22;
+  color:#e6edf3;
+  border:1px solid #30363d;
+  border-radius:6px;
+  padding:7px 8px;
+  font-size:12px;
+  font-family:'JetBrains Mono',monospace;
+  cursor:pointer;
+  outline:none;
+  transition:border-color .2s;
+  appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238b949e' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:right 8px center;
+  padding-right:26px;
+}
+
+.control-group select:focus{
+  border-color:#58a6ff;
+}
+
+/* --- Toggle Row --- */
+.toggle-row{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:14px;
+  flex-wrap:wrap;
+}
+
+.toggle-row label{
+  font-size:11px;
+  color:#8b949e;
+  display:flex;
+  align-items:center;
+  gap:5px;
+  cursor:pointer;
+}
+
+.toggle-row input[type=checkbox]{
+  appearance:none;
+  width:14px;
+  height:14px;
+  border:1px solid #30363d;
+  border-radius:3px;
+  background:#161b22;
+  cursor:pointer;
+  position:relative;
+  transition:all .15s;
+}
+
+.toggle-row input[type=checkbox]:checked{
+  background:#58a6ff;
+  border-color:#58a6ff;
+}
+
+.toggle-row input[type=checkbox]:checked::after{
+  content:'';
+  position:absolute;
+  left:3px;top:0;
+  width:5px;height:9px;
+  border:solid #fff;border-width:0 2px 2px 0;
+  transform:rotate(45deg);
+}
+
+/* --- Form Layout --- */
+.form-area{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+  margin-bottom:14px;
+}
+
+@media(max-width:600px){
+  .form-area{grid-template-columns:1fr}
+}
+
+.form-panel{
+  background:#161b22;
+  border:1px solid #30363d;
+  border-radius:8px;
+  padding:14px;
+}
+
+.form-panel h3{
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:.8px;
+  color:#8b949e;
+  font-weight:600;
+  margin-bottom:10px;
+}
+
+/* --- Form Fields --- */
+.field{
+  margin-bottom:10px;
+}
+
+.field:last-child{margin-bottom:0}
+
+.field-label{
+  font-size:11px;
+  color:#c9d1d9;
+  margin-bottom:4px;
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+
+.field-label .req{
+  color:#f85149;
+  font-weight:700;
+}
+
+.field-input{
+  width:100%;
+  background:#0d1117;
+  border:1.5px solid #30363d;
+  border-radius:6px;
+  padding:7px 10px;
+  font-size:12px;
+  font-family:'Inter',system-ui,sans-serif;
+  color:#e6edf3;
+  outline:none;
+  transition:border-color .2s, box-shadow .2s;
+}
+
+.field-input:focus{
+  border-color:#58a6ff;
+  box-shadow:0 0 0 2px rgba(88,166,255,.15);
+}
+
+.field-input:valid:not(:placeholder-shown){
+  border-color:#3fb950;
+}
+
+.field-input:invalid:not(:placeholder-shown){
+  border-color:#f85149;
+}
+
+.field-input.field-select{
+  appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238b949e' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:right 8px center;
+  padding-right:26px;
+}
+
+.field-hint{
+  font-size:10px;
+  color:#484f58;
+  margin-top:3px;
+  font-family:'JetBrains Mono',monospace;
+  transition:color .2s;
+}
+
+.field-hint.valid{color:#3fb950}
+.field-hint.invalid{color:#f85149}
+
+/* --- Attr Toggles (right panel) --- */
+.attr-row{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  margin-bottom:6px;
+  padding:5px 8px;
+  background:#0d1117;
+  border-radius:5px;
+  font-size:11px;
+}
+
+.attr-row .attr-name{
+  font-family:'JetBrains Mono',monospace;
+  color:#79c0ff;
+  min-width:90px;
+  flex-shrink:0;
+}
+
+.attr-row .attr-target{
+  color:#8b949e;
+  flex:1;
+  font-size:10px;
+}
+
+.attr-toggle{
+  appearance:none;
+  width:12px;
+  height:12px;
+  border:1px solid #30363d;
+  border-radius:3px;
+  background:#161b22;
+  cursor:pointer;
+  position:relative;
+  transition:all .15s;
+  flex-shrink:0;
+}
+
+.attr-toggle:checked{
+  background:#3fb950;
+  border-color:#3fb950;
+}
+
+.attr-toggle:checked::after{
+  content:'';
+  position:absolute;
+  left:2px;top:-1px;
+  width:5px;height:9px;
+  border:solid #fff;border-width:0 1.5px 1.5px 0;
+  transform:rotate(45deg);
+}
+
+/* --- CSS Output --- */
+.css-output{
+  background:#161b22;
+  border:1px solid #30363d;
+  border-radius:6px;
+  padding:10px 14px;
+  margin-bottom:14px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  color:#8b949e;
+  line-height:1.7;
+  overflow-x:auto;
+  white-space:pre;
+}
+
+.css-output .tag{color:#7ee787}
+.css-output .attr{color:#79c0ff}
+.css-output .val{color:#a5d6ff}
+.css-output .on{color:#3fb950}
+.css-output .off{color:#484f58}
+
+/* --- Validity State Panel --- */
+.validity-panel{
+  background:#161b22;
+  border:1px solid #30363d;
+  border-radius:8px;
+  padding:12px 14px;
+  margin-bottom:12px;
+}
+
+.validity-panel h3{
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:.8px;
+  color:#8b949e;
+  font-weight:600;
+  margin-bottom:8px;
+}
+
+.val-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(140px, 1fr));
+  gap:6px;
+}
+
+.val-item{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  font-size:10px;
+  font-family:'JetBrains Mono',monospace;
+  padding:4px 8px;
+  border-radius:4px;
+  background:#0d1117;
+}
+
+.val-item .val-field{
+  color:#8b949e;
+  min-width:50px;
+}
+
+.val-dot{
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:#30363d;
+  flex-shrink:0;
+  transition:background .2s;
+}
+
+.val-dot.valid{background:#3fb950;box-shadow:0 0 4px rgba(63,185,80,.4)}
+.val-dot.invalid{background:#f85149;box-shadow:0 0 4px rgba(248,81,73,.4)}
+.val-dot.pristine{background:#30363d}
+
+.val-item .val-msg{
+  color:#484f58;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+/* --- Action Buttons --- */
+.actions{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.btn{
+  background:#21262d;
+  color:#e6edf3;
+  border:1px solid #30363d;
+  border-radius:6px;
+  padding:6px 14px;
+  font-size:12px;
+  font-family:'Inter',system-ui,sans-serif;
+  cursor:pointer;
+  transition:all .2s;
+}
+
+.btn:hover{
+  background:#30363d;
+  border-color:#58a6ff;
+}
+
+.btn:active{
+  transform:scale(.97);
+}
+
+.btn-primary{
+  background:rgba(88,166,255,.12);
+  border-color:#58a6ff;
+  color:#58a6ff;
+}
+
+.btn-primary:hover{
+  background:rgba(88,166,255,.2);
+}
+
+/* --- Toast --- */
+.toast{
+  position:fixed;
+  top:12px;
+  right:12px;
+  background:#1a1e2e;
+  border:1px solid #3fb950;
+  border-radius:8px;
+  padding:10px 16px;
+  font-size:12px;
+  color:#3fb950;
+  z-index:999;
+  opacity:0;
+  transform:translateY(-10px);
+  transition:all .3s;
+  pointer-events:none;
+}
+
+.toast.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+.toast.error{
+  border-color:#f85149;
+  color:#f85149;
+}
+</style>
+</head>
+<body>
+
+<div class="controls">
+  <div class="control-group">
+    <label>Form preset</label>
+    <select id="presetSelect">
+      <option value="registro" selected>Registro de usuario</option>
+      <option value="contacto">Formulario de contacto</option>
+      <option value="login">Login</option>
+    </select>
+  </div>
+</div>
+
+<div class="toggle-row">
+  <label><input type="checkbox" id="novalidateToggle"> novalidate (desactivar validaci&oacute;n nativa)</label>
+</div>
+
+<div class="form-area">
+  <!-- Left: Live Form -->
+  <div class="form-panel">
+    <h3>Formulario en vivo</h3>
+    <form id="demoForm" novalidate>
+      <div id="formFields"></div>
+    </form>
+  </div>
+
+  <!-- Right: Attribute Toggles -->
+  <div class="form-panel">
+    <h3>Atributos de validaci&oacute;n</h3>
+    <div id="attrToggles"></div>
+  </div>
+</div>
+
+<div class="validity-panel">
+  <h3>Estado de validaci&oacute;n (Validity API)</h3>
+  <div class="val-grid" id="validityGrid"></div>
+</div>
+
+<div class="css-output" id="cssOutput"></div>
+
+<div class="actions">
+  <button class="btn btn-primary" id="btnSubmit">Enviar formulario</button>
+  <button class="btn" id="btnCheck">checkValidity()</button>
+  <button class="btn" id="btnReset">Reset</button>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var presetSelect = document.getElementById('presetSelect');
+var novalidateToggle = document.getElementById('novalidateToggle');
+var formFields = document.getElementById('formFields');
+var attrToggles = document.getElementById('attrToggles');
+var validityGrid = document.getElementById('validityGrid');
+var cssOutput = document.getElementById('cssOutput');
+var demoForm = document.getElementById('demoForm');
+var toast = document.getElementById('toast');
+
+var PRESETS = {
+  registro: {
+    fields: [
+      { id: 'usuario', label: 'Usuario', type: 'text', placeholder: 'nombre_usuario', attrs: { required: true, minlength: '3', maxlength: '20', pattern: '[a-zA-Z0-9_]+' } },
+      { id: 'email', label: 'Email', type: 'email', placeholder: 'tu@email.com', attrs: { required: true } },
+      { id: 'password', label: 'Contrase&ntilde;a', type: 'password', placeholder: 'Min 8, 1 may&uacute;sc, 1 n&uacute;m', attrs: { required: true, minlength: '8', pattern: '(?=.*[A-Z])(?=.*\\d).{8,}' } },
+      { id: 'edad', label: 'Edad', type: 'number', placeholder: '18 - 120', attrs: { required: true, min: '18', max: '120', step: '1' } },
+      { id: 'sitio', label: 'Sitio web', type: 'url', placeholder: 'https://tu-sitio.com', attrs: {} },
+      { id: 'pais', label: 'Pa&iacute;s', type: 'select', options: ['','Argentina','M&eacute;xico','Colombia','Chile','Espa&ntilde;a','Otro'], attrs: { required: true } }
+    ]
+  },
+  contacto: {
+    fields: [
+      { id: 'nombre', label: 'Nombre completo', type: 'text', placeholder: 'Juan P&eacute;rez', attrs: { required: true, minlength: '2', maxlength: '100' } },
+      { id: 'email', label: 'Email', type: 'email', placeholder: 'tu@email.com', attrs: { required: true } },
+      { id: 'telefono', label: 'Tel&eacute;fono', type: 'tel', placeholder: '+54 11 1234-5678', attrs: { pattern: '[\\d\\s\\-+]{7,}' } },
+      { id: 'asunto', label: 'Asunto', type: 'text', placeholder: 'Motivo del contacto', attrs: { required: true, maxlength: '200' } },
+      { id: 'mensaje', label: 'Mensaje', type: 'textarea', placeholder: 'Escrib&iacute; tu mensaje...', attrs: { required: true, minlength: '10', maxlength: '1000' } }
+    ]
+  },
+  login: {
+    fields: [
+      { id: 'user', label: 'Usuario o email', type: 'text', placeholder: 'admin@webforge.com', attrs: { required: true } },
+      { id: 'pass', label: 'Contrase&ntilde;a', type: 'password', placeholder: 'Tu contrase&ntilde;a', attrs: { required: true, minlength: '6' } },
+      { id: 'remember', label: 'Recordarme', type: 'checkbox', attrs: {} }
+    ]
+  }
+};
+
+var activeAttrs = {};
+
+function loadPreset(name) {
+  var preset = PRESETS[name];
+  activeAttrs = {};
+
+  // Build form fields
+  var fhtml = '';
+  for (var i = 0; i < preset.fields.length; i++) {
+    var f = preset.fields[i];
+    activeAttrs[f.id] = {};
+
+    // Initialize all attrs as true
+    for (var a in f.attrs) {
+      activeAttrs[f.id][a] = true;
+    }
+
+    fhtml += '<div class="field">';
+    fhtml += '<div class="field-label">' + f.label;
+    if (f.attrs.required) fhtml += ' <span class="req">*</span>';
+    fhtml += '</div>';
+
+    if (f.type === 'textarea') {
+      fhtml += '<textarea class="field-input" id="f-' + f.id + '" name="' + f.id + '" placeholder="' + f.placeholder + '" rows="3"';
+      fhtml += renderAttrs(f.id);
+      fhtml += '></textarea>';
+    } else if (f.type === 'select') {
+      fhtml += '<select class="field-input field-select" id="f-' + f.id + '" name="' + f.id + '"';
+      fhtml += renderAttrs(f.id);
+      fhtml += '>';
+      for (var j = 0; j < f.options.length; j++) {
+        fhtml += '<option value="' + f.options[j] + '">' + (f.options[j] || 'Seleccion&aacute;...') + '</option>';
+      }
+      fhtml += '</select>';
+    } else if (f.type === 'checkbox') {
+      fhtml += '<label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:12px;color:#c9d1d9">';
+      fhtml += '<input type="checkbox" id="f-' + f.id + '" name="' + f.id + '" style="width:16px;height:16px;accent-color:#58a6ff">';
+      fhtml += ' ' + f.label;
+      fhtml += '</label>';
+    } else {
+      fhtml += '<input type="' + f.type + '" class="field-input" id="f-' + f.id + '" name="' + f.id + '" placeholder="' + f.placeholder + '"';
+      fhtml += renderAttrs(f.id);
+      fhtml += '>';
+    }
+    fhtml += '<div class="field-hint" id="hint-' + f.id + '"></div>';
+    fhtml += '</div>';
+  }
+  formFields.innerHTML = fhtml;
+
+  // Build attr toggles
+  var thtml = '';
+  for (var i = 0; i < preset.fields.length; i++) {
+    var f = preset.fields[i];
+    var attrKeys = Object.keys(f.attrs);
+    if (attrKeys.length === 0) continue;
+
+    for (var j = 0; j < attrKeys.length; j++) {
+      var a = attrKeys[j];
+      thtml += '<div class="attr-row">';
+      thtml += '<input type="checkbox" class="attr-toggle" data-field="' + f.id + '" data-attr="' + a + '"' + (activeAttrs[f.id][a] ? ' checked' : '') + '>';
+      thtml += '<span class="attr-name">' + a + '</span>';
+      thtml += '<span class="attr-target">→ ' + f.label + '</span>';
+      thtml += '</div>';
+    }
+  }
+  attrToggles.innerHTML = thtml;
+
+  // Bind toggle events
+  var toggles = attrToggles.querySelectorAll('.attr-toggle');
+  for (var i = 0; i < toggles.length; i++) {
+    toggles[i].addEventListener('change', handleAttrToggle);
+  }
+
+  // Bind input events for validity display
+  var inputs = formFields.querySelectorAll('.field-input');
+  for (var i = 0; i < inputs.length; i++) {
+    inputs[i].addEventListener('input', updateValidity);
+    inputs[i].addEventListener('change', updateValidity);
+  }
+
+  updateValidity();
+  updateCSS();
+}
+
+function renderAttrs(fieldId) {
+  var preset = PRESETS[presetSelect.value];
+  var field = null;
+  for (var i = 0; i < preset.fields.length; i++) {
+    if (preset.fields[i].id === fieldId) { field = preset.fields[i]; break; }
+  }
+  if (!field) return '';
+  var s = '';
+  for (var a in field.attrs) {
+    if (activeAttrs[fieldId] && activeAttrs[fieldId][a]) {
+      if (field.attrs[a] === true) {
+        s += ' ' + a;
+      } else {
+        s += ' ' + a + '="' + field.attrs[a] + '"';
+      }
+    }
+  }
+  return s;
+}
+
+function handleAttrToggle(e) {
+  var fieldId = e.target.getAttribute('data-field');
+  var attr = e.target.getAttribute('data-attr');
+  activeAttrs[fieldId][attr] = e.target.checked;
+
+  // Re-render the field's attributes
+  var el = document.getElementById('f-' + fieldId);
+  if (el) {
+    // Remove all attrs
+    var preset = PRESETS[presetSelect.value];
+    var field = null;
+    for (var i = 0; i < preset.fields.length; i++) {
+      if (preset.fields[i].id === fieldId) { field = preset.fields[i]; break; }
+    }
+    if (field) {
+      for (var a in field.attrs) {
+        el.removeAttribute(a);
+      }
+      // Re-add active ones
+      for (var a in field.attrs) {
+        if (activeAttrs[fieldId] && activeAttrs[fieldId][a]) {
+          if (field.attrs[a] === true) {
+            el.setAttribute(a, '');
+          } else {
+            el.setAttribute(a, field.attrs[a]);
+          }
+        }
+      }
+    }
+  }
+
+  updateValidity();
+  updateCSS();
+  setTimeout(resize, 50);
+}
+
+function updateValidity() {
+  var preset = PRESETS[presetSelect.value];
+  var ghtml = '';
+
+  for (var i = 0; i < preset.fields.length; i++) {
+    var f = preset.fields[i];
+    var el = document.getElementById('f-' + f.id);
+    if (!el) continue;
+
+    var v = el.validity;
+    var isValid = v.valid;
+    var isPristine = !el.value && el.type !== 'checkbox';
+
+    // Hint text
+    var hint = document.getElementById('hint-' + f.id);
+    if (hint) {
+      if (isPristine) {
+        hint.className = 'field-hint';
+        var attrDesc = [];
+        var aa = activeAttrs[f.id] || {};
+        if (aa.required) attrDesc.push('requerido');
+        if (aa.minlength) attrDesc.push('min ' + aa.minlength + ' chars');
+        if (aa.maxlength) attrDesc.push('max ' + aa.maxlength + ' chars');
+        if (aa.pattern) attrDesc.push('patr\u00f3n activo');
+        if (aa.min) attrDesc.push('min ' + aa.min);
+        if (aa.max) attrDesc.push('max ' + aa.max);
+        hint.textContent = attrDesc.length ? attrDesc.join(' \u00b7 ') : 'opcional';
+      } else if (isValid) {
+        hint.className = 'field-hint valid';
+        hint.textContent = 'v\u00e1lido';
+      } else {
+        hint.className = 'field-hint invalid';
+        var msg = '';
+        if (v.valueMissing) msg = 'campo requerido';
+        else if (v.tooShort) msg = 'm\u00ednimo ' + (activeAttrs[f.id].minlength || '?') + ' caracteres';
+        else if (v.tooLong) msg = 'm\u00e1ximo ' + (activeAttrs[f.id].maxlength || '?') + ' caracteres';
+        else if (v.patternMismatch) msg = 'no coincide con el patr\u00f3n';
+        else if (v.rangeUnderflow) msg = 'm\u00ednimo ' + (activeAttrs[f.id].min || '?');
+        else if (v.rangeOverflow) msg = 'm\u00e1ximo ' + (activeAttrs[f.id].max || '?');
+        else if (v.typeMismatch) msg = 'formato inv\u00e1lido';
+        else msg = 'inv\u00e1lido';
+        hint.textContent = msg;
+      }
+    }
+
+    // Validity grid item
+    ghtml += '<div class="val-item">';
+    ghtml += '<div class="val-dot ' + (isPristine ? 'pristine' : (isValid ? 'valid' : 'invalid')) + '"></div>';
+    ghtml += '<span class="val-field">' + f.id + '</span>';
+    ghtml += '<span class="val-msg">' + (isPristine ? 'pristine' : (isValid ? 'valid' : 'invalid')) + '</span>';
+    ghtml += '</div>';
+  }
+
+  validityGrid.innerHTML = ghtml;
+}
+
+function updateCSS() {
+  var preset = PRESETS[presetSelect.value];
+  var lines = [];
+
+  for (var i = 0; i < preset.fields.length; i++) {
+    var f = preset.fields[i];
+    if (f.type === 'checkbox') continue;
+
+    lines.push('<span class="tag">&lt;input</span>');
+
+    var parts = [];
+    parts.push('<span class="attr">type</span>=<span class="val">"' + f.type + '"</span>');
+    parts.push('<span class="attr">name</span>=<span class="val">"' + f.id + '"</span>');
+
+    var aa = activeAttrs[f.id] || {};
+    for (var a in f.attrs) {
+      if (aa[a]) {
+        var cls = 'on';
+        if (f.attrs[a] === true) {
+          parts.push('<span class="' + cls + '"><span class="attr">' + a + '</span></span>');
+        } else {
+          parts.push('<span class="' + cls + '"><span class="attr">' + a + '</span>=<span class="val">"' + f.attrs[a] + '"</span></span>');
+        }
+      } else {
+        var cls = 'off';
+        if (f.attrs[a] === true) {
+          parts.push('<span class="' + cls + '"><span class="attr">' + a + '</span></span>');
+        } else {
+          parts.push('<span class="' + cls + '"><span class="attr">' + a + '</span>=<span class="val">"' + f.attrs[a] + '"</span></span>');
+        }
+      }
+    }
+
+    lines.push('  ' + parts.join(' '));
+    lines.push('<span class="tag">&gt;</span>');
+    if (i < preset.fields.length - 2) lines.push('');
+  }
+
+  cssOutput.innerHTML = lines.join('\n');
+}
+
+// Preset change
+presetSelect.addEventListener('change', function() { loadPreset(this.value); setTimeout(resize, 50); });
+
+// Novalidate toggle
+novalidateToggle.addEventListener('change', function() {
+  demoForm.noValidate = this.checked;
+  updateValidity();
+});
+
+// Submit
+document.getElementById('btnSubmit').addEventListener('click', function() {
+  if (demoForm.noValidate) {
+    demoForm.noValidate = false;
+    var valid = demoForm.checkValidity();
+    demoForm.noValidate = true;
+    showToast(valid ? 'Formulario v\u00e1lido' : 'Hay errores de validaci\u00f3n', !valid);
+  } else {
+    var valid = demoForm.checkValidity();
+    if (!valid) demoForm.reportValidity();
+    showToast(valid ? 'Formulario v\u00e1lido' : 'Hay errores de validaci\u00f3n', !valid);
+  }
+  updateValidity();
+});
+
+document.getElementById('btnCheck').addEventListener('click', function() {
+  var valid = demoForm.checkValidity();
+  showToast('checkValidity() → ' + (valid ? 'true' : 'false'), !valid);
+  updateValidity();
+});
+
+document.getElementById('btnReset').addEventListener('click', function() {
+  demoForm.reset();
+  novalidateToggle.checked = false;
+  demoForm.noValidate = false;
+  loadPreset(presetSelect.value);
+  setTimeout(resize, 50);
+});
+
+function showToast(msg, isError) {
+  toast.textContent = msg;
+  toast.className = 'toast show' + (isError ? ' error' : '');
+  clearTimeout(toast._t);
+  toast._t = setTimeout(function() { toast.className = 'toast'; }, 2500);
+}
+
+// Auto-resize iframe to fit content
+function resize() {
+  var h = document.body.scrollHeight;
+  if (window.parent && window.parent.postMessage) {
+    window.parent.postMessage({ type: 'demo-resize', height: h }, '*');
+  }
+}
+
+new MutationObserver(resize).observe(document.body, { childList: true, subtree: true, attributes: true });
+window.addEventListener('resize', resize);
+
+// Init
+loadPreset('registro');
+setTimeout(resize, 100);
+</script>
+
+</body>
+</html>
